@@ -135,25 +135,18 @@ const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
 ### Data Flow
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         Page                                 │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │                     State                            │   │
-│  │  portfolio, focusedIndex, isLoading, error          │   │
-│  └─────────────────────────────────────────────────────┘   │
-│                           │                                  │
-│           ┌───────────────┼───────────────┐                 │
-│           ▼               ▼               ▼                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │PortfolioChart│  │  AssetList  │  │  Loading/   │         │
-│  │             │  │             │  │   Error     │         │
-│  └─────────────┘  └─────────────┘  └─────────────┘         │
-│           │               │                                  │
-│           └───────┬───────┘                                 │
-│                   ▼                                          │
-│          setFocusedIndex(index | null)                      │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph Page
+        State["State<br/>portfolio, focusedIndex, isLoading, error"]
+
+        State --> PortfolioChart
+        State --> AssetList
+        State --> LoadingError["Loading / Error"]
+
+        PortfolioChart -->|onClick| SetFocus["setFocusedIndex(index | null)"]
+        AssetList -->|onClick| SetFocus
+    end
 ```
 
 ### Event Handlers

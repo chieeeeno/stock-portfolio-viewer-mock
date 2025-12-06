@@ -192,12 +192,12 @@ bloomo-task/
 
 ## 📐 コンポーネント構成
 
-```
-page.tsx
-├── PortfolioChart.tsx   # ドーナツ型パイチャート（Recharts）
-│   └── 中央ラベル       # 資産総額、評価損益
-└── AssetList.tsx        # 銘柄一覧コンテナ
-    └── AssetCard.tsx    # 個別銘柄カード（ロゴ、名前、損益）
+```mermaid
+graph TD
+    Page["page.tsx"] --> PortfolioChart["PortfolioChart.tsx<br/>ドーナツ型パイチャート（Recharts）"]
+    Page --> AssetList["AssetList.tsx<br/>銘柄一覧コンテナ"]
+    PortfolioChart --> CenterLabel["中央ラベル<br/>資産総額、評価損益"]
+    AssetList --> AssetCard["AssetCard.tsx<br/>個別銘柄カード（ロゴ、名前、損益）"]
 ```
 
 **状態管理**: React useState（4つの状態）

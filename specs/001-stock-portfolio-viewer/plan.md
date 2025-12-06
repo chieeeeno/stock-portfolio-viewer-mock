@@ -92,33 +92,26 @@ __tests__/
 
 ## Component Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         page.tsx                             │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │                    State (useState)                    │  │
-│  │  - portfolio: PortfolioResponse | null                │  │
-│  │  - focusedIndex: number | null                        │  │
-│  │  - isLoading: boolean                                 │  │
-│  │  - error: Error | null                                │  │
-│  └───────────────────────────────────────────────────────┘  │
-│                              │                               │
-│              ┌───────────────┴───────────────┐              │
-│              ▼                               ▼              │
-│  ┌─────────────────────┐        ┌─────────────────────┐    │
-│  │  PortfolioChart     │        │     AssetList       │    │
-│  │  (Recharts PieChart)│        │                     │    │
-│  │                     │        │  ┌───────────────┐  │    │
-│  │  - ドーナツチャート   │        │  │  AssetCard   │  │    │
-│  │  - 中央ラベル        │        │  │  (銘柄1)     │  │    │
-│  │  - クリックイベント   │        │  ├───────────────┤  │    │
-│  │                     │        │  │  AssetCard   │  │    │
-│  └─────────────────────┘        │  │  (銘柄2)     │  │    │
-│                                  │  ├───────────────┤  │    │
-│                                  │  │    ...       │  │    │
-│                                  │  └───────────────┘  │    │
-│                                  └─────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph page.tsx
+        State["State (useState)<br/>- portfolio: PortfolioResponse | null<br/>- focusedIndex: number | null<br/>- isLoading: boolean<br/>- error: Error | null"]
+
+        State --> PortfolioChart
+        State --> AssetList
+
+        subgraph PortfolioChart["PortfolioChart (Recharts PieChart)"]
+            PC1["ドーナツチャート"]
+            PC2["中央ラベル"]
+            PC3["クリックイベント"]
+        end
+
+        subgraph AssetList
+            AC1["AssetCard (銘柄1)"]
+            AC2["AssetCard (銘柄2)"]
+            AC3["..."]
+        end
+    end
 ```
 
 ## Key Technical Decisions
@@ -154,34 +147,14 @@ __tests__/
 
 ## Data Flow
 
-```
-┌──────────────────┐
-│dummy_response.json│
-└────────┬─────────┘
-         │ import
-         ▼
-┌──────────────────┐
-│     page.tsx     │
-│  (useEffect)     │
-└────────┬─────────┘
-         │ setPortfolio
-         ▼
-┌──────────────────┐
-│ State: portfolio │
-└────────┬─────────┘
-         │ props
-    ┌────┴────┐
-    ▼         ▼
-┌───────┐  ┌───────┐
-│ Chart │  │ List  │
-└───────┘  └───────┘
-    │         │
-    └────┬────┘
-         │ onClick
-         ▼
-┌──────────────────┐
-│setFocusedIndex() │
-└──────────────────┘
+```mermaid
+flowchart TD
+    A[dummy_response.json] -->|import| B[page.tsx<br/>useEffect]
+    B -->|setPortfolio| C[State: portfolio]
+    C -->|props| D[Chart]
+    C -->|props| E[List]
+    D -->|onClick| F[setFocusedIndex]
+    E -->|onClick| F
 ```
 
 ## Responsive Design Strategy
