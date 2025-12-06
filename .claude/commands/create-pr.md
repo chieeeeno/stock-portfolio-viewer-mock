@@ -23,55 +23,35 @@ git status
 
 ## Step 2: 分岐元ブランチの特定
 
-以下の手順で分岐元ブランチを特定してください：
-
-### 方法1: 上流ブランチ（tracking branch）を確認
+**スクリプトを使用して分岐元ブランチを自動検出してください：**
 
 ```bash
-git rev-parse --abbrev-ref --symbolic-full-name @{upstream} 2>/dev/null
+./scripts/detect-base-branch.sh
 ```
 
-→ 設定されていればこれが分岐元の候補
+### スクリプトの検出方法（優先順位順）
 
-### 方法2: 全リモートブランチとの距離を計算
+1. **git config**: `branch.<name>.baseBranch` に明示的に記録されている場合（信頼度: HIGH）
+2. **reflog**: ブランチ作成時の `Created from <branch>` を解析（信頼度: HIGH/MEDIUM）
+3. **GitHub PR**: 過去のPR履歴からベースブランチを取得（信頼度: HIGH）
+4. **距離計算**: 全ブランチとの共通祖先を計算し最も近いブランチを推測（信頼度: MEDIUM）
+
+### 結果の確認
+
+スクリプトの出力を確認し、ユーザーに確認：
+
+- 信頼度が **HIGH** の場合: そのまま使用可能
+- 信頼度が **MEDIUM/LOW** の場合: ユーザーに確認を取る
+
+### 分岐元ブランチの確定
+
+ユーザーが確認したら、今後のために記録：
 
 ```bash
-# リモートブランチ一覧を取得
-git fetch --all --prune
-
-# 各リモートブランチとの分岐点とコミット数を計算
-for branch in $(git branch -r | grep -v HEAD); do
-  merge_base=$(git merge-base HEAD "$branch" 2>/dev/null)
-  if [ -n "$merge_base" ]; then
-    ahead=$(git rev-list --count "$merge_base"..HEAD 2>/dev/null)
-    echo "$ahead commits ahead of $branch (merge-base: $merge_base)"
-  fi
-done | sort -n | head -10
+./scripts/detect-base-branch.sh --set <確定したブランチ名>
 ```
 
-**判定ロジック**:
-
-1. コミット数が最も少ない（=最も近い）ブランチを分岐元候補とする
-2. 同数の場合は以下の優先順位で選択:
-   - `main` > `master` > `develop` > `release/*` > その他
-
-### 方法3: reflog から分岐元を推測
-
-```bash
-# ブランチ作成時のログを確認
-git reflog show --no-abbrev $(git branch --show-current) | head -5
-```
-
-→ `branch: Created from <branch>` の形式で分岐元が記録されている場合がある
-
-### 判定結果の確認
-
-分岐元ブランチが特定できたら、ユーザーに確認：
-
-- 「分岐元ブランチは `<detected-branch>` でよろしいですか？」
-- 複数候補がある場合は選択肢を提示
-
-**確定後、差分を確認**:
+### 差分を確認
 
 ```bash
 # 分岐元からの差分（コミット一覧）
