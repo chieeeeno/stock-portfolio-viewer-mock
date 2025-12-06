@@ -1,6 +1,7 @@
 ---
 description: GitHub PRのURLからコードレビューを実施し、レビューコメントを投稿します
 argument-hint: <pr-url>
+model: claude-opus-4-5-20251101
 ---
 
 # PR Code Review
@@ -25,6 +26,19 @@ URL形式: `https://github.com/{owner}/{repo}/pull/{pull_number}`
 GitHub MCPツールを使用して以下を取得：
 1. `mcp__github__get_pull_request` - PR詳細（タイトル、説明、ベースブランチ等）
 2. `mcp__github__get_pull_request_files` - 変更されたファイル一覧と差分
+3. `mcp__github__get_pull_request_reviews` - 過去のレビュー履歴
+4. `mcp__github__get_pull_request_comments` - 過去のレビューコメント
+
+### Step 2.5: 過去レビューの確認
+
+過去のレビューコメントに「[レビュー日時]」の記載がある場合、**すでにレビュー済み**と判断する。
+
+**再レビュー時の確認事項**:
+- 過去の `[must]` 指摘が修正されているか
+- 過去の `[ask]` 質問に対する回答・対応があるか
+- 新たに追加されたコードに問題がないか
+
+過去の指摘事項が未修正の場合は、再度指摘すること。
 
 ### Step 3: コードレビュー実施
 
@@ -81,14 +95,41 @@ GitHub MCPツールを使用して以下を取得：
 
 `mcp__github__create_pull_request_review`を使用してPRにレビューを投稿してください。
 
+#### コメントのPrefix規則
+
+**各指摘には必ず以下のprefixを付けること**：
+
+| Prefix | 意味 | 説明 |
+|--------|------|------|
+| `[must]` | 必須修正 | 必ず変更が必要な内容 |
+| `[imo]` | 意見 | 自分の意見だとこうだけど修正必須ではない（In My Opinion） |
+| `[nits]` | 軽微 | ささいな指摘（Nitpick） |
+| `[ask]` | 質問 | レビュイーに対して確認事項がある場合 |
+| `[fyi]` | 参考情報 | 知っておくと良い情報（For Your Information） |
+
+**使用例**:
+```
+[must] この関数はnullチェックが必要です。line 42でundefined参照エラーが発生する可能性があります。
+
+[imo] この処理はカスタムフックに切り出すと再利用性が上がると思います。
+
+[nits] 変数名を `data` から `userData` に変更すると意図が明確になります。
+
+[ask] この実装の意図を教えていただけますか？別のアプローチも検討できそうです。
+
+[fyi] React 19ではこのパターンに対応した新しいAPIがあります。
+```
+
 **レビュー投稿形式**:
-- 問題がなければ: `event: "APPROVE"`
+- 問題がなければ: `event: "COMMENT"`（※自分自身のPRにはApproveできないため）
 - 軽微な指摘のみ: `event: "COMMENT"`
 - 修正が必要: `event: "REQUEST_CHANGES"`
 
 **bodyの形式**:
 ```markdown
 ## Code Review Summary
+
+[レビュー日時] YYYY年MM月DD日 HH時mm分ss秒（日本時間）
 
 ### 総評
 [全体的な評価を1-2文で]
@@ -99,9 +140,13 @@ GitHub MCPツールを使用して以下を取得：
 ### 良い点
 [良いコードがあれば言及]
 
+LGTM 👍
+
 ---
 🤖 Reviewed by Claude Code
 ```
+
+**注意**: 「LGTM」はApprove可能と判断した場合のみ記載する。`[must]` の指摘がある場合は記載しない。
 
 ### 注意事項
 - 各ファイルの差分を丁寧に読み、具体的な行番号を指摘に含める
