@@ -429,3 +429,6 @@ vite.config.ts.timestamp-*
 # Worktree working directories
 /worktree/
 docs/
+
+# Playwright MCP
+.playwright-mcp/

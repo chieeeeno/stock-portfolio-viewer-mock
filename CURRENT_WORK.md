@@ -1,237 +1,132 @@
 # 作業記録: 株式ポートフォリオビューワー
 
 **プロジェクト**: 顧客の保有株式のポートフォリオを表示する簡易なWebアプリケーション
-**ブランチ**: `001-stock-portfolio-viewer`
 **開始日**: 2025-12-06
 
 ---
 
-## ✅ 完了した作業
+## Session Handoff (2025-12-07 03:00)
 
-### 1. 要件の確認と把握 (2025-12-06)
+### Current Task
+フェーズ1: セットアップ（T001-T009）が完了。フェーズ2へ移行準備中。
 
-**実施内容**:
-- Notionページへのアクセスをトライしたが、JavaScriptの初期化コードのみが返されアクセス不可
-- 代替として`docs/fe-coding.pdf`ファイルを確認
-- PDFからフロントエンドエンジニア用コーディング試験の詳細を抽出
+### Completed This Session
+- **フェーズ1完了** ✅ (ブランチ: `001-phase1-setup`)
+  - T001: Next.js 16プロジェクト作成
+  - T002: recharts, react-is インストール
+  - T003: vitest, testing-library等 インストール
+  - T004-T006: vitest.config.ts, vitest.setup.ts, .prettierrc 作成
+  - T007: ESLint設定にprettier追加
+  - T008: package.json scripts更新
+  - T009: ディレクトリ構造作成（テストは同階層配置に変更）
+  - 動作確認: dev/build/lint/format/test すべて ✅
+  - publicディレクトリ追加（コピー漏れ修正）
+  - .gitignoreに.playwright-mcp/追加
+  - CLAUDE.mdにGitコミットルール追加
 
-**確認した主要要件**:
-- Next.js + TypeScriptでSPA構築
-- JSONファイル（dummy_response.json）をモックデータとして使用
-- ドーナツ型パイチャートでポートフォリオを表示
-- 保有銘柄一覧の表示
-- クリック/タップでフォーカス機能
-- レスポンシブデザイン対応
-- テストコード作成
-- pnpm install / pnpm dev で起動
+### Next Steps
+1. フェーズ2用ブランチ作成: `git checkout -b 001-phase2-foundation`
+2. フェーズ2: 基盤（T010-T023）を実装
+   - T010-T013: TypeScript型定義 `src/types/portfolio.ts`
+   - T014: モックデータ `src/data/dummy_response.json`
+   - T015-T019: フォーマッター関数 `src/utils/formatters.ts`
+   - T020: フォーマッターテスト `src/utils/formatters.test.ts`
+   - T021-T022: 定数定義 `src/utils/constants.ts`
+   - T023: globals.css更新
 
-### 2. フィーチャーブランチの作成 (2025-12-06)
+### Resume Command
+```bash
+# 現在のブランチ確認
+git branch
 
-**実施内容**:
-- 短い名前を生成: `stock-portfolio-viewer`
-- 既存ブランチを確認（リモート、ローカル、specsディレクトリ）
-- 既存の同名ブランチが存在しないことを確認
-- `.specify/scripts/bash/create-new-feature.sh`スクリプトを実行
+# フェーズ2ブランチ作成
+git checkout -b 001-phase2-foundation
 
-**作成されたリソース**:
-- ブランチ名: `001-stock-portfolio-viewer`
-- 仕様書パス: `specs/001-stock-portfolio-viewer/spec.md`
-- フィーチャー番号: `001`
-
-### 3. 仕様書の作成 (2025-12-06)
-
-**実施内容**:
-- `spec-template.md`を読み込んで構造を理解
-- PDFの要件を元に詳細な仕様書を作成
-- テンプレートに従って以下のセクションを記述:
-  - User Scenarios & Testing（4つのユーザーストーリー、優先度付き）
-  - Requirements（13件の機能要件、3つのキーエンティティ）
-  - Success Criteria（8件の測定可能な成功基準）
-  - Edge Cases（6件のエッジケース）
-  - Assumptions（9件の前提条件）
-
-### 4. 品質チェックリストの作成と検証 (2025-12-06)
-
-**実施内容**:
-- `specs/001-stock-portfolio-viewer/checklists/requirements.md`を作成
-- 仕様書の品質検証を実施
-- すべてのチェックリスト項目（17項目）が合格
-
-**ステータス**: ✅ プランニング準備完了
-
-### 5. 実装計画の作成 (2025-12-06) ✅ NEW
-
-**実施内容**:
-- `/speckit.plan`コマンドを実行
-- 技術リサーチを並列で実施（Next.js、チャートライブラリ、テストフレームワーク）
-- 以下のドキュメントを作成:
-
-#### 生成された成果物:
-
-| ファイル | 内容 |
-|---------|------|
-| `research.md` | 技術リサーチ結果と選定理由 |
-| `data-model.md` | TypeScript型定義とデータ構造 |
-| `quickstart.md` | セットアップ手順とコマンド |
-| `contracts/portfolio-schema.json` | JSONスキーマ定義 |
-| `contracts/component-contracts.md` | コンポーネントインターフェース |
-| `plan.md` | 完全な実装計画 |
-
-#### 技術選定結果:
-
-| カテゴリ | 選定 | 理由 |
-|---------|------|------|
-| フレームワーク | Next.js 16 (App Router) | 最新安定版、Turbopackデフォルト |
-| 言語 | TypeScript 5.9.x | 型安全性、要件 |
-| チャート | Recharts 3.5.x | 軽量、中央ラベル対応 |
-| スタイリング | Tailwind CSS 4.x | ゼロコンフィグ、高速開発 |
-| テスト | Vitest 3.x + RTL 16.x | Jestより高速、ゼロコンフィグTS |
-| リンター | ESLint 9.x + Prettier 3.7.x | 業界標準 |
-
-### 6. ワイヤーフレーム確認と仕様更新 (2025-12-07)
-
-**実施内容**:
-- PDFのワイヤーフレーム（手書きスケッチ）を再確認
-- 仕様書に不足していた表示形式の詳細を追加
-
-**追加した機能要件**:
-| 要件ID | 内容 |
-|-------|------|
-| FR-014 | パイチャート中央: `+15.5%(¥15,500)` 形式 |
-| FR-015 | 銘柄一覧評価損益: `+12.87%(¥5,242)` 形式 |
-| FR-016 | ティッカー/保有比率: `VOO / 39.8%` 形式 |
-
-**ワイヤーフレームから読み取ったレイアウト**:
+# 実装再開
+# /speckit.implement または手動でT010から実装
 ```
-[パイチャート中央]
-¥115,500
-+15.5%(¥15,500)
 
-[銘柄カード]
-[ロゴ] S&P500 ETF(Vanguard)    ¥45,969
-       VOO / 39.8%             +12.87%(¥5,242)
+### Important Notes
+- **Gitルール**: `git add -A` / `git add .` 禁止。ファイル個別指定必須。
+- **テスト配置**: `__tests__/` ではなく、テスト対象と同階層に `*.test.ts(x)` で配置
+- **tasks.md**: テストパスを同階層配置に更新済み
+
+---
+
+## ブランチ構成
+
+```
+main
+└── 001-stock-portfolio-viewer (ベース)
+    └── 001-phase1-setup ← 完了 (11コミット)
+        └── 001-phase2-foundation (次に作成)
+            └── 001-phase3-us1
+                └── ...
 ```
 
 ---
 
-## 📋 これから行う作業
+## フェーズ進捗
 
-### 次のステップ: タスク生成と実装
-
-#### 1. `/speckit.tasks` コマンドの実行
-
-**目的**: 実装計画を元にタスク一覧を生成する
-
-**期待される成果物**:
-- `specs/001-stock-portfolio-viewer/tasks.md`
-  - 実行可能な具体的タスクのリスト
-  - タスク間の依存関係
-  - 優先順位付け
-
-#### 2. `/speckit.implement` コマンドの実行
-
-**目的**: タスクを自動的に実装する（または手動実装の開始）
-
-**実装フェーズ**:
-1. プロジェクトセットアップ
-2. データ層実装（型定義、モックデータ、ユーティリティ）
-3. UIコンポーネント実装（パイチャート、銘柄一覧）
-4. メインページ統合（状態管理、フォーカス機能）
-5. スタイリング＆レスポンシブ
-6. テスト＆品質保証
-
-#### 3. 実装完了後の作業
-
-**提出準備**:
-- すべてのテストが通ることを確認
-- `pnpm install`と`pnpm dev`で動作確認
-- Google Chrome最新版で仕様通りに動作することを確認
-- Git bundleの作成: `git bundle create <アカウント名>_submission_<日付>.bundle main`
+| フェーズ | タスク | ステータス | ブランチ |
+|---------|-------|----------|---------|
+| Phase 1 | T001-T009 | ✅ 完了 | `001-phase1-setup` |
+| Phase 2 | T010-T023 | 🔜 次 | `001-phase2-foundation` |
+| Phase 3 | T024-T037 | ⏳ 待機 | `001-phase3-us1` |
+| Phase 4 | T038-T052 | ⏳ 待機 | `001-phase4-us2` |
+| Phase 5 | T053-T068 | ⏳ 待機 | `001-phase5-us3` |
+| Phase 6 | T069-T076 | ⏳ 待機 | `001-phase6-us4` |
+| Phase 7 | T077-T085 | ⏳ 待機 | `001-phase7-polish` |
 
 ---
 
-## 📁 プロジェクト構造
-
-```
-bloomo-task/
-├── docs/
-│   └── fe-coding.pdf                    # 要件定義書（PDF）
-├── specs/
-│   └── 001-stock-portfolio-viewer/
-│       ├── spec.md                       # 機能仕様書 ✅
-│       ├── plan.md                       # 実装計画 ✅
-│       ├── research.md                   # 技術リサーチ ✅
-│       ├── data-model.md                 # データモデル ✅
-│       ├── quickstart.md                 # セットアップガイド ✅
-│       ├── checklists/
-│       │   └── requirements.md           # 品質チェックリスト ✅
-│       ├── contracts/
-│       │   ├── portfolio-schema.json     # JSONスキーマ ✅
-│       │   └── component-contracts.md    # コンポーネント契約 ✅
-│       └── tasks.md                      # タスク一覧（次のステップで作成）
-├── CURRENT_WORK.md                       # 本ファイル
-├── CLAUDE.md                             # エージェントコンテキスト ✅
-└── .specify/
-    ├── templates/
-    │   └── spec-template.md
-    └── scripts/
-        └── bash/
-            └── create-new-feature.sh
-```
-
----
-
-## 🎯 現在のステータス
-
-**現在のフェーズ**: 実装計画フェーズ完了 → タスク生成・実装フェーズへ移行
-
-**次のアクション**: `/speckit.tasks`コマンドを実行してタスク一覧を生成
-
-**ブロッカー**: なし
-
-**備考**:
-- PDFの要件を完全に把握済み
-- 仕様書の品質検証済み
-- 実装計画と技術選定完了
-- dummy_response.jsonはquickstart.mdにサンプルデータを記載済み
-
----
-
-## 📝 確定した技術スタック
+## 技術スタック（確定）
 
 | カテゴリ | 技術 | バージョン |
 |---------|------|----------|
-| フレームワーク | Next.js | 16.x |
-| 言語 | TypeScript | 5.9.x |
-| React | React | 19.2.x |
-| チャート | Recharts | 3.5.x |
-| スタイリング | Tailwind CSS | 4.x |
-| テスト | Vitest | 3.x |
-| テスト | React Testing Library | 16.3.x |
-| リンター | ESLint | 9.39.x |
-| フォーマッター | Prettier | 3.7.x |
+| フレームワーク | Next.js | 16.0.7 |
+| React | React | 19.2.0 |
+| 言語 | TypeScript | 5.9.3 |
+| チャート | Recharts | 3.5.1 |
+| スタイリング | Tailwind CSS | 4.1.17 |
+| テスト | Vitest | 4.0.15 |
+| テスト | React Testing Library | 16.3.0 |
+| リンター | ESLint | 9.39.1 |
+| フォーマッター | Prettier | 3.7.4 |
 | パッケージマネージャー | pnpm | 10.24.x |
-| ランタイム | Node.js | 24.x |
 
 ---
 
-## 📐 コンポーネント構成
+## プロジェクト構造（現在）
 
-```mermaid
-graph TD
-    Page["page.tsx"] --> PortfolioChart["PortfolioChart.tsx<br/>ドーナツ型パイチャート（Recharts）"]
-    Page --> AssetList["AssetList.tsx<br/>銘柄一覧コンテナ"]
-    PortfolioChart --> CenterLabel["中央ラベル<br/>資産総額、評価損益"]
-    AssetList --> AssetCard["AssetCard.tsx<br/>個別銘柄カード（ロゴ、名前、損益）"]
+```
+bloomo-task/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/     # 空（フェーズ3で実装）
+│   ├── types/          # 空（フェーズ2で実装）
+│   ├── utils/          # 空（フェーズ2で実装）
+│   └── data/           # 空（フェーズ2で実装）
+├── public/             # 静的ファイル
+├── specs/001-stock-portfolio-viewer/
+│   ├── spec.md
+│   ├── plan.md
+│   ├── research.md
+│   ├── data-model.md
+│   ├── quickstart.md
+│   ├── tasks.md        # ← テストパス更新済み
+│   └── contracts/
+├── vitest.config.ts
+├── vitest.setup.ts
+├── .prettierrc
+├── eslint.config.mjs
+├── package.json
+└── CLAUDE.md           # ← Gitルール追加済み
 ```
 
-**状態管理**: React useState（4つの状態）
-- portfolio: PortfolioResponse | null
-- focusedIndex: number | null
-- isLoading: boolean
-- error: Error | null
-
 ---
 
-**最終更新**: 2025-12-07
-**作成者**: AI Assistant (Claude Opus 4.5)
+**最終更新**: 2025-12-07 03:00

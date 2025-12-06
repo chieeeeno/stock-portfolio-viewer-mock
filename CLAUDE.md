@@ -1,37 +1,106 @@
 # bloomo-task Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2025-12-07
+Last updated: 2025-12-07
 
-## Active Technologies
-- TypeScript 5.x / React 19.x + Recharts, Tailwind CSS (001-stock-portfolio-viewer)
-- N/A（モックJSONファイルを使用） (001-stock-portfolio-viewer)
+## Technology Stack
 
-- (001-stock-portfolio-viewer)
+| Category | Technology | Version |
+|----------|------------|---------|
+| Framework | Next.js (App Router) | 16.0.7 |
+| Language | TypeScript | 5.9.3 |
+| UI | React | 19.2.0 |
+| Charts | Recharts | 3.5.1 |
+| Styling | Tailwind CSS | 4.1.17 |
+| Testing | Vitest | 4.0.15 |
+| Testing | React Testing Library | 16.3.0 |
+| Linter | ESLint | 9.39.1 |
+| Formatter | Prettier | 3.7.4 |
+| Package Manager | pnpm | 10.24.x |
+| Runtime | Node.js | 24.x |
 
 ## Project Structure
 
 ```text
-backend/
-frontend/
-tests/
+bloomo-task/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── components/             # React components
+│   │   ├── *.tsx
+│   │   └── *.test.tsx          # Component tests (co-located)
+│   ├── types/                  # TypeScript type definitions
+│   │   └── portfolio.ts
+│   ├── utils/                  # Utility functions
+│   │   ├── *.ts
+│   │   └── *.test.ts           # Utility tests (co-located)
+│   └── data/                   # Mock data
+│       └── dummy_response.json
+├── public/                     # Static assets
+├── specs/                      # Feature specifications
+│   └── 001-stock-portfolio-viewer/
+├── vitest.config.ts
+├── vitest.setup.ts
+├── .prettierrc
+├── eslint.config.mjs
+└── package.json
 ```
 
 ## Commands
 
-# Add commands for 
+```bash
+pnpm dev          # Start dev server (Turbopack)
+pnpm build        # Production build
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm lint:fix     # Fix ESLint issues
+pnpm format       # Format with Prettier
+pnpm format:check # Check formatting
+pnpm test         # Run tests (watch mode)
+pnpm test:run     # Run tests (single run)
+```
 
 ## Code Style
 
-: Follow standard conventions
+- Use single quotes for strings
+- Use semicolons
+- 2 spaces for indentation
+- 100 character line width
+- Trailing commas in ES5 style
 
-## Recent Changes
-- 001-stock-portfolio-viewer: Added TypeScript 5.x / React 19.x + Recharts, Tailwind CSS
+## Test File Convention
 
-- 001-stock-portfolio-viewer: Added
+- **Location**: Co-located with source files (same directory)
+- **Naming**: `*.test.ts` or `*.test.tsx`
+- Example: `src/utils/formatters.ts` → `src/utils/formatters.test.ts`
 
 <!-- MANUAL ADDITIONS START -->
 
 ## Critical Rules
+
+### Git Commit Rules (MUST FOLLOW)
+
+**絶対に `git add -A` や `git add .` を使用しないこと。**
+
+コミット時は必ず以下のルールを遵守すること：
+
+1. **明示的なファイル指定**: コミット対象のファイルのみを個別に `git add <file1> <file2> ...` で指定する
+2. **変更内容の確認**: `git status` で変更ファイルを確認し、コミットすべきファイルのみを選択する
+3. **無関係なファイルの除外**: タスクに関係のないファイル（CURRENT_WORK.md等）はコミットに含めない
+
+```bash
+# 禁止
+git add -A
+git add .
+git commit -a
+
+# 正しい方法
+git add src/components/Example.tsx src/utils/helper.ts
+git commit -m "メッセージ"
+```
+
+---
 
 ### Context Window Management (IMPORTANT)
 

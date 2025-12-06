@@ -4,12 +4,7 @@
   "title": "PortfolioResponse",
   "description": "顧客の保有株式ポートフォリオのレスポンス形式",
   "type": "object",
-  "required": [
-    "total_asset_amount",
-    "total_gain_amount",
-    "total_gain_ratio",
-    "holding_assets"
-  ],
+  "required": ["total_asset_amount", "total_gain_amount", "total_gain_ratio", "holding_assets"],
   "properties": {
     "total_asset_amount": {
       "type": "integer",
@@ -59,13 +54,7 @@
     "HoldingAsset": {
       "type": "object",
       "description": "保有銘柄の詳細情報",
-      "required": [
-        "asset",
-        "asset_amount",
-        "gain_amount",
-        "gain_ratio",
-        "holding_ratio"
-      ],
+      "required": ["asset", "asset_amount", "gain_amount", "gain_ratio", "holding_ratio"],
       "properties": {
         "asset": {
           "$ref": "#/definitions/Asset"

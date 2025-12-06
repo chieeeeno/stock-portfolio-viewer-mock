@@ -17,7 +17,7 @@
 
 - **プロジェクトタイプ**: Web SPA（フロントエンドのみ）
 - **ソースコード**: リポジトリルートの `src/`
-- **テスト**: リポジトリルートの `__tests__/`
+- **テスト**: テスト対象と同階層に `*.test.ts(x)` 形式で配置
 
 ---
 
@@ -25,15 +25,15 @@
 
 **目的**: プロジェクト初期化と基本構造の作成
 
-- [ ] T001 Next.js 16プロジェクトをTypeScript、Tailwind CSS、ESLintで作成（`pnpm create next-app@latest`）
-- [ ] T002 本番依存パッケージをインストール: recharts, react-is
-- [ ] T003 [P] 開発依存パッケージをインストール: vitest, @vitejs/plugin-react, @testing-library/react, @testing-library/dom, jsdom, prettier, eslint-config-prettier
-- [ ] T004 [P] Vitest設定ファイルを作成 `vitest.config.ts`
-- [ ] T005 [P] Vitestセットアップファイルを作成 `vitest.setup.ts`
-- [ ] T006 [P] Prettier設定ファイルを作成 `.prettierrc`
-- [ ] T007 ESLint設定にprettierを追加 `eslint.config.mjs`
-- [ ] T008 `package.json` のscriptsを更新（test, test:run, format, format:check）
-- [ ] T009 ディレクトリ構造を作成: `src/components/`, `src/types/`, `src/utils/`, `src/data/`, `__tests__/components/`, `__tests__/utils/`
+- [x] T001 Next.js 16プロジェクトをTypeScript、Tailwind CSS、ESLintで作成（`pnpm create next-app@latest`）
+- [x] T002 本番依存パッケージをインストール: recharts, react-is
+- [x] T003 [P] 開発依存パッケージをインストール: vitest, @vitejs/plugin-react, @testing-library/react, @testing-library/dom, jsdom, prettier, eslint-config-prettier
+- [x] T004 [P] Vitest設定ファイルを作成 `vitest.config.ts`
+- [x] T005 [P] Vitestセットアップファイルを作成 `vitest.setup.ts`
+- [x] T006 [P] Prettier設定ファイルを作成 `.prettierrc`
+- [x] T007 ESLint設定にprettierを追加 `eslint.config.mjs`
+- [x] T008 `package.json` のscriptsを更新（test, test:run, format, format:check）
+- [x] T009 ディレクトリ構造を作成: `src/components/`, `src/types/`, `src/utils/`, `src/data/`
 
 ---
 
@@ -53,7 +53,7 @@
 - [ ] T017 [P] formatHoldingRatio ユーティリティ関数を実装 `src/utils/formatters.ts`
 - [ ] T018 [P] formatGainAmount ユーティリティ関数を実装 `src/utils/formatters.ts`
 - [ ] T019 [P] getGainStatus ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T020 フォーマッターユーティリティのユニットテストを作成 `__tests__/utils/formatters.test.ts`
+- [ ] T020 フォーマッターユーティリティのユニットテストを作成 `src/utils/formatters.test.ts`
 - [ ] T021 [P] CHART_COLORS 定数配列を定義 `src/utils/constants.ts`
 - [ ] T022 [P] GAIN_COLORS 定数オブジェクトを定義 `src/utils/constants.ts`
 - [ ] T023 Tailwind CSSのベースインポートで `src/app/globals.css` を更新
@@ -70,9 +70,9 @@
 
 ### US1のテスト
 
-- [ ] T024 [P] [US1] PortfolioChartの描画コンポーネントテストを作成 `__tests__/components/PortfolioChart.test.tsx`
-- [ ] T025 [P] [US1] チャート中央ラベル表示のテストを作成（総額、損益率、損益額） `__tests__/components/PortfolioChart.test.tsx`
-- [ ] T026 [P] [US1] 損益色ロジックのテストを作成（緑/赤/グレー） `__tests__/components/PortfolioChart.test.tsx`
+- [ ] T024 [P] [US1] PortfolioChartの描画コンポーネントテストを作成 `src/components/PortfolioChart.test.tsx`
+- [ ] T025 [P] [US1] チャート中央ラベル表示のテストを作成（総額、損益率、損益額） `src/components/PortfolioChart.test.tsx`
+- [ ] T026 [P] [US1] 損益色ロジックのテストを作成（緑/赤/グレー） `src/components/PortfolioChart.test.tsx`
 
 ### US1の実装
 
@@ -100,10 +100,10 @@
 
 ### US2のテスト
 
-- [ ] T038 [P] [US2] AssetCardの描画コンポーネントテストを作成 `__tests__/components/AssetCard.test.tsx`
-- [ ] T039 [P] [US2] AssetListの描画コンポーネントテストを作成 `__tests__/components/AssetList.test.tsx`
-- [ ] T040 [P] [US2] 「VOO / 39.8%」形式の表示テストを作成 `__tests__/components/AssetCard.test.tsx`
-- [ ] T041 [P] [US2] 「+12.87%(¥5,242)」形式の損益表示テストを作成 `__tests__/components/AssetCard.test.tsx`
+- [ ] T038 [P] [US2] AssetCardの描画コンポーネントテストを作成 `src/components/AssetCard.test.tsx`
+- [ ] T039 [P] [US2] AssetListの描画コンポーネントテストを作成 `src/components/AssetList.test.tsx`
+- [ ] T040 [P] [US2] 「VOO / 39.8%」形式の表示テストを作成 `src/components/AssetCard.test.tsx`
+- [ ] T041 [P] [US2] 「+12.87%(¥5,242)」形式の損益表示テストを作成 `src/components/AssetCard.test.tsx`
 
 ### US2の実装
 
@@ -131,10 +131,10 @@
 
 ### US3のテスト
 
-- [ ] T053 [P] [US3] セグメントクリックハンドラのテストを作成 `__tests__/components/PortfolioChart.test.tsx`
-- [ ] T054 [P] [US3] フォーカス状態の透明度変更テストを作成 `__tests__/components/PortfolioChart.test.tsx`
-- [ ] T055 [P] [US3] カードクリックハンドラのテストを作成 `__tests__/components/AssetCard.test.tsx`
-- [ ] T056 [P] [US3] 半透過状態（opacity 0.3）のテストを作成 `__tests__/components/AssetCard.test.tsx`
+- [ ] T053 [P] [US3] セグメントクリックハンドラのテストを作成 `src/components/PortfolioChart.test.tsx`
+- [ ] T054 [P] [US3] フォーカス状態の透明度変更テストを作成 `src/components/PortfolioChart.test.tsx`
+- [ ] T055 [P] [US3] カードクリックハンドラのテストを作成 `src/components/AssetCard.test.tsx`
+- [ ] T056 [P] [US3] 半透過状態（opacity 0.3）のテストを作成 `src/components/AssetCard.test.tsx`
 
 ### US3の実装
 
