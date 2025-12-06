@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,css,mjs,json}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,css,mjs,json}\" --ignore-path .gitignore",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
