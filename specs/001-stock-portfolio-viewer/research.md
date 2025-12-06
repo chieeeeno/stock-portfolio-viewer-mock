@@ -5,17 +5,23 @@
 
 ## 1. フレームワークバージョン
 
-### Decision: Next.js 15 (安定版)
+### Decision: Next.js 16 (最新安定版)
 
 **Rationale**:
-- Next.js 16は2025年10月にリリースされたが、セキュリティ脆弱性(CVE-2025-66478)が報告されている
-- 試験要件は「できるだけ最新版」だが、安定性を考慮しNext.js 15の最新安定版を使用
+- Next.js 16は2025年10月30日に安定版リリース
+- 試験要件の「できるだけ最新版」に合致
+- Turbopackがデフォルトで安定版に
 - App Router（推奨）を使用
-- Turbopackはdev環境で使用可能
+
+**Key Features (v16)**:
+- `use cache` ディレクティブによる明示的キャッシング
+- Turbopack: 10倍高速なFast Refresh、2-5倍高速なビルド
+- `middleware.ts` → `proxy.ts` への変更
+- React 19.2同梱
+- Node.js 20.9+ 必須
 
 **Alternatives Considered**:
-- Next.js 16: 最新だがセキュリティ問題が懸念
-- Next.js 14: 安定しているが、最新版を使用という要件に反する
+- Next.js 15: 安定しているが、16が既に安定版としてリリース済み
 
 **Key Configuration**:
 - App Router (src/app/ ディレクトリ)
@@ -26,15 +32,15 @@
 
 ## 2. パイチャートライブラリ
 
-### Decision: Recharts
+### Decision: Recharts v3.5
 
 **Rationale**:
 1. **中央ラベル対応**: ネイティブサポート（プラグイン不要）
-2. **バンドルサイズ**: 45KB gzipped（最小）
+2. **バンドルサイズ**: 軽量（recharts-scale, react-smoothを内包）
 3. **クリック/タップ**: シンプルなonClickハンドラで実装可能
-4. **TypeScript**: 完全な型定義
+4. **TypeScript**: 完全な型定義（v3でさらに改善）
 5. **レスポンシブ**: 組み込みサポート
-6. **学習曲線**: 浅い（1-2時間）
+6. **要件**: React 16.8+, TypeScript 5.x+, Node.js 18+
 
 **Alternatives Considered**:
 
@@ -72,14 +78,21 @@ const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
 ## 3. スタイリング
 
-### Decision: Tailwind CSS
+### Decision: Tailwind CSS v4.0
 
 **Rationale**:
 1. **PDFで許可**: 「Tailwind CSSなどのユーティリティファーストなCSSフレームワーク」が明示的に許可
 2. **開発速度**: ユーティリティクラスで高速なスタイリング
 3. **レスポンシブ**: 組み込みのブレークポイント（sm, md, lg）
-4. **バンドルサイズ**: PurgeCSSで未使用CSSを除去
-5. **Next.js統合**: 公式サポート
+4. **ゼロコンフィグ**: v4.0は設定ファイル不要
+5. **パフォーマンス**: フルビルド5倍高速、インクリメンタルビルド100倍高速
+
+**Key Features (v4.0)**:
+- `@import "tailwindcss"` の1行でセットアップ完了
+- 自動コンテンツ検出（設定不要）
+- CSS-firstな設定（JavaScriptではなくCSS内で設定）
+- Lightning CSSによるベンダープレフィックス
+- cascade layers、@property、color-mix()などモダンCSS機能
 
 **Alternatives Considered**:
 - CSS Modules: 良い選択だが、レスポンシブが冗長になりがち
@@ -97,7 +110,7 @@ const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
 ## 4. テストフレームワーク
 
-### Decision: Vitest + React Testing Library
+### Decision: Vitest 3.x + React Testing Library 16.x
 
 **Rationale**:
 1. **パフォーマンス**: Jestより2-10倍高速
@@ -105,6 +118,7 @@ const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 3. **ESM**: ネイティブESMサポート
 4. **設定**: 最小限の設定で開始可能
 5. **Next.js互換**: 良好な互換性
+6. **採用率**: 週間7.7M DLを超える採用（2025年1月時点）
 
 **Alternatives Considered**:
 - Jest + RTL: 成熟しているが、設定が複雑でVitest より遅い
@@ -190,30 +204,29 @@ src/
 ### Production Dependencies
 ```json
 {
-  "next": "^15.0.0",
-  "react": "^19.0.0",
-  "react-dom": "^19.0.0",
-  "recharts": "^2.12.0"
+  "next": "^16.0.0",
+  "react": "^19.2.0",
+  "react-dom": "^19.2.0",
+  "recharts": "^3.5.0"
 }
 ```
 
 ### Development Dependencies
 ```json
 {
-  "typescript": "^5.0.0",
+  "typescript": "^5.9.0",
   "@types/react": "^19.0.0",
-  "@types/node": "^20.0.0",
-  "tailwindcss": "^3.4.0",
-  "postcss": "^8.0.0",
-  "autoprefixer": "^10.0.0",
-  "eslint": "^9.0.0",
-  "eslint-config-next": "^15.0.0",
-  "prettier": "^3.0.0",
-  "eslint-config-prettier": "^9.0.0",
-  "vitest": "^2.0.0",
+  "@types/node": "^22.0.0",
+  "tailwindcss": "^4.0.0",
+  "eslint": "^9.39.0",
+  "eslint-config-next": "^16.0.0",
+  "prettier": "^3.7.0",
+  "eslint-config-prettier": "^10.0.0",
+  "vitest": "^3.0.0",
   "@vitejs/plugin-react": "^4.0.0",
-  "@testing-library/react": "^16.0.0",
-  "jsdom": "^25.0.0"
+  "@testing-library/react": "^16.3.0",
+  "@testing-library/dom": "^10.0.0",
+  "jsdom": "^26.0.0"
 }
 ```
 

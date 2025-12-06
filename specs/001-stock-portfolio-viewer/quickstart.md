@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-- **Node.js**: v20.x 以上
+- **Node.js**: v20.9 以上（Next.js 16の必須要件）
 - **pnpm**: v8.x 以上
 - **Git**: 最新版
 - **Google Chrome**: 最新版（動作確認用）
@@ -34,11 +34,13 @@ pnpm create next-app@latest . --typescript --tailwind --eslint --app --src-dir -
 
 ```bash
 # 本番依存
-pnpm add recharts
+pnpm add recharts react-is
 
 # 開発依存
 pnpm add -D vitest @vitejs/plugin-react @testing-library/react @testing-library/dom jsdom prettier eslint-config-prettier
 ```
+
+> **Note**: Recharts 3.x では `react-is` が必要です。インストールするReactバージョンと一致させてください。
 
 ---
 

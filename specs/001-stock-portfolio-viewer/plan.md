@@ -5,19 +5,19 @@
 
 ## Summary
 
-顧客の保有株式のポートフォリオを表示する簡易なWebアプリケーション。Next.js 15とTypeScriptを使用したSPAで、Rechartsによるドーナツ型パイチャートと銘柄一覧を表示。フォーカス機能とレスポンシブデザインに対応。
+顧客の保有株式のポートフォリオを表示する簡易なWebアプリケーション。Next.js 16とTypeScriptを使用したSPAで、Rechartsによるドーナツ型パイチャートと銘柄一覧を表示。フォーカス機能とレスポンシブデザインに対応。
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x / React 19.x
-**Framework**: Next.js 15 (App Router)
-**Primary Dependencies**: Recharts, Tailwind CSS
+**Language/Version**: TypeScript 5.x / React 19.2
+**Framework**: Next.js 16 (App Router)
+**Primary Dependencies**: Recharts, Tailwind CSS v4.0
 **Storage**: N/A（モックJSONファイルを使用）
 **Testing**: Vitest + React Testing Library
 **Target Platform**: Web (PC / Mobile)
 **Project Type**: web (SPA)
 **Performance Goals**: 初期表示3秒以内、60fps インタラクション
-**Constraints**: Google Chrome最新版のみサポート、pnpmパッケージマネージャー
+**Constraints**: Google Chrome最新版のみサポート、pnpmパッケージマネージャー、Node.js 20.9+
 **Scale/Scope**: シングルページ、5-10銘柄のモックデータ
 
 ## Constitution Check

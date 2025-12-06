@@ -177,16 +177,16 @@ bloomo-task/
 
 | カテゴリ | 技術 | バージョン |
 |---------|------|----------|
-| フレームワーク | Next.js | 15.x |
-| 言語 | TypeScript | 5.x |
-| React | React | 19.x |
-| チャート | Recharts | 2.12.x |
-| スタイリング | Tailwind CSS | 3.4.x |
-| テスト | Vitest | 2.x |
-| テスト | React Testing Library | 16.x |
-| リンター | ESLint | 9.x |
-| フォーマッター | Prettier | 3.x |
-| パッケージマネージャー | pnpm | 8.x |
+| フレームワーク | Next.js | 16.x |
+| 言語 | TypeScript | 5.9.x |
+| React | React | 19.2.x |
+| チャート | Recharts | 3.5.x |
+| スタイリング | Tailwind CSS | 4.x |
+| テスト | Vitest | 3.x |
+| テスト | React Testing Library | 16.3.x |
+| リンター | ESLint | 9.39.x |
+| フォーマッター | Prettier | 3.7.x |
+| パッケージマネージャー | pnpm | 9.x |
 
 ---
 
