@@ -5,10 +5,12 @@
 
 ## Prerequisites
 
-- **Node.js**: v20.9 以上（Next.js 16の必須要件）
-- **pnpm**: v8.x 以上
+- **Node.js**: v24.x（Volta管理）
+- **pnpm**: v10.24.x（Volta管理）
 - **Git**: 最新版
 - **Google Chrome**: 最新版（動作確認用）
+
+> **Note**: プロジェクト作成後、`volta pin node@24 pnpm@10` でバージョンを固定します。
 
 ---
 

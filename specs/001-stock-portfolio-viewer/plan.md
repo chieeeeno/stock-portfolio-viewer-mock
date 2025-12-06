@@ -17,7 +17,7 @@
 **Target Platform**: Web (PC / Mobile)
 **Project Type**: web (SPA)
 **Performance Goals**: 初期表示3秒以内、60fps インタラクション
-**Constraints**: Google Chrome最新版のみサポート、pnpmパッケージマネージャー、Node.js 20.9+
+**Constraints**: Google Chrome最新版のみサポート、pnpm 10.x、Node.js 24.x（Volta管理）
 **Scale/Scope**: シングルページ、5-10銘柄のモックデータ
 
 ## Constitution Check

@@ -26,7 +26,8 @@
 **Key Configuration**:
 - App Router (src/app/ ディレクトリ)
 - TypeScript 5.x
-- pnpm パッケージマネージャー
+- pnpm 10.x パッケージマネージャー
+- Node.js 24.x（Volta管理）
 
 ---
 

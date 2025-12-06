@@ -186,7 +186,8 @@ bloomo-task/
 | テスト | React Testing Library | 16.3.x |
 | リンター | ESLint | 9.39.x |
 | フォーマッター | Prettier | 3.7.x |
-| パッケージマネージャー | pnpm | 9.x |
+| パッケージマネージャー | pnpm | 10.24.x |
+| ランタイム | Node.js | 24.x |
 
 ---
 
