@@ -33,6 +33,29 @@ tests/
 
 ## Critical Rules
 
+### Git Commit Rules (MUST FOLLOW)
+
+**絶対に `git add -A` や `git add .` を使用しないこと。**
+
+コミット時は必ず以下のルールを遵守すること：
+
+1. **明示的なファイル指定**: コミット対象のファイルのみを個別に `git add <file1> <file2> ...` で指定する
+2. **変更内容の確認**: `git status` で変更ファイルを確認し、コミットすべきファイルのみを選択する
+3. **無関係なファイルの除外**: タスクに関係のないファイル（CURRENT_WORK.md等）はコミットに含めない
+
+```bash
+# 禁止
+git add -A
+git add .
+git commit -a
+
+# 正しい方法
+git add src/components/Example.tsx src/utils/helper.ts
+git commit -m "メッセージ"
+```
+
+---
+
 ### Context Window Management (IMPORTANT)
 
 When the context window remaining drops below 10%:
