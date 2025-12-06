@@ -30,4 +30,41 @@ tests/
 - 001-stock-portfolio-viewer: Added
 
 <!-- MANUAL ADDITIONS START -->
+
+## Critical Rules
+
+### Context Window Management (IMPORTANT)
+
+When the context window remaining drops below 10%:
+
+1. **IMMEDIATELY** update `CURRENT_WORK.md` with:
+   - Current task status (what was being worked on)
+   - Completed items in this session
+   - Next steps / remaining tasks
+   - Any blockers or important notes
+   - Commands to resume work
+
+2. **Notify the user** that context is running low and handoff is prepared
+
+3. **Format for CURRENT_WORK.md update**:
+   ```markdown
+   ## Session Handoff (YYYY-MM-DD HH:MM)
+
+   ### Current Task
+   [What was being worked on]
+
+   ### Completed This Session
+   - [Item 1]
+   - [Item 2]
+
+   ### Next Steps
+   1. [Next action]
+   2. [Following action]
+
+   ### Resume Command
+   `/speckit.tasks` or specific command to continue
+   ```
+
+This ensures seamless work continuation across sessions.
+
 <!-- MANUAL ADDITIONS END -->
