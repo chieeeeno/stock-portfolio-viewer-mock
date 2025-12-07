@@ -70,23 +70,23 @@
 
 ### US1のテスト
 
-- [ ] T024 [P] [US1] PortfolioChartの描画コンポーネントテストを作成 `src/components/PortfolioChart.test.tsx`
-- [ ] T025 [P] [US1] チャート中央ラベル表示のテストを作成（総額、損益率、損益額） `src/components/PortfolioChart.test.tsx`
-- [ ] T026 [P] [US1] 損益色ロジックのテストを作成（緑/赤/グレー） `src/components/PortfolioChart.test.tsx`
+- [x] T024 [P] [US1] PortfolioChartの描画コンポーネントテストを作成 `src/components/PortfolioChart.test.tsx`
+- [x] T025 [P] [US1] チャート中央ラベル表示のテストを作成（総額、損益率、損益額） `src/components/PortfolioChart.test.tsx`
+- [x] T026 [P] [US1] 損益色ロジックのテストを作成（緑/赤/グレー） `src/components/PortfolioChart.test.tsx`
 
 ### US1の実装
 
-- [ ] T027 [US1] 'use client'ディレクティブ付きでPortfolioChartコンポーネントの骨格を作成 `src/components/PortfolioChart.tsx`
-- [ ] T028 [US1] ドーナツ形状のRecharts PieChartを実装（innerRadius, outerRadius） `src/components/PortfolioChart.tsx`
-- [ ] T029 [US1] チャートを12時位置起点（startAngle={90}）で時計回り順に設定 `src/components/PortfolioChart.tsx`
-- [ ] T030 [US1] 資産総額を表示する中央ラベルを実装（¥115,500形式） `src/components/PortfolioChart.tsx`
-- [ ] T031 [US1] 評価損益を「+15.5%(¥15,500)」形式で表示する中央ラベルを実装 `src/components/PortfolioChart.tsx`
-- [ ] T032 [US1] 損益額に基づいて中央ラベルに損益色（緑/赤/グレー）を適用 `src/components/PortfolioChart.tsx`
-- [ ] T033 [US1] CHART_COLORS定数を使用してチャートセグメントの色を追加 `src/components/PortfolioChart.tsx`
-- [ ] T034 [US1] 描画前にholding_ratioの降順で銘柄をソート `src/components/PortfolioChart.tsx`
-- [ ] T035 [US1] モックデータを読み込みPortfolioChartを表示する基本的なpage.tsxを作成 `src/app/page.tsx`
-- [ ] T036 [US1] ローディング状態の処理を追加 `src/app/page.tsx`
-- [ ] T037 [US1] エラー状態の処理を追加 `src/app/page.tsx`
+- [x] T027 [US1] 'use client'ディレクティブ付きでPortfolioChartコンポーネントの骨格を作成 `src/components/PortfolioChart.tsx`
+- [x] T028 [US1] ドーナツ形状のRecharts PieChartを実装（innerRadius, outerRadius） `src/components/PortfolioChart.tsx`
+- [x] T029 [US1] チャートを12時位置起点（startAngle={90}）で時計回り順に設定 `src/components/PortfolioChart.tsx`
+- [x] T030 [US1] 資産総額を表示する中央ラベルを実装（¥115,500形式） `src/components/PortfolioChart.tsx`
+- [x] T031 [US1] 評価損益を「+15.5%(¥15,500)」形式で表示する中央ラベルを実装 `src/components/PortfolioChart.tsx`
+- [x] T032 [US1] 損益額に基づいて中央ラベルに損益色（緑/赤/グレー）を適用 `src/components/PortfolioChart.tsx`
+- [x] T033 [US1] CHART_COLORS定数を使用してチャートセグメントの色を追加 `src/components/PortfolioChart.tsx`
+- [x] T034 [US1] 描画前にholding_ratioの降順で銘柄をソート `src/components/PortfolioChart.tsx`
+- [x] T035 [US1] モックデータを読み込みPortfolioChartを表示する基本的なpage.tsxを作成 `src/app/page.tsx`
+- [x] T036 [US1] ローディング状態の処理を追加 `src/app/page.tsx`
+- [x] T037 [US1] エラー状態の処理を追加 `src/app/page.tsx`
 
 **チェックポイント**: パイチャートが正しく表示され、中央に資産総額と評価損益が表示される
 
@@ -183,6 +183,8 @@
 - [ ] T077 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
 - [ ] T078 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
 - [ ] T079 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
+- [ ] T086 [P] チャートホバー時に銘柄詳細をツールチップ表示（Recharts Tooltip使用） `src/components/PortfolioChart.tsx`
+- [ ] T087 [P] 全コンポーネントのダークモード対応を確認・統一
 - [ ] T080 `pnpm test:run` で全テストを実行し、100%パスを確認
 - [ ] T081 `pnpm lint` でリンターを実行し、問題を修正
 - [ ] T082 `pnpm format` でフォーマッターを実行し、フォーマットを確認
