@@ -47,7 +47,7 @@ export default function PortfolioChart({
 
   return (
     <div data-testid="portfolio-chart" className="w-full">
-      <div className="relative" style={{ width: '100%', height: 300 }}>
+      <div className="relative h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
@@ -76,7 +76,7 @@ export default function PortfolioChart({
         {/* T030, T031: 中央ラベル（資産総額と評価損益） */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           {/* 資産総額 */}
-          <div className="text-xl font-bold text-gray-900">
+          <div className="text-xl font-bold text-gray-900 dark:text-white">
             ¥{formatCurrency(totalAssetAmount)}
           </div>
           {/* 評価損益（率と額を併記） */}
