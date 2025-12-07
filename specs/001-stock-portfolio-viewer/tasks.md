@@ -43,20 +43,20 @@
 
 **⚠️ 重要**: このフェーズが完了するまでユーザーストーリーの作業は開始できない
 
-- [ ] T010 [P] Asset インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
-- [ ] T011 [P] HoldingAsset インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
-- [ ] T012 [P] PortfolioResponse インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
-- [ ] T013 [P] GainStatus と GainStatusInfo のTypeScript型を作成 `src/types/portfolio.ts`
-- [ ] T014 5件のサンプル銘柄を含むモックデータファイルを作成 `src/data/dummy_response.json`
-- [ ] T015 [P] formatCurrency ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T016 [P] formatGainRatio ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T017 [P] formatHoldingRatio ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T018 [P] formatGainAmount ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T019 [P] getGainStatus ユーティリティ関数を実装 `src/utils/formatters.ts`
-- [ ] T020 フォーマッターユーティリティのユニットテストを作成 `src/utils/formatters.test.ts`
-- [ ] T021 [P] CHART_COLORS 定数配列を定義 `src/utils/constants.ts`
-- [ ] T022 [P] GAIN_COLORS 定数オブジェクトを定義 `src/utils/constants.ts`
-- [ ] T023 Tailwind CSSのベースインポートで `src/app/globals.css` を更新
+- [x] T010 [P] Asset インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
+- [x] T011 [P] HoldingAsset インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
+- [x] T012 [P] PortfolioResponse インターフェースのTypeScript型を作成 `src/types/portfolio.ts`
+- [x] T013 [P] GainStatus と GainStatusInfo のTypeScript型を作成 `src/types/portfolio.ts`
+- [x] T014 5件のサンプル銘柄を含むモックデータファイルを作成 `src/data/dummy_response.json`
+- [x] T015 [P] formatCurrency ユーティリティ関数を実装 `src/utils/formatters.ts`
+- [x] T016 [P] formatGainRatio ユーティリティ関数を実装 `src/utils/formatters.ts`
+- [x] T017 [P] formatHoldingRatio ユーティリティ関数を実装 `src/utils/formatters.ts`
+- [x] T018 [P] formatGainAmount ユーティリティ関数を実装 `src/utils/formatters.ts`
+- [x] T019 [P] getGainStatus ユーティリティ関数を実装 `src/utils/formatters.ts`
+- [x] T020 フォーマッターユーティリティのユニットテストを作成 `src/utils/formatters.test.ts`
+- [x] T021 [P] CHART_COLORS 定数配列を定義 `src/utils/constants.ts`
+- [x] T022 [P] GAIN_COLORS 定数オブジェクトを定義 `src/utils/constants.ts`
+- [x] T023 Tailwind CSSのベースインポートで `src/app/globals.css` を更新
 
 **チェックポイント**: 基盤完了 - ユーザーストーリーの実装を開始可能
 
