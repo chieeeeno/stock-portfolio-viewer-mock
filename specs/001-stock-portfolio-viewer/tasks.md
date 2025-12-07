@@ -183,6 +183,7 @@
 - [ ] T077 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
 - [ ] T078 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
 - [ ] T079 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
+- [ ] T086 [P] チャートホバー時に銘柄詳細をツールチップ表示（Recharts Tooltip使用） `src/components/PortfolioChart.tsx`
 - [ ] T080 `pnpm test:run` で全テストを実行し、100%パスを確認
 - [ ] T081 `pnpm lint` でリンターを実行し、問題を修正
 - [ ] T082 `pnpm format` でフォーマッターを実行し、フォーマットを確認
