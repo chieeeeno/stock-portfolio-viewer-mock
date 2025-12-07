@@ -100,6 +100,30 @@ git add src/components/Example.tsx src/utils/helper.ts
 git commit -m "メッセージ"
 ```
 
+### Commit Granularity Rules (MUST FOLLOW)
+
+**コード変更の内容を確認し、適切な粒度でコミットを行うこと。**
+
+以下の種類の変更は必ず別々のコミットに分けること：
+
+1. **ロジックとテストを分離**: ロジックの追加・修正とテストコードの追加・修正は別コミット
+2. **コードとドキュメントを分離**: コードの修正とドキュメント（README、CLAUDE.md等）の修正は別コミット
+3. **パッケージとコードを分離**: パッケージの追加（package.json変更）とコードの修正は別コミット
+4. **設定とコードを分離**: 設定ファイルの変更とアプリケーションコードの変更は別コミット
+
+```bash
+# 良い例: 実装とテストを分けてコミット
+git add src/utils/formatters.ts
+git commit -m "feat: フォーマッター関数を実装"
+
+git add src/utils/formatters.test.ts
+git commit -m "test: フォーマッター関数のテストを追加"
+
+# 悪い例: 実装とテストを一緒にコミット
+git add src/utils/formatters.ts src/utils/formatters.test.ts
+git commit -m "feat: フォーマッター関数を実装してテストを追加"
+```
+
 ---
 
 ### Context Window Management (IMPORTANT)
