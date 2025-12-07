@@ -23,6 +23,18 @@ describe('formatCurrency', () => {
   it('小さな数値はカンマなしでフォーマットする', () => {
     expect(formatCurrency(999)).toBe('999');
   });
+
+  it('NaNの場合は0を返す', () => {
+    expect(formatCurrency(NaN)).toBe('0');
+  });
+
+  it('Infinityの場合は0を返す', () => {
+    expect(formatCurrency(Infinity)).toBe('0');
+  });
+
+  it('-Infinityの場合は0を返す', () => {
+    expect(formatCurrency(-Infinity)).toBe('0');
+  });
 });
 
 describe('formatGainRatio', () => {
@@ -40,6 +52,18 @@ describe('formatGainRatio', () => {
 
   it('整数を小数点以下2桁でフォーマットする', () => {
     expect(formatGainRatio(20)).toBe('+20.00%');
+  });
+
+  it('NaNの場合は0.00%を返す', () => {
+    expect(formatGainRatio(NaN)).toBe('0.00%');
+  });
+
+  it('Infinityの場合は0.00%を返す', () => {
+    expect(formatGainRatio(Infinity)).toBe('0.00%');
+  });
+
+  it('-Infinityの場合は0.00%を返す', () => {
+    expect(formatGainRatio(-Infinity)).toBe('0.00%');
   });
 });
 
@@ -59,6 +83,18 @@ describe('formatHoldingRatio', () => {
   it('小数点以下1桁に丸める', () => {
     expect(formatHoldingRatio(12.345)).toBe('12.3%');
   });
+
+  it('NaNの場合は0.0%を返す', () => {
+    expect(formatHoldingRatio(NaN)).toBe('0.0%');
+  });
+
+  it('Infinityの場合は0.0%を返す', () => {
+    expect(formatHoldingRatio(Infinity)).toBe('0.0%');
+  });
+
+  it('-Infinityの場合は0.0%を返す', () => {
+    expect(formatHoldingRatio(-Infinity)).toBe('0.0%');
+  });
 });
 
 describe('formatGainAmount', () => {
@@ -77,6 +113,18 @@ describe('formatGainAmount', () => {
   it('大きな金額をフォーマットする', () => {
     expect(formatGainAmount(1234567)).toBe('+1,234,567');
   });
+
+  it('NaNの場合は0を返す', () => {
+    expect(formatGainAmount(NaN)).toBe('0');
+  });
+
+  it('Infinityの場合は0を返す', () => {
+    expect(formatGainAmount(Infinity)).toBe('0');
+  });
+
+  it('-Infinityの場合は0を返す', () => {
+    expect(formatGainAmount(-Infinity)).toBe('0');
+  });
 });
 
 describe('getGainStatus', () => {
@@ -94,6 +142,24 @@ describe('getGainStatus', () => {
 
   it('0に対してzeroステータスを返す', () => {
     const result = getGainStatus(0);
+    expect(result.status).toBe('zero');
+    expect(result.colorClass).toBe('text-gray-500');
+  });
+
+  it('NaNに対してzeroステータスを返す', () => {
+    const result = getGainStatus(NaN);
+    expect(result.status).toBe('zero');
+    expect(result.colorClass).toBe('text-gray-500');
+  });
+
+  it('Infinityに対してzeroステータスを返す', () => {
+    const result = getGainStatus(Infinity);
+    expect(result.status).toBe('zero');
+    expect(result.colorClass).toBe('text-gray-500');
+  });
+
+  it('-Infinityに対してzeroステータスを返す', () => {
+    const result = getGainStatus(-Infinity);
     expect(result.status).toBe('zero');
     expect(result.colorClass).toBe('text-gray-500');
   });
