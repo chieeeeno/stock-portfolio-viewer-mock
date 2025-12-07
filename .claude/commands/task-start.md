@@ -22,13 +22,20 @@ git worktreeを使用して、タスクごとに独立した作業環境を作�
 
 **AskUserQuestionツールで一度に質問:**
 
-`$ARGUMENTS` が空の場合のみ、以下の質問をします（引数がある場合はタスク名として使用し、Issue作成のみ質問）:
+`$ARGUMENTS` が空の場合のみ、以下の質問をします（引数がある場合はタスク名として使用し、ベースブランチとIssue作成のみ質問）:
 
 ```
 質問1: "タスク名を入力してください:"
   - タスク名を短いテキストで入力（例: ユーザー認証機能、バグ修正、パフォーマンス改善など）
 
-質問2: "GitHub Issueを作成しますか？"
+質問2: "ベースブランチを選択してください:"
+  選択肢:
+    - current (デフォルト): 現在のブランチから分岐
+    - main: mainブランチから分岐
+    - develop: developブランチから分岐
+    - Other: 任意のブランチ名を入力
+
+質問3: "GitHub Issueを作成しますか？"
   選択肢:
     - No (デフォルト): Issueを作成しない
     - Yes: worktree作成後にGitHub Issueを作成
@@ -36,17 +43,18 @@ git worktreeを使用して、タスクごとに独立した作業環境を作�
 
 **引数がある場合:**
 - タスク名は `$ARGUMENTS` を使用
-- Issue作成のみ質問
+- ベースブランチとIssue作成のみ質問
 
 **この後の処理:**
 - ユーザーの回答を受け取ったら、以降はユーザーの確認なしで自動的に以下を実行:
   1. タスク名の英訳
   2. ブランチ名の生成
-  3. worktreeディレクトリの作成
-  4. ブランチ存在確認（既存の場合は連番を付けて別名に変更）
-  5. worktreeの作成
-  6. GitHub Issue作成（Yesの場合）
-  7. VSCodeで開く
+  3. ベースブランチの存在確認
+  4. worktreeディレクトリの作成
+  5. ブランチ存在確認（既存の場合は連番を付けて別名に変更）
+  6. worktreeの作成（指定されたベースブランチから分岐）
+  7. GitHub Issue作成（Yesの場合）
+  8. VSCodeで開く
 
 **重要な注意事項:**
 - ブランチが既に存在する場合、削除せず連番を付けて別のブランチ名を生成します
@@ -126,20 +134,42 @@ echo "✓ ブランチ '$BRANCH_NAME' を作成します"
 - `worktree/test-task-2` も存在する場合 → `worktree/test-task-3` を作成
 - 利用可能なブランチ名が見つかるまで連番を増やします
 
-### 6. worktreeの作成
+### 6. ベースブランチの存在確認
 
 ```bash
-# 現在のブランチから新しいブランチを作成してworktreeを追加
+# ベースブランチの決定
+# "current" の場合は現在のブランチを使用
+if [ "$BASE_BRANCH" = "current" ]; then
+    BASE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    echo "✓ 現在のブランチ '$BASE_BRANCH' をベースにします"
+fi
+
+# ベースブランチの存在確認
+if ! git show-ref --verify --quiet "refs/heads/$BASE_BRANCH"; then
+    # リモートブランチを確認
+    if git show-ref --verify --quiet "refs/remotes/origin/$BASE_BRANCH"; then
+        echo "✓ リモートブランチ 'origin/$BASE_BRANCH' を使用します"
+    else
+        echo "エラー: ブランチ '$BASE_BRANCH' が見つかりません"
+        exit 1
+    fi
+fi
+```
+
+### 7. worktreeの作成
+
+```bash
+# 指定されたベースブランチから新しいブランチを作成してworktreeを追加
 WORKTREE_PATH="$WORKTREE_BASE/$TASK_NAME_EN"
 
-git worktree add -b "$BRANCH_NAME" "$WORKTREE_PATH"
+git worktree add -b "$BRANCH_NAME" "$WORKTREE_PATH" "$BASE_BRANCH"
 ```
 
 エラーハンドリング：
 - worktree作成に失敗した場合は適切なエラーメッセージを表示
 - ディスク容量不足などの一般的なエラーケースを考慮
 
-### 7. worktree情報の表示
+### 8. worktree情報の表示
 
 ```bash
 echo ""
@@ -154,7 +184,7 @@ echo "  code $WORKTREE_PATH  # VSCodeで開く"
 echo ""
 ```
 
-### 8. GitHub Issueの作成（オプション）
+### 9. GitHub Issueの作成（オプション）
 
 ユーザーが「Yes」を選択した場合のみ実行します：
 
@@ -203,7 +233,7 @@ echo "  URL: [ISSUE_URL]"
 echo ""
 ```
 
-### 9. VSCodeで開く
+### 10. VSCodeで開く
 
 ```bash
 # worktreeディレクトリをVSCodeで開く
@@ -250,11 +280,13 @@ git branch -d worktree/[task-name]
 
 ```
 ✓ タスク名を英訳しました: "ユーザー認証機能" → "user-authentication-feature"
+✓ 現在のブランチ 'main' をベースにします
 ✓ ブランチ名: worktree/user-authentication-feature
 ✓ worktreeを作成しました: /path/to/repo/worktree/user-authentication-feature
 
 === Worktree環境のセットアップが完了しました ===
 
+ベースブランチ: main
 ブランチ名: worktree/user-authentication-feature
 作業ディレクトリ: /path/to/repo/worktree/user-authentication-feature
 
@@ -265,6 +297,7 @@ VSCodeで開いています...
 
 ```
 ✓ タスク名を英訳しました: "ユーザー認証機能" → "user-authentication-feature"
+✓ 現在のブランチ 'develop' をベースにします
 ✓ ブランチ名: worktree/user-authentication-feature
 ✓ worktreeを作成しました: /path/to/repo/worktree/user-authentication-feature
 
@@ -273,6 +306,7 @@ VSCodeで開いています...
 
 === Worktree環境のセットアップが完了しました ===
 
+ベースブランチ: develop
 ブランチ名: worktree/user-authentication-feature
 作業ディレクトリ: /path/to/repo/worktree/user-authentication-feature
 
