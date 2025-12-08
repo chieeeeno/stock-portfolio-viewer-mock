@@ -12,6 +12,7 @@ import {
 } from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
+import clsx from 'clsx';
 
 // ブレークポイント: モバイル < 640px, タブレット 640-1023px, デスクトップ >= 1024px
 type Breakpoint = 'mobile' | 'tablet' | 'desktop';
@@ -117,14 +118,17 @@ export default function PortfolioChart({
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
 
   return (
-    <div
-      data-testid="portfolio-chart"
-      className="w-full"
-      onClick={(e) => e.stopPropagation()}
-    >
+    <div data-testid="portfolio-chart" className="w-full" onClick={(e) => e.stopPropagation()}>
       {/* 白いカードで囲む */}
-      <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-6 lg:p-8 dark:bg-zinc-800">
-        <div className="relative h-[300px] w-full sm:h-[380px] lg:h-[450px]">
+      <div
+        className={clsx(
+          'rounded-2xl bg-white p-4 shadow-sm',
+          'sm:p-6',
+          'lg:p-8',
+          'dark:bg-zinc-800'
+        )}
+      >
+        <div className={clsx('relative h-[300px] w-full', 'sm:h-[380px]', 'lg:h-[450px]')}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
@@ -167,19 +171,33 @@ export default function PortfolioChart({
             onClick={isCenterClickable ? onClearFocus : undefined}
           >
             {/* 資産総額ラベル */}
-            <div className="text-sm text-gray-500 sm:text-base lg:text-lg dark:text-gray-400">
+            <div
+              className={clsx(
+                'text-sm text-gray-500',
+                'sm:text-base',
+                'lg:text-lg',
+                'dark:text-gray-400'
+              )}
+            >
               資産総額
             </div>
             {/* 資産総額 */}
-            <div className="text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl dark:text-white">
+            <div
+              className={clsx(
+                'text-2xl font-bold text-gray-900',
+                'sm:text-3xl',
+                'lg:text-4xl',
+                'dark:text-white'
+              )}
+            >
               ¥{formatCurrency(totalAssetAmount)}
             </div>
             {/* 評価損益（額と率を別行で表示） */}
             <div data-testid="gain-info" className={cn('text-center', gainStatus.colorClass)}>
-              <div className="text-lg font-semibold sm:text-xl lg:text-2xl">
+              <div className={clsx('text-lg font-semibold', 'sm:text-xl', 'lg:text-2xl')}>
                 {formatGainAmountWithCurrency(totalGainAmount)}
               </div>
-              <div className="text-base sm:text-lg lg:text-xl">
+              <div className={clsx('text-base', 'sm:text-lg', 'lg:text-xl')}>
                 {formatGainRatio(totalGainRatio)}
               </div>
             </div>
