@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { tv } from 'tailwind-variants';
+import type { MouseEvent } from 'react';
 import type { HoldingAsset } from '@/types/portfolio';
 import {
   formatGainAmountWithCurrency,
@@ -10,12 +12,35 @@ import {
   getGainStatus,
 } from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
+import { cn } from '@/utils/cn';
+
+// カードのスタイルバリアント定義
+const cardVariants = tv({
+  base: 'flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm transition-all duration-200 dark:bg-zinc-800',
+  variants: {
+    focused: {
+      true: 'ring-2 ring-blue-500',
+    },
+    dimmed: {
+      true: 'opacity-30',
+    },
+    clickable: {
+      true: 'cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700',
+    },
+  },
+});
 
 interface AssetCardProps {
   /** 保有銘柄の情報 */
   asset: HoldingAsset;
   /** カラーインデックス（CHART_COLORSの配列インデックス） */
   colorIndex: number;
+  /** フォーカス状態かどうか */
+  isFocused?: boolean;
+  /** 半透過状態かどうか */
+  isDimmed?: boolean;
+  /** クリック時のコールバック */
+  onClick?: (e: MouseEvent) => void;
 }
 
 /**
@@ -25,7 +50,13 @@ interface AssetCardProps {
  * - ティッカーシンボル・保有比率
  * - 評価損益（額と率を縦並び）
  */
-export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
+export default function AssetCard({
+  asset,
+  colorIndex,
+  isFocused = false,
+  isDimmed = false,
+  onClick,
+}: AssetCardProps) {
   const [imageError, setImageError] = useState(false);
 
   const { asset: assetInfo, gain_amount, gain_ratio, holding_ratio } = asset;
@@ -38,7 +69,12 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
   return (
     <div
       data-testid="asset-card"
-      className="flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm dark:bg-zinc-800"
+      className={cardVariants({
+        focused: isFocused,
+        dimmed: isDimmed,
+        clickable: !!onClick,
+      })}
+      onClick={onClick}
     >
       {/* カラフルな丸アイコン */}
       <div
@@ -73,7 +109,7 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
       </div>
 
       {/* 損益情報（縦並び） */}
-      <div data-testid="asset-gain" className={`shrink-0 text-right ${gainStatus.colorClass}`}>
+      <div data-testid="asset-gain" className={cn('shrink-0 text-right', gainStatus.colorClass)}>
         {/* 損益額 */}
         <div className="text-xl font-semibold">{formatGainAmountWithCurrency(gain_amount)}</div>
         {/* 損益率 */}
