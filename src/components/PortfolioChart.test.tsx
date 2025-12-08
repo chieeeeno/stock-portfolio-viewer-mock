@@ -18,29 +18,50 @@ vi.mock('recharts', async () => {
       <div data-testid="pie-chart">{children}</div>
     ),
     // Pieコンポーネントをモックして、Cellの子要素をそのままレンダリング
-    Pie: ({ children }: { children: React.ReactNode }) => (
-      <div data-testid="pie">{children}</div>
+    Pie: ({
+      children,
+      onClick,
+      style,
+    }: {
+      children: React.ReactNode;
+      onClick?: (data: unknown, index: number) => void;
+      style?: React.CSSProperties;
+    }) => (
+      <div
+        data-testid="pie"
+        style={style}
+        onClick={(e) => {
+          // data-indexを持つ子要素がクリックされた場合、そのindexでonClickを呼ぶ
+          const target = e.target as HTMLElement;
+          const testId = target.getAttribute('data-testid');
+          if (testId === 'chart-segment' && onClick) {
+            const segments = Array.from(
+              (e.currentTarget as HTMLElement).querySelectorAll('[data-testid="chart-segment"]')
+            );
+            const index = segments.indexOf(target);
+            if (index >= 0) {
+              onClick({}, index);
+            }
+          }
+        }}
+      >
+        {children}
+      </div>
     ),
     // Cellコンポーネントをモックしてテスト可能にする
     Cell: ({
       fill,
-      fillOpacity,
-      onClick,
       style,
       'data-testid': dataTestId,
     }: {
       fill: string;
-      fillOpacity?: number;
-      onClick?: () => void;
-      style?: React.CSSProperties;
+      style?: { opacity?: number };
       'data-testid'?: string;
     }) => (
       <div
         data-testid={dataTestId}
         data-fill={fill}
-        data-fill-opacity={String(fillOpacity ?? 1)}
-        onClick={onClick}
-        style={style}
+        data-fill-opacity={String(style?.opacity ?? 1)}
       />
     ),
   };
@@ -350,7 +371,7 @@ describe('PortfolioChart', () => {
       });
     });
 
-    it('クリック可能なセグメントにcursor-pointerがある', () => {
+    it('クリック可能なチャートにcursor-pointerがある', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -361,10 +382,9 @@ describe('PortfolioChart', () => {
         />
       );
 
-      const segments = screen.getAllByTestId('chart-segment');
-      segments.forEach((segment) => {
-        expect(segment).toHaveStyle({ cursor: 'pointer' });
-      });
+      // Pieコンポーネントにcursor-pointerが適用される
+      const pie = screen.getByTestId('pie');
+      expect(pie).toHaveStyle({ cursor: 'pointer' });
     });
   });
 });
