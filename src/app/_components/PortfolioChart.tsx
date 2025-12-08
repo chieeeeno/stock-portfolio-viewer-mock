@@ -204,6 +204,7 @@ export default function PortfolioChart({
                 paddingAngle={1}
                 onClick={onSegmentClick ? (_, index) => onSegmentClick(index) : undefined}
                 onMouseEnter={handlePieMouseEnter}
+                onMouseLeave={handleChartMouseLeave}
               >
                 {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
                 {chartData.map((_, index) => {
