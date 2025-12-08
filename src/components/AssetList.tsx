@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, type MouseEvent } from 'react';
 import type { HoldingAsset } from '@/types/portfolio';
 import AssetCard from './AssetCard';
 
@@ -10,7 +10,7 @@ interface AssetListProps {
   /** フォーカス中の銘柄インデックス（null=フォーカスなし） */
   focusedIndex?: number | null;
   /** 銘柄クリック時のコールバック */
-  onAssetClick?: (index: number) => void;
+  onAssetClick?: (index: number, e?: MouseEvent) => void;
 }
 
 /**
@@ -30,7 +30,11 @@ export default function AssetList({
   }, [holdingAssets]);
 
   return (
-    <div data-testid="asset-list" className="flex flex-col gap-4">
+    <div
+      data-testid="asset-list"
+      className="flex flex-col gap-4"
+      onClick={(e) => e.stopPropagation()}
+    >
       {sortedAssets.map((asset, index) => {
         // T065: 各AssetCardにisFocusedとisDimmedプロップを渡す
         const isFocused = focusedIndex === index;
@@ -43,7 +47,7 @@ export default function AssetList({
             colorIndex={index}
             isFocused={isFocused}
             isDimmed={isDimmed}
-            onClick={onAssetClick ? () => onAssetClick(index) : undefined}
+            onClick={onAssetClick ? (e) => onAssetClick(index, e) : undefined}
           />
         );
       })}

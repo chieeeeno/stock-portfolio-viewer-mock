@@ -79,7 +79,11 @@ export default function PortfolioChart({
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
 
   return (
-    <div data-testid="portfolio-chart" className="w-full">
+    <div
+      data-testid="portfolio-chart"
+      className="w-full"
+      onClick={(e) => e.stopPropagation()}
+    >
       {/* 白いカードで囲む */}
       <div className="rounded-2xl bg-white p-8 shadow-sm dark:bg-zinc-800">
         <div className="relative h-[450px] w-full">

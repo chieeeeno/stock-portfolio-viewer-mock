@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { tv } from 'tailwind-variants';
+import type { MouseEvent } from 'react';
 import type { HoldingAsset } from '@/types/portfolio';
 import {
   formatGainAmountWithCurrency,
@@ -39,7 +40,7 @@ interface AssetCardProps {
   /** 半透過状態かどうか */
   isDimmed?: boolean;
   /** クリック時のコールバック */
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
 }
 
 /**
