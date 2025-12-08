@@ -1,7 +1,7 @@
 {
   "total_asset_amount": 115500,
-  "total_gain_amount": 15500,
-  "total_gain_ratio": 15.5,
+  "total_gain_amount": 11130,
+  "total_gain_ratio": 10.67,
   "holding_assets": [
     {
       "asset": {
@@ -43,8 +43,8 @@
         "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/TSLA.svg"
       },
       "asset_amount": 11400,
-      "gain_amount": 1520,
-      "gain_ratio": 15.38,
+      "gain_amount": -2850,
+      "gain_ratio": -20.0,
       "holding_ratio": 9.9
     },
     {
