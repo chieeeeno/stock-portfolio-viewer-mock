@@ -46,7 +46,7 @@ function PortfolioSkeleton() {
  */
 export default function Home() {
   return (
-    <main className="mx-auto w-full max-w-4xl px-6 py-8">
+    <main className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">ポートフォリオ</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

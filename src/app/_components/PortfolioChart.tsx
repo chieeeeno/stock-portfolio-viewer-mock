@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
@@ -13,9 +13,43 @@ import {
 import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
 
+// ブレークポイント: モバイル < 640px, タブレット 640-1023px, デスクトップ >= 1024px
+type Breakpoint = 'mobile' | 'tablet' | 'desktop';
+
+// ブレークポイントに応じたチャートサイズ設定
+const CHART_SIZES = {
+  mobile: { innerRadius: 90, outerRadius: 130, centerSize: 180 },
+  tablet: { innerRadius: 110, outerRadius: 160, centerSize: 220 },
+  desktop: { innerRadius: 130, outerRadius: 190, centerSize: 260 },
+} as const;
+
+// 現在のブレークポイントを取得するカスタムフック
+function useBreakpoint(): Breakpoint {
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>('desktop');
+
+  useEffect(() => {
+    const updateBreakpoint = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setBreakpoint('mobile');
+      } else if (width < 1024) {
+        setBreakpoint('tablet');
+      } else {
+        setBreakpoint('desktop');
+      }
+    };
+
+    updateBreakpoint();
+    window.addEventListener('resize', updateBreakpoint);
+    return () => window.removeEventListener('resize', updateBreakpoint);
+  }, []);
+
+  return breakpoint;
+}
+
 // チャート中央エリアのスタイルバリアント
 const chartCenterVariants = tv({
-  base: 'absolute left-1/2 top-1/2 flex h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full',
+  base: 'absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full',
   variants: {
     clickable: {
       true: 'cursor-pointer',
@@ -59,6 +93,10 @@ export default function PortfolioChart({
   onSegmentClick,
   onClearFocus,
 }: PortfolioChartProps) {
+  // ブレークポイントに応じたサイズを取得
+  const breakpoint = useBreakpoint();
+  const chartSize = CHART_SIZES[breakpoint];
+
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
     return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
@@ -85,8 +123,8 @@ export default function PortfolioChart({
       onClick={(e) => e.stopPropagation()}
     >
       {/* 白いカードで囲む */}
-      <div className="rounded-2xl bg-white p-8 shadow-sm dark:bg-zinc-800">
-        <div className="relative h-[450px] w-full">
+      <div className="rounded-2xl bg-white p-4 shadow-sm sm:p-6 lg:p-8 dark:bg-zinc-800">
+        <div className="relative h-[300px] w-full sm:h-[380px] lg:h-[450px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
@@ -94,8 +132,8 @@ export default function PortfolioChart({
                 data={chartData}
                 cx="50%"
                 cy="50%"
-                innerRadius={130}
-                outerRadius={190}
+                innerRadius={chartSize.innerRadius}
+                outerRadius={chartSize.outerRadius}
                 dataKey="value"
                 startAngle={90}
                 endAngle={-270}
@@ -121,24 +159,29 @@ export default function PortfolioChart({
           </ResponsiveContainer>
 
           {/* T030, T031, T063: 中央ラベル（資産総額と評価損益）- クリックでフォーカス解除 */}
-          {/* ドーナツの穴の部分のみをカバーするように配置（innerRadius=130pxに合わせる） */}
+          {/* ドーナツの穴の部分のみをカバーするように配置 */}
           <div
             data-testid="chart-center"
             className={chartCenterVariants({ clickable: isCenterClickable })}
+            style={{ width: chartSize.centerSize, height: chartSize.centerSize }}
             onClick={isCenterClickable ? onClearFocus : undefined}
           >
             {/* 資産総額ラベル */}
-            <div className="text-lg text-gray-500 dark:text-gray-400">資産総額</div>
+            <div className="text-sm text-gray-500 sm:text-base lg:text-lg dark:text-gray-400">
+              資産総額
+            </div>
             {/* 資産総額 */}
-            <div className="text-4xl font-bold text-gray-900 dark:text-white">
+            <div className="text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl dark:text-white">
               ¥{formatCurrency(totalAssetAmount)}
             </div>
             {/* 評価損益（額と率を別行で表示） */}
             <div data-testid="gain-info" className={cn('text-center', gainStatus.colorClass)}>
-              <div className="text-2xl font-semibold">
+              <div className="text-lg font-semibold sm:text-xl lg:text-2xl">
                 {formatGainAmountWithCurrency(totalGainAmount)}
               </div>
-              <div className="text-xl">{formatGainRatio(totalGainRatio)}</div>
+              <div className="text-base sm:text-lg lg:text-xl">
+                {formatGainRatio(totalGainRatio)}
+              </div>
             </div>
           </div>
         </div>
