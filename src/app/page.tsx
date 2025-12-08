@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import PortfolioContent from './_components/PortfolioContent';
+import PortfolioChartSkeleton from './_components/PortfolioChartSkeleton';
+import AssetListSkeleton from './_components/AssetListSkeleton';
 import { APP_NAME, APP_DESCRIPTION } from '@/utils/constants';
 
 /**
@@ -22,12 +24,17 @@ export const metadata: Metadata = {
 
 /**
  * ローディング中のスケルトンUI
+ * - PortfolioInteractiveと同じ構造でスケルトンを表示
+ * - レイアウトのガタツキを防ぐため、見出しも含める
  */
 function PortfolioSkeleton() {
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-blue-500" />
-      <p className="text-gray-600 dark:text-gray-400">読み込み中...</p>
+    <div className="flex flex-col gap-y-16">
+      <PortfolioChartSkeleton />
+      <div>
+        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
+        <AssetListSkeleton />
+      </div>
     </div>
   );
 }
