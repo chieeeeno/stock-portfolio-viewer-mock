@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useEffect, type MouseEvent } from 'react';
 import type { PortfolioResponse } from '@/types/portfolio';
 import PortfolioChart from './PortfolioChart';
 import AssetList from './AssetList';
@@ -23,14 +23,27 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   // T058: 銘柄クリックハンドラ（同じ銘柄でトグル、別の銘柄でフォーカス設定）
-  const handleAssetClick = (index: number) => {
+  const handleAssetClick = useCallback((index: number, e?: MouseEvent) => {
+    e?.stopPropagation();
     setFocusedIndex((prev) => (prev === index ? null : index));
-  };
+  }, []);
 
   // T059: フォーカス解除ハンドラ
-  const handleClearFocus = () => {
+  const handleClearFocus = useCallback(() => {
     setFocusedIndex(null);
-  };
+  }, []);
+
+  // 枠外クリック時のフォーカス解除（documentレベルでイベントを捕捉）
+  useEffect(() => {
+    if (focusedIndex === null) return;
+
+    const handleDocumentClick = () => {
+      setFocusedIndex(null);
+    };
+
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, [focusedIndex]);
 
   return (
     <div className="flex flex-col gap-y-16">
@@ -44,7 +57,7 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
         onSegmentClick={handleAssetClick}
         onClearFocus={handleClearFocus}
       />
-      <div>
+      <div onClick={(e) => e.stopPropagation()}>
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
         {/* T064: AssetListにfocusedIndexとハンドラを渡す */}
         <AssetList
