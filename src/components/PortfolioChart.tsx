@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '@/types/portfolio';
 import {
   formatCurrency,
@@ -10,6 +11,21 @@ import {
   getGainStatus,
 } from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
+import { cn } from '@/utils/cn';
+
+// チャート中央エリアのスタイルバリアント
+const chartCenterVariants = tv({
+  base: 'absolute left-1/2 top-1/2 flex h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full',
+  variants: {
+    clickable: {
+      true: 'cursor-pointer',
+      false: 'pointer-events-none',
+    },
+  },
+  defaultVariants: {
+    clickable: false,
+  },
+});
 
 interface PortfolioChartProps {
   /** 保有銘柄のリスト */
@@ -59,6 +75,9 @@ export default function PortfolioChart({
   // T032: 評価損益の状態を取得
   const gainStatus = getGainStatus(totalGainAmount);
 
+  // フォーカス中かつクリアハンドラがある場合、中央エリアをクリック可能にする
+  const isCenterClickable = focusedIndex !== null && !!onClearFocus;
+
   return (
     <div data-testid="portfolio-chart" className="w-full">
       {/* 白いカードで囲む */}
@@ -101,10 +120,8 @@ export default function PortfolioChart({
           {/* ドーナツの穴の部分のみをカバーするように配置（innerRadius=130pxに合わせる） */}
           <div
             data-testid="chart-center"
-            className={`absolute left-1/2 top-1/2 flex h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full ${
-              focusedIndex !== null && onClearFocus ? 'cursor-pointer' : 'pointer-events-none'
-            }`}
-            onClick={focusedIndex !== null ? onClearFocus : undefined}
+            className={chartCenterVariants({ clickable: isCenterClickable })}
+            onClick={isCenterClickable ? onClearFocus : undefined}
           >
             {/* 資産総額ラベル */}
             <div className="text-lg text-gray-500 dark:text-gray-400">資産総額</div>
@@ -113,7 +130,7 @@ export default function PortfolioChart({
               ¥{formatCurrency(totalAssetAmount)}
             </div>
             {/* 評価損益（額と率を別行で表示） */}
-            <div data-testid="gain-info" className={`text-center ${gainStatus.colorClass}`}>
+            <div data-testid="gain-info" className={cn('text-center', gainStatus.colorClass)}>
               <div className="text-2xl font-semibold">
                 {formatGainAmountWithCurrency(totalGainAmount)}
               </div>

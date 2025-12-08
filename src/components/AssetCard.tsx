@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '@/types/portfolio';
 import {
   formatGainAmountWithCurrency,
@@ -10,6 +11,23 @@ import {
   getGainStatus,
 } from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
+import { cn } from '@/utils/cn';
+
+// カードのスタイルバリアント定義
+const cardVariants = tv({
+  base: 'flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm transition-all duration-200 dark:bg-zinc-800',
+  variants: {
+    focused: {
+      true: 'ring-2 ring-blue-500',
+    },
+    dimmed: {
+      true: 'opacity-30',
+    },
+    clickable: {
+      true: 'cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700',
+    },
+  },
+});
 
 interface AssetCardProps {
   /** 保有銘柄の情報 */
@@ -47,19 +65,16 @@ export default function AssetCard({
   // ティッカーシンボルの先頭2文字を取得
   const tickerInitials = assetInfo.ticker_symbol.slice(0, 2).toUpperCase();
 
-  // T067, T068: フォーカス/半透過状態とクリック可能状態のスタイル
-  const cardClasses = [
-    'flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm dark:bg-zinc-800',
-    'transition-all duration-200',
-    isDimmed && 'opacity-30',
-    isFocused && 'ring-2 ring-blue-500',
-    onClick && 'cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return (
-    <div data-testid="asset-card" className={cardClasses} onClick={onClick}>
+    <div
+      data-testid="asset-card"
+      className={cardVariants({
+        focused: isFocused,
+        dimmed: isDimmed,
+        clickable: !!onClick,
+      })}
+      onClick={onClick}
+    >
       {/* カラフルな丸アイコン */}
       <div
         data-testid="color-indicator"
@@ -93,7 +108,7 @@ export default function AssetCard({
       </div>
 
       {/* 損益情報（縦並び） */}
-      <div data-testid="asset-gain" className={`shrink-0 text-right ${gainStatus.colorClass}`}>
+      <div data-testid="asset-gain" className={cn('shrink-0 text-right', gainStatus.colorClass)}>
         {/* 損益額 */}
         <div className="text-xl font-semibold">{formatGainAmountWithCurrency(gain_amount)}</div>
         {/* 損益率 */}
