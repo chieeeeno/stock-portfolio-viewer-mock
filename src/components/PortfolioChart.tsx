@@ -3,7 +3,12 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import type { HoldingAsset } from '@/types/portfolio';
-import { formatCurrency, formatGainRatio, getGainStatus } from '@/utils/formatters';
+import {
+  formatCurrency,
+  formatGainAmountWithCurrency,
+  formatGainRatio,
+  getGainStatus,
+} from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
 
 interface PortfolioChartProps {
@@ -83,7 +88,7 @@ export default function PortfolioChart({
             {/* 評価損益（額と率を別行で表示） */}
             <div data-testid="gain-info" className={`text-center ${gainStatus.colorClass}`}>
               <div className="text-2xl font-semibold">
-                {totalGainAmount >= 0 ? '+' : ''}¥{formatCurrency(Math.abs(totalGainAmount))}
+                {formatGainAmountWithCurrency(totalGainAmount)}
               </div>
               <div className="text-xl">{formatGainRatio(totalGainRatio)}</div>
             </div>

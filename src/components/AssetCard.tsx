@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import type { HoldingAsset } from '@/types/portfolio';
 import {
-  formatCurrency,
+  formatGainAmountWithCurrency,
   formatGainRatio,
   formatHoldingRatio,
   getGainStatus,
@@ -75,9 +75,7 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
       {/* 損益情報（縦並び） */}
       <div data-testid="asset-gain" className={`flex-shrink-0 text-right ${gainStatus.colorClass}`}>
         {/* 損益額 */}
-        <div className="text-xl font-semibold">
-          {gain_amount >= 0 ? '+' : ''}¥{formatCurrency(Math.abs(gain_amount))}
-        </div>
+        <div className="text-xl font-semibold">{formatGainAmountWithCurrency(gain_amount)}</div>
         {/* 損益率 */}
         <div className="text-base">{formatGainRatio(gain_ratio)}</div>
       </div>
