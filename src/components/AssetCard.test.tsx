@@ -172,12 +172,12 @@ describe('AssetCard', () => {
 
   // T043: ロゴ画像エラー時のフォールバック
   describe('ロゴフォールバックテスト', () => {
-    it('ロゴ画像エラー時にティッカーシンボルの先頭2文字がフォールバック表示される', async () => {
+    it('ロゴ画像エラー時にティッカーシンボルの先頭2文字がフォールバック表示される', () => {
       render(<AssetCard asset={mockAsset} colorIndex={0} />);
 
       // ロゴのonErrorをトリガー（actでラップしてReact状態更新を待つ）
       const logo = screen.getByTestId('asset-logo');
-      await act(async () => {
+      act(() => {
         logo.dispatchEvent(new Event('error'));
       });
 

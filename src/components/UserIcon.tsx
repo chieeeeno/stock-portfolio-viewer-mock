@@ -22,6 +22,8 @@ export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
         <img
           src={imageUrl}
           alt={name}
+          width={40}
+          height={40}
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover"
