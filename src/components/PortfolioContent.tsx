@@ -1,4 +1,5 @@
 import PortfolioChart from './PortfolioChart';
+import AssetList from './AssetList';
 import type { PortfolioResponse } from '@/types/portfolio';
 
 /**
@@ -37,11 +38,14 @@ export default async function PortfolioContent() {
   const data = await fetchPortfolioData();
 
   return (
-    <PortfolioChart
-      holdingAssets={data.holding_assets}
-      totalAssetAmount={data.total_asset_amount}
-      totalGainAmount={data.total_gain_amount}
-      totalGainRatio={data.total_gain_ratio}
-    />
+    <div className="flex flex-col gap-6">
+      <PortfolioChart
+        holdingAssets={data.holding_assets}
+        totalAssetAmount={data.total_asset_amount}
+        totalGainAmount={data.total_gain_amount}
+        totalGainRatio={data.total_gain_ratio}
+      />
+      <AssetList holdingAssets={data.holding_assets} />
+    </div>
   );
 }
