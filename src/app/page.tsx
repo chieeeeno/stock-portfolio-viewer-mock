@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import PortfolioContent from '@/components/PortfolioContent';
+import PortfolioContent from './_components/PortfolioContent';
 import { APP_NAME, APP_DESCRIPTION } from '@/utils/constants';
 
 /**

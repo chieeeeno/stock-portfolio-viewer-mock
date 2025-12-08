@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, type MouseEvent } from 'react';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 import AssetCard from './AssetCard';
 
 interface AssetListProps {

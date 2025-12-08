@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { tv } from 'tailwind-variants';
 import type { MouseEvent } from 'react';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 import {
   formatGainAmountWithCurrency,
   formatGainRatio,

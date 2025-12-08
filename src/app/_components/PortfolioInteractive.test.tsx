@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioInteractive from './PortfolioInteractive';
-import type { PortfolioResponse } from '@/types/portfolio';
+import type { PortfolioResponse } from '../_types/portfolio';
 
 // next/imageのモック
 vi.mock('next/image', () => ({

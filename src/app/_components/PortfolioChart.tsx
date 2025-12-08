@@ -3,7 +3,7 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { tv } from 'tailwind-variants';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 import {
   formatCurrency,
   formatGainAmountWithCurrency,

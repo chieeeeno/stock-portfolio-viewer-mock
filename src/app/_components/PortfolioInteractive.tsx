@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, type MouseEvent } from 'react';
-import type { PortfolioResponse } from '@/types/portfolio';
+import type { PortfolioResponse } from '../_types/portfolio';
 import PortfolioChart from './PortfolioChart';
 import AssetList from './AssetList';
 

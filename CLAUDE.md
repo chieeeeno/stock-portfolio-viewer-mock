@@ -1,6 +1,6 @@
 # bloomo-task Development Guidelines
 
-Last updated: 2025-12-07
+Last updated: 2025-12-08
 
 ## Technology Stack
 
@@ -24,17 +24,21 @@ Last updated: 2025-12-07
 bloomo-task/
 ├── src/
 │   ├── app/                    # Next.js App Router
+│   │   ├── _components/        # Page-specific components (colocation)
+│   │   │   ├── *.tsx
+│   │   │   └── *.test.tsx
+│   │   ├── _types/             # Page-specific type definitions
+│   │   │   └── portfolio.ts
+│   │   ├── api/                # API Routes
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
 │   │   └── globals.css
-│   ├── components/             # React components
+│   ├── components/             # Shared components (cross-page)
 │   │   ├── *.tsx
-│   │   └── *.test.tsx          # Component tests (co-located)
-│   ├── types/                  # TypeScript type definitions
-│   │   └── portfolio.ts
+│   │   └── *.test.tsx
 │   ├── utils/                  # Utility functions
 │   │   ├── *.ts
-│   │   └── *.test.ts           # Utility tests (co-located)
+│   │   └── *.test.ts
 │   └── data/                   # Mock data
 │       └── dummy_response.json
 ├── public/                     # Static assets
@@ -45,6 +49,45 @@ bloomo-task/
 ├── .prettierrc
 ├── eslint.config.mjs
 └── package.json
+```
+
+## Directory Structure Convention (Next.js Colocation Pattern)
+
+このプロジェクトでは、Next.js App Routerの[コロケーションパターン](https://nextjs.org/docs/app/getting-started/project-structure#colocation)を採用しています。
+
+### 基本原則
+
+| ディレクトリ | 用途 | 例 |
+|-------------|------|-----|
+| `src/app/_components/` | ページ固有のコンポーネント | PortfolioChart, AssetCard |
+| `src/app/_types/` | ページ固有の型定義 | portfolio.ts |
+| `src/components/` | 複数ページで共有するコンポーネント | GlobalHeader, UserIcon |
+| `src/utils/` | 共有ユーティリティ関数 | formatters.ts, constants.ts |
+
+### `_`プレフィックスについて
+
+- `_`で始まるディレクトリはNext.jsのルーティングから**除外**されます
+- ページと関連ファイルを同じ場所に配置しつつ、ルーティングに影響を与えません
+- 参照: [Private Folders](https://nextjs.org/docs/app/getting-started/project-structure#private-folders)
+
+### コンポーネント配置の判断基準
+
+```
+そのコンポーネントは複数のページで使用される？
+  ├─ Yes → src/components/ に配置
+  └─ No  → src/app/_components/ に配置（該当ページのディレクトリ内）
+```
+
+### インポートパスの規約
+
+```typescript
+// ページ固有コンポーネント（同一app内）→ 相対パス
+import PortfolioChart from './_components/PortfolioChart';
+import type { PortfolioResponse } from '../_types/portfolio';
+
+// 共有コンポーネント → パスエイリアス
+import GlobalHeader from '@/components/GlobalHeader';
+import { formatCurrency } from '@/utils/formatters';
 ```
 
 ## Commands
