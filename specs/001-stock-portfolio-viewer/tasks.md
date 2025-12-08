@@ -203,29 +203,39 @@
 
 ## フェーズ8: ユーザーストーリー6 - ダークモードでの閲覧 (優先度: P3)
 
-**ゴール**: 顧客がシステム設定に応じてダークモードでポートフォリオを快適に閲覧できる
+**ゴール**: 顧客がグローバルヘッダーのテーマ切り替えスイッチを使用してダークモード/ライトモードを切り替え、ポートフォリオを快適に閲覧できる
 
-**独立テスト**: システムダークモード設定時にアプリ全体がダークテーマで表示される
+**独立テスト**: ヘッダーのテーマ切り替えスイッチをクリックするとアプリ全体のテーマが切り替わる
 
 ### US6のテスト
 
-- [ ] T095 [P] [US6] ダークモード切り替えのテストを作成 `src/app/page.test.tsx`
-- [ ] T096 [P] [US6] ダークモードでの損益色（緑/赤/グレー）表示テストを作成 `src/components/PortfolioChart.test.tsx`
+- [ ] T095 [P] [US6] ThemeToggleコンポーネントのテストを作成 `src/components/ThemeToggle.test.tsx`
+- [ ] T096 [P] [US6] Headerコンポーネントの描画テストを作成 `src/components/Header.test.tsx`
+- [ ] T097 [P] [US6] useThemeフックのテストを作成 `src/hooks/useTheme.test.ts`
+- [ ] T098 [P] [US6] ダークモードでの損益色（緑/赤/グレー）表示テストを作成 `src/components/PortfolioChart.test.tsx`
 
 ### US6の実装
 
-- [ ] T097 [US6] Tailwind CSSのdarkModeを'class'から'media'に設定確認 `tailwind.config.ts`
-- [ ] T098 [US6] ベースレイアウトにダークモード背景色を追加 `src/app/layout.tsx`
-- [ ] T099 [US6] globals.cssにダークモード用CSS変数を定義 `src/app/globals.css`
-- [ ] T100 [US6] PortfolioChartにダークモード対応スタイルを追加 `src/components/PortfolioChart.tsx`
-- [ ] T101 [US6] ChartTooltipにダークモード対応スタイルを追加 `src/components/ChartTooltip.tsx`
-- [ ] T102 [US6] AssetCardにダークモード対応スタイルを追加 `src/components/AssetCard.tsx`
-- [ ] T103 [US6] AssetListにダークモード対応スタイルを追加 `src/components/AssetList.tsx`
-- [ ] T104 [US6] GAIN_COLORSにダークモード用カラーを追加 `src/utils/constants.ts`
-- [ ] T105 [US6] ダークモードでのチャートセグメント色の視認性を確認・調整 `src/utils/constants.ts`
-- [ ] T106 [US6] 手動テスト: Chrome DevToolsでダークモードをエミュレートして全画面確認
+- [ ] T099 [US6] Tailwind CSSのdarkModeを'class'に設定（手動切り替え対応） `tailwind.config.ts`
+- [ ] T100 [US6] useThemeカスタムフックを作成（localStorage保存、システム設定フォールバック） `src/hooks/useTheme.ts`
+- [ ] T101 [US6] ThemeToggleコンポーネントの骨格を作成 `src/components/ThemeToggle.tsx`
+- [ ] T102 [US6] ThemeToggleにトグルボタンUIを実装（太陽/月アイコン） `src/components/ThemeToggle.tsx`
+- [ ] T103 [US6] Headerコンポーネントの骨格を作成 `src/components/Header.tsx`
+- [ ] T104 [US6] HeaderにThemeToggleを配置 `src/components/Header.tsx`
+- [ ] T105 [US6] Headerにレスポンシブスタイルを適用 `src/components/Header.tsx`
+- [ ] T106 [US6] layout.tsxにHeaderを統合 `src/app/layout.tsx`
+- [ ] T107 [US6] layout.tsxにテーマ初期化スクリプトを追加（FOUC防止） `src/app/layout.tsx`
+- [ ] T108 [US6] globals.cssにダークモード用CSS変数を定義 `src/app/globals.css`
+- [ ] T109 [US6] PortfolioChartにダークモード対応スタイルを追加 `src/components/PortfolioChart.tsx`
+- [ ] T110 [US6] ChartTooltipにダークモード対応スタイルを追加 `src/components/ChartTooltip.tsx`
+- [ ] T111 [US6] AssetCardにダークモード対応スタイルを追加 `src/components/AssetCard.tsx`
+- [ ] T112 [US6] AssetListにダークモード対応スタイルを追加 `src/components/AssetList.tsx`
+- [ ] T113 [US6] GAIN_COLORSにダークモード用カラーを追加 `src/utils/constants.ts`
+- [ ] T114 [US6] ダークモードでのチャートセグメント色の視認性を確認・調整 `src/utils/constants.ts`
+- [ ] T115 [US6] 手動テスト: テーマ切り替えスイッチで全コンポーネントのテーマ切り替えを確認
+- [ ] T116 [US6] 手動テスト: ページリロード後もテーマ設定が維持されることを確認
 
-**チェックポイント**: システムダークモード設定時にすべてのコンポーネントがダークテーマで表示される
+**チェックポイント**: ヘッダーのテーマ切り替えスイッチでダークモード/ライトモードが切り替わり、設定が永続化される
 
 ---
 
@@ -233,15 +243,15 @@
 
 **目的**: 最終改善と品質保証
 
-- [ ] T077 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
-- [ ] T078 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
-- [ ] T079 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
-- [ ] T107 `pnpm test:run` で全テストを実行し、100%パスを確認
-- [ ] T108 `pnpm lint` でリンターを実行し、問題を修正
-- [ ] T109 `pnpm format` でフォーマッターを実行し、フォーマットを確認
-- [ ] T110 `pnpm build` で本番ビルドを実行し、成功を確認
-- [ ] T111 手動テスト: Google Chrome最新版で全機能を確認
-- [ ] T112 quickstart.md検証チェックリストを実行（6項目の動作確認）
+- [ ] T117 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
+- [ ] T118 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
+- [ ] T119 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
+- [ ] T120 `pnpm test:run` で全テストを実行し、100%パスを確認
+- [ ] T121 `pnpm lint` でリンターを実行し、問題を修正
+- [ ] T122 `pnpm format` でフォーマッターを実行し、フォーマットを確認
+- [ ] T123 `pnpm build` で本番ビルドを実行し、成功を確認
+- [ ] T124 手動テスト: Google Chrome最新版で全機能を確認
+- [ ] T125 quickstart.md検証チェックリストを実行（6項目の動作確認）
 
 ---
 
@@ -363,9 +373,9 @@ T095, T096
 | フェーズ5: US3 | 16 | 4 |
 | フェーズ6: US4 | 8 | 0 |
 | フェーズ7: US5 | 9 | 2 |
-| フェーズ8: US6 | 12 | 2 |
+| フェーズ8: US6 | 22 | 4 |
 | フェーズ9: 仕上げ | 9 | 3 |
-| **合計** | **106** | **33** |
+| **合計** | **116** | **35** |
 
 ---
 

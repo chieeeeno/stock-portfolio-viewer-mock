@@ -231,3 +231,95 @@ const GAIN_COLORS = {
 - **デスクトップ (>= 1024px)**:
   - パイチャート: 幅400px
   - 銘柄一覧: 縦スタック
+
+---
+
+## 7. Header Component
+
+### Props Interface
+
+```typescript
+interface HeaderProps {
+  /** 子要素（オプション） */
+  children?: React.ReactNode;
+}
+```
+
+### Rendering Contract
+
+- **レイアウト**: 画面上部に固定配置（sticky）
+- **コンテンツ**:
+  - 左側: アプリケーションタイトル（オプション）
+  - 右側: ThemeToggleコンポーネント
+- **レスポンシブ対応**:
+  - モバイル: padding-x: 16px
+  - タブレット以上: padding-x: 24px
+- **背景**: ライトモード時は白、ダークモード時はダークグレー
+- **ボーダー**: 下部にセパレータライン
+
+---
+
+## 8. ThemeToggle Component
+
+### Props Interface
+
+```typescript
+interface ThemeToggleProps {
+  /** 現在のテーマ */
+  theme: 'light' | 'dark';
+
+  /** テーマ切り替え時のコールバック */
+  onToggle: () => void;
+}
+```
+
+### Behavior Contract
+
+| イベント | トリガー | 期待される動作 |
+|---------|---------|--------------|
+| クリック | ユーザーがトグルボタンをクリック/タップ | `onToggle()` を呼び出す |
+
+### Rendering Contract
+
+- **ライトモード時**: 月アイコンを表示（ダークモードへ切り替え）
+- **ダークモード時**: 太陽アイコンを表示（ライトモードへ切り替え）
+- **アクセシビリティ**:
+  - `aria-label`: "ダークモードに切り替え" / "ライトモードに切り替え"
+  - 最小タップターゲット: 44x44px
+- **ホバー/フォーカス状態**: 視覚的フィードバックを提供
+
+---
+
+## 9. useTheme Hook
+
+### Interface
+
+```typescript
+interface UseThemeReturn {
+  /** 現在のテーマ */
+  theme: 'light' | 'dark';
+
+  /** テーマを切り替える関数 */
+  toggleTheme: () => void;
+
+  /** 特定のテーマを設定する関数 */
+  setTheme: (theme: 'light' | 'dark') => void;
+}
+
+function useTheme(): UseThemeReturn;
+```
+
+### Behavior Contract
+
+| 状態 | 条件 | 期待される動作 |
+|------|------|--------------|
+| 初期化（localStorageあり） | `localStorage.theme` が設定されている | 保存された値を使用 |
+| 初期化（localStorageなし） | `localStorage.theme` が未設定 | `prefers-color-scheme` を使用 |
+| テーマ切り替え | `toggleTheme()` 呼び出し | テーマを反転し、localStorageに保存 |
+| テーマ設定 | `setTheme(theme)` 呼び出し | 指定テーマを設定し、localStorageに保存 |
+
+### Implementation Notes
+
+- **FOUC（Flash of Unstyled Content）防止**: `<html>` タグに `dark` クラスを追加/削除する初期化スクリプトを `<head>` に配置
+- **localStorage キー**: `'theme'`
+- **HTMLクラス管理**: `document.documentElement.classList.add/remove('dark')`
