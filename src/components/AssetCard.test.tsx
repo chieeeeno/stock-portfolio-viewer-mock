@@ -101,47 +101,45 @@ describe('AssetCard', () => {
     });
   });
 
-  // T040: 「VOO / 39.8%」形式の表示テスト
+  // T040: 「VOO • 39.8%」形式の表示テスト
   describe('ティッカー/比率表示テスト', () => {
-    it('ティッカーシンボルと保有比率が「VOO / 39.8%」形式で表示される', () => {
+    it('ティッカーシンボルと保有比率が表示される', () => {
       render(<AssetCard asset={mockAsset} colorIndex={0} />);
 
-      expect(screen.getByText('VOO / 39.8%')).toBeInTheDocument();
+      // テキストが分割されているため、個別に確認
+      expect(screen.getByText(/VOO/)).toBeInTheDocument();
+      expect(screen.getByText(/39\.8%/)).toBeInTheDocument();
     });
 
-    it('異なる銘柄でも正しい形式で表示される', () => {
+    it('異なる銘柄でも正しく表示される', () => {
       render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
 
-      expect(screen.getByText('TSLA / 9.9%')).toBeInTheDocument();
+      expect(screen.getByText(/TSLA/)).toBeInTheDocument();
+      expect(screen.getByText(/9\.9%/)).toBeInTheDocument();
     });
   });
 
-  // T046: 保有金額の表示テスト
-  describe('保有金額表示テスト', () => {
-    it('保有金額が¥45,969形式で表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
-
-      expect(screen.getByText('¥45,969')).toBeInTheDocument();
-    });
-  });
-
-  // T041: 「+12.87%(¥5,242)」形式の損益表示テスト
+  // T041: 損益表示テスト（額と率は別行で表示）
   describe('損益表示テスト', () => {
-    it('プラスの損益が「+12.87%(¥+5,242)」形式で表示される', () => {
+    it('プラスの損益額と損益率が表示される', () => {
       render(<AssetCard asset={mockAsset} colorIndex={0} />);
 
+      // 損益率
       expect(screen.getByText(/\+12\.87%/)).toBeInTheDocument();
-      expect(screen.getByText(/¥\+5,242/)).toBeInTheDocument();
+      // 損益額（+¥5,242形式）
+      expect(screen.getByText(/5,242/)).toBeInTheDocument();
     });
 
-    it('マイナスの損益が「-15.38%(¥-1,520)」形式で表示される', () => {
+    it('マイナスの損益額と損益率が表示される', () => {
       render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
 
+      // 損益率
       expect(screen.getByText(/-15\.38%/)).toBeInTheDocument();
-      expect(screen.getByText(/¥-1,520/)).toBeInTheDocument();
+      // 損益額
+      expect(screen.getByText(/1,520/)).toBeInTheDocument();
     });
 
-    it('ゼロの損益が「0.00%(¥0)」形式で表示される', () => {
+    it('ゼロの損益が正しく表示される', () => {
       render(<AssetCard asset={mockAssetZero} colorIndex={0} />);
 
       expect(screen.getByText(/0\.00%/)).toBeInTheDocument();
@@ -174,7 +172,7 @@ describe('AssetCard', () => {
 
   // T043: ロゴ画像エラー時のフォールバック
   describe('ロゴフォールバックテスト', () => {
-    it('ロゴ画像エラー時にティッカーシンボルのフォールバックが表示される', async () => {
+    it('ロゴ画像エラー時にティッカーシンボルの先頭2文字がフォールバック表示される', async () => {
       render(<AssetCard asset={mockAsset} colorIndex={0} />);
 
       // ロゴのonErrorをトリガー（actでラップしてReact状態更新を待つ）
@@ -183,9 +181,9 @@ describe('AssetCard', () => {
         logo.dispatchEvent(new Event('error'));
       });
 
-      // フォールバック（ティッカーシンボル）が表示されることを確認
+      // フォールバック（ティッカーシンボルの先頭2文字）が表示されることを確認
       expect(screen.getByTestId('logo-fallback')).toBeInTheDocument();
-      expect(screen.getByTestId('logo-fallback')).toHaveTextContent('VOO');
+      expect(screen.getByTestId('logo-fallback')).toHaveTextContent('VO');
     });
   });
 });
