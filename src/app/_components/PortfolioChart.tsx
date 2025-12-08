@@ -64,6 +64,20 @@ const chartCenterVariants = tv({
   },
 });
 
+// チャートセグメント（Cell）のスタイルバリアント
+const chartSegmentVariants = tv({
+  base: 'cursor-pointer transition-opacity duration-200',
+  variants: {
+    focused: {
+      true: 'opacity-100',
+      false: 'opacity-30',
+    },
+  },
+  defaultVariants: {
+    focused: true,
+  },
+});
+
 interface PortfolioChartProps {
   /** 保有銘柄のリスト */
   holdingAssets: HoldingAsset[];
@@ -166,7 +180,12 @@ export default function PortfolioChart({
         )}
       >
         <div
-          className={clsx('relative h-[300px] w-full', 'sm:h-[380px]', 'lg:h-[450px]')}
+          className={clsx(
+            'relative h-[300px] w-full',
+            'sm:h-[380px]',
+            'lg:h-[450px]',
+            '**:outline-none'
+          )}
           onMouseMove={handleChartMouseMove}
           onMouseLeave={handleChartMouseLeave}
         >
@@ -185,18 +204,16 @@ export default function PortfolioChart({
                 paddingAngle={1}
                 onClick={onSegmentClick ? (_, index) => onSegmentClick(index) : undefined}
                 onMouseEnter={handlePieMouseEnter}
-                style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
               >
                 {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
                 {chartData.map((_, index) => {
                   const isSegmentFocused = focusedIndex === null || focusedIndex === index;
-                  const opacity = isSegmentFocused ? 1 : 0.3;
                   return (
                     <Cell
                       key={`cell-${index}`}
                       data-testid="chart-segment"
                       fill={CHART_COLORS[index % CHART_COLORS.length]}
-                      style={{ opacity, transition: 'opacity 0.2s ease-in-out' }}
+                      className={chartSegmentVariants({ focused: isSegmentFocused })}
                     />
                   );
                 })}
