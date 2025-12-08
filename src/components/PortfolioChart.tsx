@@ -20,6 +20,12 @@ interface PortfolioChartProps {
   totalGainAmount: number;
   /** 評価損益率（%） */
   totalGainRatio: number;
+  /** フォーカス中の銘柄インデックス（null=フォーカスなし） */
+  focusedIndex?: number | null;
+  /** セグメントクリック時のコールバック */
+  onSegmentClick?: (index: number) => void;
+  /** フォーカス解除時のコールバック */
+  onClearFocus?: () => void;
 }
 
 /**
@@ -33,6 +39,9 @@ export default function PortfolioChart({
   totalAssetAmount,
   totalGainAmount,
   totalGainRatio,
+  focusedIndex = null,
+  onSegmentClick,
+  onClearFocus,
 }: PortfolioChartProps) {
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
@@ -69,16 +78,32 @@ export default function PortfolioChart({
                 endAngle={-270}
                 paddingAngle={1}
               >
-                {/* T033: CHART_COLORS定数を使用してセグメントの色を設定 */}
-                {chartData.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
-                ))}
+                {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
+                {chartData.map((_, index) => {
+                  const isFocused = focusedIndex === null || focusedIndex === index;
+                  return (
+                    <Cell
+                      key={`cell-${index}`}
+                      data-testid="chart-segment"
+                      fill={CHART_COLORS[index % CHART_COLORS.length]}
+                      fillOpacity={isFocused ? 1 : 0.3}
+                      onClick={() => onSegmentClick?.(index)}
+                      style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
+                    />
+                  );
+                })}
               </Pie>
             </PieChart>
           </ResponsiveContainer>
 
-          {/* T030, T031: 中央ラベル（資産総額と評価損益） */}
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          {/* T030, T031, T063: 中央ラベル（資産総額と評価損益）- クリックでフォーカス解除 */}
+          <div
+            data-testid="chart-center"
+            className={`absolute inset-0 flex flex-col items-center justify-center ${
+              onClearFocus ? 'cursor-pointer' : 'pointer-events-none'
+            }`}
+            onClick={onClearFocus}
+          >
             {/* 資産総額ラベル */}
             <div className="text-lg text-gray-500 dark:text-gray-400">資産総額</div>
             {/* 資産総額 */}

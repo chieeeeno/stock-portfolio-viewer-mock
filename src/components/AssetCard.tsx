@@ -16,6 +16,12 @@ interface AssetCardProps {
   asset: HoldingAsset;
   /** カラーインデックス（CHART_COLORSの配列インデックス） */
   colorIndex: number;
+  /** フォーカス状態かどうか */
+  isFocused?: boolean;
+  /** 半透過状態かどうか */
+  isDimmed?: boolean;
+  /** クリック時のコールバック */
+  onClick?: () => void;
 }
 
 /**
@@ -25,7 +31,13 @@ interface AssetCardProps {
  * - ティッカーシンボル・保有比率
  * - 評価損益（額と率を縦並び）
  */
-export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
+export default function AssetCard({
+  asset,
+  colorIndex,
+  isFocused = false,
+  isDimmed = false,
+  onClick,
+}: AssetCardProps) {
   const [imageError, setImageError] = useState(false);
 
   const { asset: assetInfo, gain_amount, gain_ratio, holding_ratio } = asset;
@@ -35,11 +47,19 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
   // ティッカーシンボルの先頭2文字を取得
   const tickerInitials = assetInfo.ticker_symbol.slice(0, 2).toUpperCase();
 
+  // T067, T068: フォーカス/半透過状態とクリック可能状態のスタイル
+  const cardClasses = [
+    'flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm dark:bg-zinc-800',
+    'transition-all duration-200',
+    isDimmed && 'opacity-30',
+    isFocused && 'ring-2 ring-blue-500',
+    onClick && 'cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <div
-      data-testid="asset-card"
-      className="flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm dark:bg-zinc-800"
-    >
+    <div data-testid="asset-card" className={cardClasses} onClick={onClick}>
       {/* カラフルな丸アイコン */}
       <div
         data-testid="color-indicator"

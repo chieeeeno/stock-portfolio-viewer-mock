@@ -7,6 +7,10 @@ import AssetCard from './AssetCard';
 interface AssetListProps {
   /** 保有銘柄のリスト */
   holdingAssets: HoldingAsset[];
+  /** フォーカス中の銘柄インデックス（null=フォーカスなし） */
+  focusedIndex?: number | null;
+  /** 銘柄クリック時のコールバック */
+  onAssetClick?: (index: number) => void;
 }
 
 /**
@@ -15,7 +19,11 @@ interface AssetListProps {
  * - 各銘柄をAssetCardにマッピング
  * - チャートセグメントと同じ順序・色で表示
  */
-export default function AssetList({ holdingAssets }: AssetListProps) {
+export default function AssetList({
+  holdingAssets,
+  focusedIndex = null,
+  onAssetClick,
+}: AssetListProps) {
   // T051: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
     return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
@@ -23,9 +31,22 @@ export default function AssetList({ holdingAssets }: AssetListProps) {
 
   return (
     <div data-testid="asset-list" className="flex flex-col gap-4">
-      {sortedAssets.map((asset, index) => (
-        <AssetCard key={asset.asset.ticker_symbol} asset={asset} colorIndex={index} />
-      ))}
+      {sortedAssets.map((asset, index) => {
+        // T065: 各AssetCardにisFocusedとisDimmedプロップを渡す
+        const isFocused = focusedIndex === index;
+        const isDimmed = focusedIndex !== null && focusedIndex !== index;
+
+        return (
+          <AssetCard
+            key={asset.asset.ticker_symbol}
+            asset={asset}
+            colorIndex={index}
+            isFocused={isFocused}
+            isDimmed={isDimmed}
+            onClick={onAssetClick ? () => onAssetClick(index) : undefined}
+          />
+        );
+      })}
     </div>
   );
 }

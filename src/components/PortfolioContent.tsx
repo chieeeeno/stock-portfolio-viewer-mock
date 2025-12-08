@@ -1,5 +1,4 @@
-import PortfolioChart from './PortfolioChart';
-import AssetList from './AssetList';
+import PortfolioInteractive from './PortfolioInteractive';
 import type { PortfolioResponse } from '@/types/portfolio';
 
 /**
@@ -37,18 +36,5 @@ async function fetchPortfolioData(): Promise<PortfolioResponse> {
 export default async function PortfolioContent() {
   const data = await fetchPortfolioData();
 
-  return (
-    <div className="flex flex-col gap-y-16">
-      <PortfolioChart
-        holdingAssets={data.holding_assets}
-        totalAssetAmount={data.total_asset_amount}
-        totalGainAmount={data.total_gain_amount}
-        totalGainRatio={data.total_gain_ratio}
-      />
-      <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
-        <AssetList holdingAssets={data.holding_assets} />
-      </div>
-    </div>
-  );
+  return <PortfolioInteractive data={data} />;
 }
