@@ -191,14 +191,14 @@
 
 ### US4の実装
 
-- [ ] T069 [US4] page.tsxにレスポンシブコンテナスタイルを追加（max-width, padding） `src/app/page.tsx`
-- [ ] T070 [US4] レスポンシブなチャートサイズを実装（モバイル280px、タブレット360px、デスクトップ400px） `src/components/PortfolioChart.tsx`
-- [ ] T071 [US4] Recharts ResponsiveContainerを使用して適応的なチャート幅を実現 `src/components/PortfolioChart.tsx`
-- [ ] T072 [US4] 中央ラベルにレスポンシブなタイポグラフィを適用（text-lg sm:text-xl lg:text-2xl） `src/components/PortfolioChart.tsx`
-- [ ] T073 [US4] レスポンシブなカードレイアウトを適用（モバイルで全幅、全サイズで縦スタック） `src/components/AssetCard.tsx`
-- [ ] T074 [US4] コンポーネント全体にレスポンシブな間隔を適用（gap, padding, margin）
-- [ ] T075 [US4] モバイルアクセシビリティのためタッチターゲットを最低44x44pxに確保
-- [ ] T076 [US4] ブラウザDevTools（Chrome）でレスポンシブ動作をテスト
+- [x] T069 [US4] page.tsxにレスポンシブコンテナスタイルを追加（max-width, padding） `src/app/page.tsx`
+- [x] T070 [US4] レスポンシブなチャートサイズを実装（モバイル280px、タブレット360px、デスクトップ400px） `src/components/PortfolioChart.tsx`
+- [x] T071 [US4] Recharts ResponsiveContainerを使用して適応的なチャート幅を実現 `src/components/PortfolioChart.tsx`
+- [x] T072 [US4] 中央ラベルにレスポンシブなタイポグラフィを適用（text-lg sm:text-xl lg:text-2xl） `src/components/PortfolioChart.tsx`
+- [x] T073 [US4] レスポンシブなカードレイアウトを適用（モバイルで全幅、全サイズで縦スタック） `src/components/AssetCard.tsx`
+- [x] T074 [US4] コンポーネント全体にレスポンシブな間隔を適用（gap, padding, margin）
+- [x] T075 [US4] モバイルアクセシビリティのためタッチターゲットを最低44x44pxに確保
+- [x] T076 [US4] ブラウザDevTools（Chrome）でレスポンシブ動作をテスト
 
 **チェックポイント**: すべての画面サイズでレイアウトが適切に表示される
 
