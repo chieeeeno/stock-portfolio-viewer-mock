@@ -4,6 +4,7 @@ import {
   formatGainRatio,
   formatHoldingRatio,
   formatGainAmount,
+  formatGainAmountWithCurrency,
   getGainStatus,
 } from './formatters';
 
@@ -124,6 +125,40 @@ describe('formatGainAmount', () => {
 
   it('-Infinityの場合は0を返す', () => {
     expect(formatGainAmount(-Infinity)).toBe('0');
+  });
+});
+
+describe('formatGainAmountWithCurrency', () => {
+  it('正の金額を+¥符号とカンマ区切りでフォーマットする', () => {
+    expect(formatGainAmountWithCurrency(15500)).toBe('+¥15,500');
+  });
+
+  it('負の金額を-¥符号とカンマ区切りでフォーマットする', () => {
+    expect(formatGainAmountWithCurrency(-3000)).toBe('-¥3,000');
+  });
+
+  it('0は¥符号のみでフォーマットする', () => {
+    expect(formatGainAmountWithCurrency(0)).toBe('¥0');
+  });
+
+  it('大きな正の金額をフォーマットする', () => {
+    expect(formatGainAmountWithCurrency(1234567)).toBe('+¥1,234,567');
+  });
+
+  it('大きな負の金額をフォーマットする', () => {
+    expect(formatGainAmountWithCurrency(-1234567)).toBe('-¥1,234,567');
+  });
+
+  it('NaNの場合は¥0を返す', () => {
+    expect(formatGainAmountWithCurrency(NaN)).toBe('¥0');
+  });
+
+  it('Infinityの場合は¥0を返す', () => {
+    expect(formatGainAmountWithCurrency(Infinity)).toBe('¥0');
+  });
+
+  it('-Infinityの場合は¥0を返す', () => {
+    expect(formatGainAmountWithCurrency(-Infinity)).toBe('¥0');
   });
 });
 

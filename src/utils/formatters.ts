@@ -63,6 +63,24 @@ export function formatGainAmount(amount: number): string {
 }
 
 /**
+ * 評価損益額を円記号付きでフォーマット（カンマ区切り、符号付き）
+ * @param amount - 評価損益額（円）
+ * @returns フォーマットされた文字列 (例: "+¥15,500", "-¥3,000", "¥0")
+ * @remarks NaN, Infinityの場合は"¥0"を返す
+ */
+export function formatGainAmountWithCurrency(amount: number): string {
+  const normalized = normalizeNumber(amount);
+  const absAmount = Math.abs(normalized).toLocaleString('ja-JP');
+  if (normalized > 0) {
+    return `+¥${absAmount}`;
+  } else if (normalized < 0) {
+    return `-¥${absAmount}`;
+  } else {
+    return `¥${absAmount}`;
+  }
+}
+
+/**
  * 評価損益の状態を判定
  * @param amount - 評価損益額
  * @returns GainStatusInfo オブジェクト

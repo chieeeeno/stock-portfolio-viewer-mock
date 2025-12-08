@@ -1,5 +1,24 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import PortfolioContent from '@/components/PortfolioContent';
+import { APP_NAME, APP_DESCRIPTION } from '@/utils/constants';
+
+/**
+ * ポートフォリオページのメタデータ
+ */
+export const metadata: Metadata = {
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
+  openGraph: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    url: '/',
+  },
+  twitter: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+  },
+};
 
 /**
  * ローディング中のスケルトンUI
@@ -20,15 +39,16 @@ function PortfolioSkeleton() {
  */
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
-      <main className="w-full max-w-md px-4 py-8">
-        <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-white">
-          ポートフォリオ
-        </h1>
-        <Suspense fallback={<PortfolioSkeleton />}>
-          <PortfolioContent />
-        </Suspense>
-      </main>
-    </div>
+    <main className="mx-auto w-full max-w-4xl px-6 py-8">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">ポートフォリオ</h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          あなたの資産運用状況を確認できます
+        </p>
+      </div>
+      <Suspense fallback={<PortfolioSkeleton />}>
+        <PortfolioContent />
+      </Suspense>
+    </main>
   );
 }

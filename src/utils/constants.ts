@@ -1,6 +1,26 @@
 import colors from 'tailwindcss/colors';
 
 /**
+ * アプリケーション名
+ */
+export const APP_NAME = 'Portfolio Viewer';
+
+/**
+ * アプリケーションの説明
+ */
+export const APP_DESCRIPTION = '株式ポートフォリオビューワー';
+
+/**
+ * サイトURL（OGP用）
+ */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+/**
+ * OGP画像パス
+ */
+export const OG_IMAGE_PATH = '/og-image.png';
+
+/**
  * パイチャートの各セグメントに使用するカラーパレット
  */
 export const CHART_COLORS = [

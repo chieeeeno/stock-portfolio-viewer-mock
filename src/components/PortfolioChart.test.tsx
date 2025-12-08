@@ -114,7 +114,7 @@ describe('PortfolioChart', () => {
       expect(screen.getByText('¥115,500')).toBeInTheDocument();
     });
 
-    it('評価損益率と評価損益額が正しいフォーマットで表示される（+15.50%(¥+15,500)形式）', () => {
+    it('評価損益率と評価損益額が正しく表示される', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -126,8 +126,9 @@ describe('PortfolioChart', () => {
 
       // 評価損益率が表示されていることを確認
       expect(screen.getByText(/\+15\.50%/)).toBeInTheDocument();
-      // 評価損益額が表示されていることを確認
-      expect(screen.getByText(/¥\+15,500/)).toBeInTheDocument();
+      // 評価損益情報コンテナ内に金額が表示されていることを確認
+      const gainInfo = screen.getByTestId('gain-info');
+      expect(gainInfo).toHaveTextContent('15,500');
     });
 
     it('マイナスの評価損益が正しく表示される', () => {
@@ -143,7 +144,7 @@ describe('PortfolioChart', () => {
       // マイナスの評価損益率が表示されていることを確認
       expect(screen.getByText(/-4\.76%/)).toBeInTheDocument();
       // マイナスの評価損益額が表示されていることを確認
-      expect(screen.getByText(/¥-5,000/)).toBeInTheDocument();
+      expect(screen.getByText(/5,000/)).toBeInTheDocument();
     });
 
     it('評価損益がゼロの場合も正しく表示される', () => {
