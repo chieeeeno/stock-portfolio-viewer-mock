@@ -163,21 +163,21 @@
 
 ### US3Aのテスト
 
-- [ ] T068A [P] [US3A] PortfolioChartSkeletonの描画テストを作成 `src/components/PortfolioChartSkeleton.test.tsx`
-- [ ] T068B [P] [US3A] AssetCardSkeletonの描画テストを作成 `src/components/AssetCardSkeleton.test.tsx`
-- [ ] T068C [P] [US3A] スケルトンアニメーションクラスのテストを作成 `src/components/PortfolioChartSkeleton.test.tsx`
+- [x] T068A [P] [US3A] PortfolioChartSkeletonの描画テストを作成 `src/app/_components/PortfolioChartSkeleton.test.tsx`
+- [x] T068B [P] [US3A] AssetCardSkeletonの描画テストを作成 `src/app/_components/AssetCardSkeleton.test.tsx`
+- [x] T068C [P] [US3A] スケルトンアニメーションクラスのテストを作成 `src/app/_components/PortfolioChartSkeleton.test.tsx`
 
 ### US3Aの実装
 
-- [ ] T068D [US3A] PortfolioChartSkeletonコンポーネントの骨格を作成 `src/components/PortfolioChartSkeleton.tsx`
-- [ ] T068E [US3A] ドーナツ形状のスケルトンプレースホルダーを実装 `src/components/PortfolioChartSkeleton.tsx`
-- [ ] T068F [US3A] 中央ラベルエリアのスケルトンプレースホルダーを実装 `src/components/PortfolioChartSkeleton.tsx`
-- [ ] T068G [US3A] AssetCardSkeletonコンポーネントの骨格を作成 `src/components/AssetCardSkeleton.tsx`
-- [ ] T068H [US3A] カード形状のスケルトンプレースホルダーを実装（ロゴ、テキスト行） `src/components/AssetCardSkeleton.tsx`
-- [ ] T068I [US3A] AssetListSkeletonコンポーネントを作成（複数のAssetCardSkeletonを表示） `src/components/AssetListSkeleton.tsx`
-- [ ] T068J [US3A] スケルトン要素にパルスアニメーションを適用（Tailwind animate-pulse） `src/components/PortfolioChartSkeleton.tsx` と `src/components/AssetCardSkeleton.tsx`
-- [ ] T068K [US3A] page.tsxのローディング状態でスケルトンコンポーネントを表示 `src/app/page.tsx`
-- [ ] T068L [US3A] スケルトンからコンテンツへのスムーズな遷移を確認
+- [x] T068D [US3A] PortfolioChartSkeletonコンポーネントの骨格を作成 `src/app/_components/PortfolioChartSkeleton.tsx`
+- [x] T068E [US3A] ドーナツ形状のスケルトンプレースホルダーを実装 `src/app/_components/PortfolioChartSkeleton.tsx`
+- [x] T068F [US3A] 中央ラベルエリアのスケルトンプレースホルダーを実装 `src/app/_components/PortfolioChartSkeleton.tsx`
+- [x] T068G [US3A] AssetCardSkeletonコンポーネントの骨格を作成 `src/app/_components/AssetCardSkeleton.tsx`
+- [x] T068H [US3A] カード形状のスケルトンプレースホルダーを実装（ロゴ、テキスト行） `src/app/_components/AssetCardSkeleton.tsx`
+- [x] T068I [US3A] AssetListSkeletonコンポーネントを作成（複数のAssetCardSkeletonを表示） `src/app/_components/AssetListSkeleton.tsx`
+- [x] T068J [US3A] スケルトン要素にパルスアニメーションを適用（Tailwind animate-pulse） `src/app/_components/PortfolioChartSkeleton.tsx` と `src/app/_components/AssetCardSkeleton.tsx`
+- [x] T068K [US3A] page.tsxのローディング状態でスケルトンコンポーネントを表示 `src/app/page.tsx`
+- [x] T068L [US3A] スケルトンからコンテンツへのスムーズな遷移を確認
 
 **チェックポイント**: データ読み込み中にスケルトンスクリーンが表示され、読み込み完了後にコンテンツが表示される
 
