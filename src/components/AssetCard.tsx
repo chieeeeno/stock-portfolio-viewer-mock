@@ -6,7 +6,6 @@ import type { HoldingAsset } from '@/types/portfolio';
 import {
   formatCurrency,
   formatGainRatio,
-  formatGainAmount,
   formatHoldingRatio,
   getGainStatus,
 } from '@/utils/formatters';
@@ -21,48 +20,41 @@ interface AssetCardProps {
 
 /**
  * 個別銘柄の詳細情報を表示するカードコンポーネント
- * - ロゴ画像（エラー時はティッカーシンボルにフォールバック）
+ * - カラフルな丸アイコン（ティッカー2文字）またはロゴ画像
  * - 銘柄名
- * - ティッカーシンボル / 保有比率
- * - 保有金額
- * - 評価損益（率と額）
- * - カラーインジケーターバー（チャートセグメントと対応）
+ * - ティッカーシンボル・保有比率
+ * - 評価損益（額と率を縦並び）
  */
 export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
   const [imageError, setImageError] = useState(false);
 
-  const { asset: assetInfo, asset_amount, gain_amount, gain_ratio, holding_ratio } = asset;
+  const { asset: assetInfo, gain_amount, gain_ratio, holding_ratio } = asset;
   const gainStatus = getGainStatus(gain_amount);
   const segmentColor = CHART_COLORS[colorIndex % CHART_COLORS.length];
+
+  // ティッカーシンボルの先頭2文字を取得
+  const tickerInitials = assetInfo.ticker_symbol.slice(0, 2).toUpperCase();
 
   return (
     <div
       data-testid="asset-card"
-      className="flex items-center gap-3 rounded-lg bg-white p-3 shadow-sm dark:bg-zinc-800"
+      className="flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm dark:bg-zinc-800"
     >
-      {/* T049: カラーインジケーターバー */}
+      {/* カラフルな丸アイコン */}
       <div
         data-testid="color-indicator"
-        className="h-12 w-1 flex-shrink-0 rounded-full"
+        className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-base font-bold text-white"
         style={{ backgroundColor: segmentColor }}
-      />
-
-      {/* T043: ロゴ画像（エラー時はフォールバック） */}
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-100 dark:bg-zinc-700">
+      >
         {imageError ? (
-          <span
-            data-testid="logo-fallback"
-            className="text-xs font-bold text-gray-600 dark:text-gray-300"
-          >
-            {assetInfo.ticker_symbol}
-          </span>
+          <span data-testid="logo-fallback">{tickerInitials}</span>
         ) : (
           <Image
             src={assetInfo.logo_url}
             alt={assetInfo.name}
-            width={40}
-            height={40}
-            className="h-full w-full object-contain"
+            width={48}
+            height={48}
+            className="h-full w-full rounded-full object-cover"
             onError={() => setImageError(true)}
           />
         )}
@@ -71,25 +63,23 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
       {/* 銘柄情報 */}
       <div className="min-w-0 flex-1">
         {/* T044: 銘柄名 */}
-        <div className="truncate text-sm font-medium text-gray-900 dark:text-white">
+        <div className="truncate text-base font-semibold text-gray-900 dark:text-white">
           {assetInfo.name}
         </div>
-        {/* T045: ティッカー / 比率 */}
-        <div className="text-xs text-gray-500 dark:text-gray-400">
-          {assetInfo.ticker_symbol} / {formatHoldingRatio(holding_ratio)}
+        {/* T045: ティッカー・比率 */}
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          {assetInfo.ticker_symbol} • {formatHoldingRatio(holding_ratio)}
         </div>
       </div>
 
-      {/* 金額情報 */}
-      <div className="flex-shrink-0 text-right">
-        {/* T046: 保有金額 */}
-        <div className="text-sm font-medium text-gray-900 dark:text-white">
-          ¥{formatCurrency(asset_amount)}
+      {/* 損益情報（縦並び） */}
+      <div data-testid="asset-gain" className={`flex-shrink-0 text-right ${gainStatus.colorClass}`}>
+        {/* 損益額 */}
+        <div className="text-xl font-semibold">
+          {gain_amount >= 0 ? '+' : ''}¥{formatCurrency(Math.abs(gain_amount))}
         </div>
-        {/* T047, T048: 損益表示（色付き） */}
-        <div data-testid="asset-gain" className={`text-xs ${gainStatus.colorClass}`}>
-          {formatGainRatio(gain_ratio)}(¥{formatGainAmount(gain_amount)})
-        </div>
+        {/* 損益率 */}
+        <div className="text-base">{formatGainRatio(gain_ratio)}</div>
       </div>
     </div>
   );

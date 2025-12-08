@@ -22,7 +22,7 @@ export default function AssetList({ holdingAssets }: AssetListProps) {
   }, [holdingAssets]);
 
   return (
-    <div data-testid="asset-list" className="flex flex-col gap-2">
+    <div data-testid="asset-list" className="flex flex-col gap-4">
       {sortedAssets.map((asset, index) => (
         <AssetCard key={asset.asset.ticker_symbol} asset={asset} colorIndex={index} />
       ))}

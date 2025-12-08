@@ -38,14 +38,17 @@ export default async function PortfolioContent() {
   const data = await fetchPortfolioData();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-y-16">
       <PortfolioChart
         holdingAssets={data.holding_assets}
         totalAssetAmount={data.total_asset_amount}
         totalGainAmount={data.total_gain_amount}
         totalGainRatio={data.total_gain_ratio}
       />
-      <AssetList holdingAssets={data.holding_assets} />
+      <div>
+        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
+        <AssetList holdingAssets={data.holding_assets} />
+      </div>
     </div>
   );
 }
