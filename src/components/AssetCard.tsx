@@ -43,7 +43,7 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
       {/* カラフルな丸アイコン */}
       <div
         data-testid="color-indicator"
-        className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-base font-bold text-white"
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-bold text-white"
         style={{ backgroundColor: segmentColor }}
       >
         {imageError ? (
@@ -73,7 +73,7 @@ export default function AssetCard({ asset, colorIndex }: AssetCardProps) {
       </div>
 
       {/* 損益情報（縦並び） */}
-      <div data-testid="asset-gain" className={`flex-shrink-0 text-right ${gainStatus.colorClass}`}>
+      <div data-testid="asset-gain" className={`shrink-0 text-right ${gainStatus.colorClass}`}>
         {/* 損益額 */}
         <div className="text-xl font-semibold">{formatGainAmountWithCurrency(gain_amount)}</div>
         {/* 損益率 */}
