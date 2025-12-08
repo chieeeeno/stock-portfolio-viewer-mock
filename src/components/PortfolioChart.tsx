@@ -77,18 +77,19 @@ export default function PortfolioChart({
                 startAngle={90}
                 endAngle={-270}
                 paddingAngle={1}
+                onClick={onSegmentClick ? (_, index) => onSegmentClick(index) : undefined}
+                style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
               >
                 {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
                 {chartData.map((_, index) => {
-                  const isFocused = focusedIndex === null || focusedIndex === index;
+                  const isSegmentFocused = focusedIndex === null || focusedIndex === index;
+                  const opacity = isSegmentFocused ? 1 : 0.3;
                   return (
                     <Cell
                       key={`cell-${index}`}
                       data-testid="chart-segment"
                       fill={CHART_COLORS[index % CHART_COLORS.length]}
-                      fillOpacity={isFocused ? 1 : 0.3}
-                      onClick={() => onSegmentClick?.(index)}
-                      style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
+                      style={{ opacity, transition: 'opacity 0.2s ease-in-out' }}
                     />
                   );
                 })}
@@ -97,12 +98,13 @@ export default function PortfolioChart({
           </ResponsiveContainer>
 
           {/* T030, T031, T063: 中央ラベル（資産総額と評価損益）- クリックでフォーカス解除 */}
+          {/* ドーナツの穴の部分のみをカバーするように配置（innerRadius=130pxに合わせる） */}
           <div
             data-testid="chart-center"
-            className={`absolute inset-0 flex flex-col items-center justify-center ${
-              onClearFocus ? 'cursor-pointer' : 'pointer-events-none'
+            className={`absolute left-1/2 top-1/2 flex h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full ${
+              focusedIndex !== null && onClearFocus ? 'cursor-pointer' : 'pointer-events-none'
             }`}
-            onClick={onClearFocus}
+            onClick={focusedIndex !== null ? onClearFocus : undefined}
           >
             {/* 資産総額ラベル */}
             <div className="text-lg text-gray-500 dark:text-gray-400">資産総額</div>
