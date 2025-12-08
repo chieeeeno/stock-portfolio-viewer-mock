@@ -14,7 +14,7 @@ export default function AssetListSkeleton({ count = 5 }: AssetListSkeletonProps)
   return (
     <div data-testid="asset-list-skeleton" className="flex flex-col gap-4">
       {Array.from({ length: count }).map((_, index) => (
-        <AssetCardSkeleton key={index} />
+        <AssetCardSkeleton key={`skeleton-card-${index}`} />
       ))}
     </div>
   );
