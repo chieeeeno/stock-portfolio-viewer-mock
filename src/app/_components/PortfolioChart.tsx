@@ -1,7 +1,9 @@
 'use client';
 
 import { useMemo, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import ChartTooltip from './ChartTooltip';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
 import {
@@ -98,16 +100,22 @@ export default function PortfolioChart({
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
 
+  // マウス追従ツールチップ用のstate
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hoveredAsset, setHoveredAsset] = useState<HoldingAsset | null>(null);
+
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
     return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
   }, [holdingAssets]);
 
-  // チャート用のデータ形式に変換
+  // チャート用のデータ形式に変換（ツールチップ用にHoldingAsset全体を含む）
   const chartData = useMemo(() => {
     return sortedAssets.map((holding) => ({
       name: holding.asset.ticker_symbol,
       value: holding.holding_ratio,
+      // ツールチップでHoldingAsset全体にアクセスするためにpayloadに含める
+      ...holding,
     }));
   }, [sortedAssets]);
 
@@ -116,6 +124,35 @@ export default function PortfolioChart({
 
   // フォーカス中かつクリアハンドラがある場合、中央エリアをクリック可能にする
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
+
+  // T094: マウス追従ツールチップ用のイベントハンドラ
+  const handlePieMouseEnter = (data: (typeof chartData)[number]) => {
+    // chartDataにはHoldingAssetのプロパティがスプレッドされている
+    setHoveredAsset({
+      asset: data.asset,
+      asset_amount: data.asset_amount,
+      gain_amount: data.gain_amount,
+      gain_ratio: data.gain_ratio,
+      holding_ratio: data.holding_ratio,
+    });
+  };
+
+  const handleChartMouseMove = (e: React.MouseEvent) => {
+    const tooltipWidth = 200;
+    let x = e.clientX + 15;
+    const y = e.clientY + 15;
+
+    // ツールチップが画面右端からはみ出す場合は左側に表示
+    if (x + tooltipWidth > window.innerWidth) {
+      x = e.clientX - tooltipWidth - 15;
+    }
+
+    setMousePosition({ x, y });
+  };
+
+  const handleChartMouseLeave = () => {
+    setHoveredAsset(null);
+  };
 
   return (
     <div data-testid="portfolio-chart" className="w-full" onClick={(e) => e.stopPropagation()}>
@@ -128,7 +165,11 @@ export default function PortfolioChart({
           'dark:bg-zinc-800'
         )}
       >
-        <div className={clsx('relative h-[300px] w-full', 'sm:h-[380px]', 'lg:h-[450px]')}>
+        <div
+          className={clsx('relative h-[300px] w-full', 'sm:h-[380px]', 'lg:h-[450px]')}
+          onMouseMove={handleChartMouseMove}
+          onMouseLeave={handleChartMouseLeave}
+        >
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
@@ -143,6 +184,7 @@ export default function PortfolioChart({
                 endAngle={-270}
                 paddingAngle={1}
                 onClick={onSegmentClick ? (_, index) => onSegmentClick(index) : undefined}
+                onMouseEnter={handlePieMouseEnter}
                 style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
               >
                 {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
@@ -204,6 +246,22 @@ export default function PortfolioChart({
           </div>
         </div>
       </div>
+      {/* T093, T094: マウス追従ツールチップ（createPortalでbodyに直接レンダリング） */}
+      {hoveredAsset &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            data-testid="floating-tooltip"
+            className="pointer-events-none fixed z-50"
+            style={{
+              left: `${mousePosition.x}px`,
+              top: `${mousePosition.y}px`,
+            }}
+          >
+            <ChartTooltip active payload={[{ payload: hoveredAsset }]} />
+          </div>,
+          document.body
+        )}
     </div>
   );
 }
