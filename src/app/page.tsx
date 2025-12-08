@@ -1,5 +1,24 @@
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import PortfolioContent from '@/components/PortfolioContent';
+import { APP_NAME, APP_DESCRIPTION } from '@/utils/constants';
+
+/**
+ * ポートフォリオページのメタデータ
+ */
+export const metadata: Metadata = {
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
+  openGraph: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    url: '/',
+  },
+  twitter: {
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+  },
+};
 
 /**
  * ローディング中のスケルトンUI
