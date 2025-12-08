@@ -131,25 +131,25 @@
 
 ### US3のテスト
 
-- [ ] T053 [P] [US3] セグメントクリックハンドラのテストを作成 `src/components/PortfolioChart.test.tsx`
-- [ ] T054 [P] [US3] フォーカス状態の透明度変更テストを作成 `src/components/PortfolioChart.test.tsx`
-- [ ] T055 [P] [US3] カードクリックハンドラのテストを作成 `src/components/AssetCard.test.tsx`
-- [ ] T056 [P] [US3] 半透過状態（opacity 0.3）のテストを作成 `src/components/AssetCard.test.tsx`
+- [x] T053 [P] [US3] セグメントクリックハンドラのテストを作成 `src/components/PortfolioChart.test.tsx`
+- [x] T054 [P] [US3] フォーカス状態の透明度変更テストを作成 `src/components/PortfolioChart.test.tsx`
+- [x] T055 [P] [US3] カードクリックハンドラのテストを作成 `src/components/AssetCard.test.tsx`
+- [x] T056 [P] [US3] 半透過状態（opacity 0.3）のテストを作成 `src/components/AssetCard.test.tsx`
 
 ### US3の実装
 
-- [ ] T057 [US3] page.tsxにfocusedIndex状態を追加 `src/app/page.tsx`
-- [ ] T058 [US3] handleAssetClickハンドラを実装（同じ銘柄でトグル、別の銘柄でフォーカス設定） `src/app/page.tsx`
-- [ ] T059 [US3] handleClearFocusハンドラを実装 `src/app/page.tsx`
-- [ ] T060 [US3] PortfolioChartにfocusedIndexとonSegmentClickプロップを渡す `src/app/page.tsx`
-- [ ] T061 [US3] PieセグメントのonClickハンドラを実装 `src/components/PortfolioChart.tsx`
-- [ ] T062 [US3] focusedIndexに基づいてCellコンポーネントに透明度（1または0.3）を適用 `src/components/PortfolioChart.tsx`
-- [ ] T063 [US3] 中央エリアクリックでフォーカス解除を実装（onClearFocus） `src/components/PortfolioChart.tsx`
-- [ ] T064 [US3] AssetListにfocusedIndexとonAssetClickプロップを渡す `src/app/page.tsx`
-- [ ] T065 [US3] 各AssetCardにisFocusedとisDimmedプロップを渡す `src/components/AssetList.tsx`
-- [ ] T066 [US3] AssetCardにonClickハンドラを実装 `src/components/AssetCard.tsx`
-- [ ] T067 [US3] isFocused/isDimmedプロップに基づいて透明度スタイルを適用 `src/components/AssetCard.tsx`
-- [ ] T068 [US3] クリック可能要素にcursor-pointerとホバーエフェクトを追加 `src/components/PortfolioChart.tsx` と `src/components/AssetCard.tsx`
+- [x] T057 [US3] page.tsxにfocusedIndex状態を追加 `src/app/page.tsx`
+- [x] T058 [US3] handleAssetClickハンドラを実装（同じ銘柄でトグル、別の銘柄でフォーカス設定） `src/app/page.tsx`
+- [x] T059 [US3] handleClearFocusハンドラを実装 `src/app/page.tsx`
+- [x] T060 [US3] PortfolioChartにfocusedIndexとonSegmentClickプロップを渡す `src/app/page.tsx`
+- [x] T061 [US3] PieセグメントのonClickハンドラを実装 `src/components/PortfolioChart.tsx`
+- [x] T062 [US3] focusedIndexに基づいてCellコンポーネントに透明度（1または0.3）を適用 `src/components/PortfolioChart.tsx`
+- [x] T063 [US3] 中央エリアクリックでフォーカス解除を実装（onClearFocus） `src/components/PortfolioChart.tsx`
+- [x] T064 [US3] AssetListにfocusedIndexとonAssetClickプロップを渡す `src/app/page.tsx`
+- [x] T065 [US3] 各AssetCardにisFocusedとisDimmedプロップを渡す `src/components/AssetList.tsx`
+- [x] T066 [US3] AssetCardにonClickハンドラを実装 `src/components/AssetCard.tsx`
+- [x] T067 [US3] isFocused/isDimmedプロップに基づいて透明度スタイルを適用 `src/components/AssetCard.tsx`
+- [x] T068 [US3] クリック可能要素にcursor-pointerとホバーエフェクトを追加 `src/components/PortfolioChart.tsx` と `src/components/AssetCard.tsx`
 
 **チェックポイント**: パイチャートと銘柄一覧のフォーカス機能が連動して動作する
 
