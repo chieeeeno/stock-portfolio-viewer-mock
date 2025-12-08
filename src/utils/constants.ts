@@ -1,6 +1,16 @@
 import colors from 'tailwindcss/colors';
 
 /**
+ * アプリケーション名
+ */
+export const APP_NAME = 'Portfolio Viewer';
+
+/**
+ * アプリケーションの説明
+ */
+export const APP_DESCRIPTION = '株式ポートフォリオビューワー';
+
+/**
  * パイチャートの各セグメントに使用するカラーパレット
  */
 export const CHART_COLORS = [
