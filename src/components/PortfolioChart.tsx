@@ -3,7 +3,12 @@
 import { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import type { HoldingAsset } from '@/types/portfolio';
-import { formatCurrency, formatGainRatio, formatGainAmount, getGainStatus } from '@/utils/formatters';
+import {
+  formatCurrency,
+  formatGainRatio,
+  formatGainAmount,
+  getGainStatus,
+} from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
 
 interface PortfolioChartProps {
@@ -64,10 +69,7 @@ export default function PortfolioChart({
             >
               {/* T033: CHART_COLORS定数を使用してセグメントの色を設定 */}
               {chartData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={CHART_COLORS[index % CHART_COLORS.length]}
-                />
+                <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
               ))}
             </Pie>
           </PieChart>
