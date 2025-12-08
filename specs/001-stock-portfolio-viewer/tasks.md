@@ -100,24 +100,24 @@
 
 ### US2のテスト
 
-- [ ] T038 [P] [US2] AssetCardの描画コンポーネントテストを作成 `src/components/AssetCard.test.tsx`
-- [ ] T039 [P] [US2] AssetListの描画コンポーネントテストを作成 `src/components/AssetList.test.tsx`
-- [ ] T040 [P] [US2] 「VOO / 39.8%」形式の表示テストを作成 `src/components/AssetCard.test.tsx`
-- [ ] T041 [P] [US2] 「+12.87%(¥5,242)」形式の損益表示テストを作成 `src/components/AssetCard.test.tsx`
+- [x] T038 [P] [US2] AssetCardの描画コンポーネントテストを作成 `src/components/AssetCard.test.tsx`
+- [x] T039 [P] [US2] AssetListの描画コンポーネントテストを作成 `src/components/AssetList.test.tsx`
+- [x] T040 [P] [US2] 「VOO / 39.8%」形式の表示テストを作成 `src/components/AssetCard.test.tsx`
+- [x] T041 [P] [US2] 「+12.87%(¥5,242)」形式の損益表示テストを作成 `src/components/AssetCard.test.tsx`
 
 ### US2の実装
 
-- [ ] T042 [US2] AssetCardコンポーネントの骨格を作成 `src/components/AssetCard.tsx`
-- [ ] T043 [US2] next/imageでロゴ画像表示を実装、エラー時はティッカーシンボルにフォールバック `src/components/AssetCard.tsx`
-- [ ] T044 [US2] 銘柄名の表示を実装 `src/components/AssetCard.tsx`
-- [ ] T045 [US2] 「VOO / 39.8%」形式でティッカー/比率の表示を実装 `src/components/AssetCard.tsx`
-- [ ] T046 [US2] 保有金額の表示を実装（¥45,969形式） `src/components/AssetCard.tsx`
-- [ ] T047 [US2] 「+12.87%(¥5,242)」形式で損益表示を実装 `src/components/AssetCard.tsx`
-- [ ] T048 [US2] 損益テキストに損益色（緑/赤/グレー）を適用 `src/components/AssetCard.tsx`
-- [ ] T049 [US2] チャートセグメント色に対応するカラーインジケーターバーを追加 `src/components/AssetCard.tsx`
-- [ ] T050 [US2] 銘柄をAssetCardにマッピングするAssetListコンポーネントを作成 `src/components/AssetList.tsx`
-- [ ] T051 [US2] AssetListがholding_ratio降順で描画されることを確認 `src/components/AssetList.tsx`
-- [ ] T052 [US2] PortfolioChartの下にAssetListをpage.tsxに統合 `src/app/page.tsx`
+- [x] T042 [US2] AssetCardコンポーネントの骨格を作成 `src/components/AssetCard.tsx`
+- [x] T043 [US2] next/imageでロゴ画像表示を実装、エラー時はティッカーシンボルにフォールバック `src/components/AssetCard.tsx`
+- [x] T044 [US2] 銘柄名の表示を実装 `src/components/AssetCard.tsx`
+- [x] T045 [US2] 「VOO / 39.8%」形式でティッカー/比率の表示を実装 `src/components/AssetCard.tsx`
+- [x] T046 [US2] 保有金額の表示を実装（¥45,969形式） `src/components/AssetCard.tsx`
+- [x] T047 [US2] 「+12.87%(¥5,242)」形式で損益表示を実装 `src/components/AssetCard.tsx`
+- [x] T048 [US2] 損益テキストに損益色（緑/赤/グレー）を適用 `src/components/AssetCard.tsx`
+- [x] T049 [US2] チャートセグメント色に対応するカラーインジケーターバーを追加 `src/components/AssetCard.tsx`
+- [x] T050 [US2] 銘柄をAssetCardにマッピングするAssetListコンポーネントを作成 `src/components/AssetList.tsx`
+- [x] T051 [US2] AssetListがholding_ratio降順で描画されることを確認 `src/components/AssetList.tsx`
+- [x] T052 [US2] PortfolioChartの下にAssetListをpage.tsxに統合 `src/app/page.tsx`
 
 **チェックポイント**: パイチャートの下に銘柄一覧が正しいフォーマットで表示される
 
