@@ -154,6 +154,31 @@ import clsx from 'clsx';
 5. `dark:` ダークモード
 6. その他の状態（`hover:`, `focus:` など）
 
+#### 任意の値（Arbitrary Values）の禁止
+
+`h-[180px]` や `w-[calc(100%-20px)]` のような任意の値（角括弧記法）は**使用しないこと**。
+
+```tsx
+// 禁止
+<div className="h-[180px] w-[300px] mt-[10px]" />
+
+// 推奨: Tailwind の標準クラスを使用
+<div className="h-44 w-72 mt-2.5" />
+
+// 標準クラスで対応できない場合: カスタムクラスを定義
+// globals.css や Tailwind 設定で定義してから使用する
+```
+
+**理由:**
+- 一貫性のあるデザインシステムを維持するため
+- マジックナンバーを避け、保守性を向上させるため
+- デザイントークンとして管理しやすくするため
+
+**対応方法:**
+1. まず標準のTailwindクラスで代替できないか検討する
+2. 標準クラスで対応できない場合は、`globals.css` にカスタムクラスを追加する
+3. 頻繁に使用する値は Tailwind の設定（`@theme`）に追加することを検討する
+
 ## Test File Convention
 
 - **Location**: Co-located with source files (same directory)
