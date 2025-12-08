@@ -186,4 +186,70 @@ describe('AssetCard', () => {
       expect(screen.getByTestId('logo-fallback')).toHaveTextContent('VO');
     });
   });
+
+  // T055: カードクリックハンドラのテスト
+  describe('カードクリックハンドラテスト', () => {
+    it('カードクリック時にonClickが呼ばれる', () => {
+      const handleClick = vi.fn();
+      render(<AssetCard asset={mockAsset} colorIndex={0} onClick={handleClick} />);
+
+      const card = screen.getByTestId('asset-card');
+      card.click();
+
+      expect(handleClick).toHaveBeenCalled();
+    });
+
+    it('onClickが渡されていない場合でもエラーが発生しない', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(() => card.click()).not.toThrow();
+    });
+
+    it('クリック可能な場合にcursor-pointerが適用される', () => {
+      const handleClick = vi.fn();
+      render(<AssetCard asset={mockAsset} colorIndex={0} onClick={handleClick} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).toHaveClass('cursor-pointer');
+    });
+  });
+
+  // T056: 半透過状態（opacity 0.3）のテスト
+  describe('半透過状態テスト', () => {
+    it('isDimmed=trueの場合、opacity 0.3が適用される', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} isDimmed={true} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).toHaveClass('opacity-30');
+    });
+
+    it('isDimmed=falseの場合、opacity 0.3が適用されない', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} isDimmed={false} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).not.toHaveClass('opacity-30');
+    });
+
+    it('isFocused=trueの場合、opacity 1が適用される', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={true} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).not.toHaveClass('opacity-30');
+    });
+
+    it('フォーカス状態でリング表示される', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={true} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).toHaveClass('ring-2');
+    });
+
+    it('非フォーカス状態ではリング表示されない', () => {
+      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={false} />);
+
+      const card = screen.getByTestId('asset-card');
+      expect(card).not.toHaveClass('ring-2');
+    });
+  });
 });

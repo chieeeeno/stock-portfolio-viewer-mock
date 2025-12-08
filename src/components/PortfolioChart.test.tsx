@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioChart from './PortfolioChart';
 import type { HoldingAsset } from '@/types/portfolio';
@@ -12,6 +12,36 @@ vi.mock('recharts', async () => {
       <div data-testid="responsive-container" style={{ width: 400, height: 400 }}>
         {children}
       </div>
+    ),
+    // PieChartコンポーネントをモック
+    PieChart: ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="pie-chart">{children}</div>
+    ),
+    // Pieコンポーネントをモックして、Cellの子要素をそのままレンダリング
+    Pie: ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="pie">{children}</div>
+    ),
+    // Cellコンポーネントをモックしてテスト可能にする
+    Cell: ({
+      fill,
+      fillOpacity,
+      onClick,
+      style,
+      'data-testid': dataTestId,
+    }: {
+      fill: string;
+      fillOpacity?: number;
+      onClick?: () => void;
+      style?: React.CSSProperties;
+      'data-testid'?: string;
+    }) => (
+      <div
+        data-testid={dataTestId}
+        data-fill={fill}
+        data-fill-opacity={String(fillOpacity ?? 1)}
+        onClick={onClick}
+        style={style}
+      />
     ),
   };
 });
@@ -204,6 +234,137 @@ describe('PortfolioChart', () => {
 
       const gainElement = screen.getByTestId('gain-info');
       expect(gainElement).toHaveClass('text-gray-500');
+    });
+  });
+
+  // T053: セグメントクリックハンドラのテスト
+  describe('セグメントクリックハンドラテスト', () => {
+    it('セグメントクリック時にonSegmentClickが呼ばれる', () => {
+      const handleSegmentClick = vi.fn();
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          onSegmentClick={handleSegmentClick}
+        />
+      );
+
+      // セグメントをクリック
+      const segments = screen.getAllByTestId('chart-segment');
+      fireEvent.click(segments[0]);
+
+      expect(handleSegmentClick).toHaveBeenCalledWith(0);
+    });
+
+    it('異なるセグメントクリックで異なるインデックスが渡される', () => {
+      const handleSegmentClick = vi.fn();
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          onSegmentClick={handleSegmentClick}
+        />
+      );
+
+      // 2番目のセグメントをクリック
+      const segments = screen.getAllByTestId('chart-segment');
+      fireEvent.click(segments[1]);
+
+      expect(handleSegmentClick).toHaveBeenCalledWith(1);
+    });
+
+    it('中央エリアクリックでonClearFocusが呼ばれる', () => {
+      const handleClearFocus = vi.fn();
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          focusedIndex={0}
+          onClearFocus={handleClearFocus}
+        />
+      );
+
+      // 中央エリアをクリック
+      const centerArea = screen.getByTestId('chart-center');
+      fireEvent.click(centerArea);
+
+      expect(handleClearFocus).toHaveBeenCalled();
+    });
+  });
+
+  // T054: フォーカス状態の透明度変更テスト
+  describe('フォーカス状態透明度テスト', () => {
+    it('focusedIndex指定時、フォーカスされたセグメントは透明度1', () => {
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          focusedIndex={0}
+        />
+      );
+
+      const segments = screen.getAllByTestId('chart-segment');
+      // フォーカスされたセグメント（インデックス0）は透明度1
+      expect(segments[0]).toHaveAttribute('data-fill-opacity', '1');
+    });
+
+    it('focusedIndex指定時、他のセグメントは透明度0.3', () => {
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          focusedIndex={0}
+        />
+      );
+
+      const segments = screen.getAllByTestId('chart-segment');
+      // フォーカスされていないセグメント（インデックス1, 2）は透明度0.3
+      expect(segments[1]).toHaveAttribute('data-fill-opacity', '0.3');
+      expect(segments[2]).toHaveAttribute('data-fill-opacity', '0.3');
+    });
+
+    it('focusedIndexがnullの場合、すべてのセグメントは透明度1', () => {
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          focusedIndex={null}
+        />
+      );
+
+      const segments = screen.getAllByTestId('chart-segment');
+      segments.forEach((segment) => {
+        expect(segment).toHaveAttribute('data-fill-opacity', '1');
+      });
+    });
+
+    it('クリック可能なセグメントにcursor-pointerがある', () => {
+      render(
+        <PortfolioChart
+          holdingAssets={mockHoldingAssets}
+          totalAssetAmount={115500}
+          totalGainAmount={15500}
+          totalGainRatio={15.5}
+          onSegmentClick={vi.fn()}
+        />
+      );
+
+      const segments = screen.getAllByTestId('chart-segment');
+      segments.forEach((segment) => {
+        expect(segment).toHaveStyle({ cursor: 'pointer' });
+      });
     });
   });
 });
