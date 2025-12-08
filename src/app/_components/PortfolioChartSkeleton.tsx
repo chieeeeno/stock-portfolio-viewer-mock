@@ -39,7 +39,7 @@ export default function PortfolioChartSkeleton() {
             {/* ドーナツの穴（中央の白い円） - レスポンシブサイズ */}
             <div
               className={clsx(
-                'absolute left-1/2 top-1/2 h-[180px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white',
+                'absolute top-1/2 left-1/2 h-[180px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white',
                 'sm:h-[220px] sm:w-[220px]',
                 'lg:h-[260px] lg:w-[260px]',
                 'dark:bg-zinc-800'
@@ -51,7 +51,7 @@ export default function PortfolioChartSkeleton() {
           <div
             data-testid="chart-skeleton-center"
             className={clsx(
-              'absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 animate-pulse flex-col items-center gap-2',
+              'absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 animate-pulse flex-col items-center gap-2',
               'sm:gap-3'
             )}
           >
