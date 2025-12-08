@@ -1,4 +1,4 @@
-import type { GainStatusInfo } from '@/types/portfolio';
+import type { GainStatusInfo } from '@/app/_types/portfolio';
 
 /**
  * 数値が有効かどうかをチェック（NaN, Infinity, -Infinityを除外）

@@ -1,5 +1,5 @@
 import PortfolioInteractive from './PortfolioInteractive';
-import type { PortfolioResponse } from '@/types/portfolio';
+import type { PortfolioResponse } from '../_types/portfolio';
 
 /**
  * APIのベースURLを取得
