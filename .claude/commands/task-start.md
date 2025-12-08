@@ -54,7 +54,14 @@ git worktreeを使用して、タスクごとに独立した作業環境を作�
   5. ブランチ存在確認（既存の場合は連番を付けて別名に変更）
   6. worktreeの作成（指定されたベースブランチから分岐）
   7. GitHub Issue作成（Yesの場合）
-  8. VSCodeで開く
+  8. worktreeディレクトリに移動
+  9. 依存パッケージのインストール（pnpm install）
+  10. 環境設定ファイルの作成（.env.example → .env.local）
+  11. 利用可能なポートの検索
+  12. .env.localのAPI_BASE_URLを更新
+  13. 開発サーバーの起動（バックグラウンド）
+  14. VSCodeで開く
+  15. リポジトリのルートディレクトリに戻る
 
 **重要な注意事項:**
 - ブランチが既に存在する場合、削除せず連番を付けて別のブランチ名を生成します
@@ -233,12 +240,102 @@ echo "  URL: [ISSUE_URL]"
 echo ""
 ```
 
-### 10. VSCodeで開く
+### 10. worktreeディレクトリに移動
+
+```bash
+# worktreeディレクトリに移動
+cd "$WORKTREE_PATH"
+echo "✓ worktreeディレクトリに移動しました: $WORKTREE_PATH"
+```
+
+### 11. 依存パッケージのインストール
+
+```bash
+# pnpmで依存パッケージをインストール
+echo "依存パッケージをインストールしています..."
+pnpm install
+echo "✓ 依存パッケージのインストールが完了しました"
+```
+
+### 12. 環境設定ファイルの作成
+
+```bash
+# .env.exampleを.env.localにコピー
+if [ -f ".env.example" ]; then
+    cp .env.example .env.local
+    echo "✓ .env.localを作成しました"
+else
+    echo "⚠ .env.exampleが見つかりません。環境設定ファイルの作成をスキップします。"
+fi
+```
+
+### 13. 利用可能なポートの検索
+
+デフォルトポート3000から順番に利用可能なポートを検索します：
+
+```bash
+# 利用可能なポートを検索（3000から開始）
+PORT=3000
+MAX_PORT=3010
+
+while [ $PORT -le $MAX_PORT ]; do
+    # ポートが使用中かチェック（lsofまたはnetstat使用）
+    if ! lsof -i :$PORT > /dev/null 2>&1; then
+        echo "✓ 利用可能なポートを見つけました: $PORT"
+        break
+    fi
+    echo "ポート $PORT は使用中です。次のポートを確認します..."
+    PORT=$((PORT + 1))
+done
+
+if [ $PORT -gt $MAX_PORT ]; then
+    echo "⚠ 利用可能なポートが見つかりませんでした。デフォルトの3000を使用します。"
+    PORT=3000
+fi
+```
+
+### 14. .env.localのAPI_BASE_URLを更新
+
+```bash
+# .env.localのAPI_BASE_URLのポート番号を更新
+if [ -f ".env.local" ]; then
+    # macOSとLinuxの両方で動作するsed
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "s|API_BASE_URL=http://localhost:[0-9]*|API_BASE_URL=http://localhost:$PORT|g" .env.local
+    else
+        sed -i "s|API_BASE_URL=http://localhost:[0-9]*|API_BASE_URL=http://localhost:$PORT|g" .env.local
+    fi
+    echo "✓ .env.localのAPI_BASE_URLをポート$PORTに更新しました"
+fi
+```
+
+### 15. 開発サーバーの起動
+
+```bash
+# バックグラウンドで開発サーバーを起動
+echo "開発サーバーをポート$PORTで起動しています..."
+pnpm dev --port $PORT &
+DEV_SERVER_PID=$!
+echo "✓ 開発サーバーを起動しました (PID: $DEV_SERVER_PID, ポート: $PORT)"
+echo "  URL: http://localhost:$PORT"
+```
+
+**注意**: 開発サーバーはBashツールの `run_in_background` オプションを使用してバックグラウンドで起動します。
+
+### 16. VSCodeで開く
 
 ```bash
 # worktreeディレクトリをVSCodeで開く
-cd "$WORKTREE_PATH"
 code .
+echo "✓ VSCodeでworktreeを開きました"
+```
+
+### 17. ルートディレクトリに戻る
+
+```bash
+# リポジトリのルートディレクトリに戻る
+cd "$REPO_ROOT"
+echo "✓ ルートディレクトリに戻りました: $REPO_ROOT"
 ```
 
 ## Additional Features
@@ -273,6 +370,10 @@ git branch -d worktree/[task-name]
 4. **worktree作成失敗**: 詳細なエラーメッセージを表示
 5. **VSCode未インストール**: code コマンドが使えない場合は手動で開くよう指示
 6. **GitHub Issue作成失敗**: エラーメッセージを表示するが、worktree作成は継続
+7. **pnpm install失敗**: エラーメッセージを表示し、手動でのインストールを促す
+8. **.env.exampleが存在しない**: 警告を表示してスキップ
+9. **利用可能なポートが見つからない**: デフォルトポート3000を使用
+10. **開発サーバー起動失敗**: エラーメッセージを表示するが、VSCodeは開く
 
 ## Output Format
 
@@ -284,13 +385,23 @@ git branch -d worktree/[task-name]
 ✓ ブランチ名: worktree/user-authentication-feature
 ✓ worktreeを作成しました: /path/to/repo/worktree/user-authentication-feature
 
+✓ worktreeディレクトリに移動しました
+✓ 依存パッケージのインストールが完了しました
+✓ .env.localを作成しました
+✓ 利用可能なポートを見つけました: 3001
+✓ .env.localのAPI_BASE_URLをポート3001に更新しました
+✓ 開発サーバーを起動しました (ポート: 3001)
+  URL: http://localhost:3001
+
 === Worktree環境のセットアップが完了しました ===
 
 ベースブランチ: main
 ブランチ名: worktree/user-authentication-feature
 作業ディレクトリ: /path/to/repo/worktree/user-authentication-feature
+開発サーバー: http://localhost:3001
 
 VSCodeで開いています...
+✓ ルートディレクトリに戻りました
 ```
 
 **成功時の出力例（Issue作成あり）:**
@@ -304,13 +415,23 @@ VSCodeで開いています...
 ✓ GitHub Issueを作成しました: #123
   URL: https://github.com/owner/repo/issues/123
 
+✓ worktreeディレクトリに移動しました
+✓ 依存パッケージのインストールが完了しました
+✓ .env.localを作成しました
+✓ 利用可能なポートを見つけました: 3002
+✓ .env.localのAPI_BASE_URLをポート3002に更新しました
+✓ 開発サーバーを起動しました (ポート: 3002)
+  URL: http://localhost:3002
+
 === Worktree環境のセットアップが完了しました ===
 
 ベースブランチ: develop
 ブランチ名: worktree/user-authentication-feature
 作業ディレクトリ: /path/to/repo/worktree/user-authentication-feature
+開発サーバー: http://localhost:3002
 
 VSCodeで開いています...
+✓ ルートディレクトリに戻りました
 ```
 
 ## Notes
@@ -319,3 +440,6 @@ VSCodeで開いています...
 - 各worktreeは独立した作業ディレクトリを持ちます
 - メインの作業ディレクトリに影響を与えずに複数のタスクを並行して進められます
 - worktreeディレクトリは .gitignore に追加することを推奨
+- 各worktreeは独自のポートで開発サーバーを起動するため、複数のworktreeを同時に実行可能
+- 開発サーバーはバックグラウンドで起動されるため、作業終了時は手動で停止が必要
+- 開発サーバーの停止: `lsof -i :[PORT] | grep LISTEN | awk '{print $2}' | xargs kill`
