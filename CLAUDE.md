@@ -112,6 +112,48 @@ pnpm test:run     # Run tests (single run)
 - 100 character line width
 - Trailing commas in ES5 style
 
+### Tailwind CSS クラス記述規約
+
+レスポンシブやダークモードなど、複数のブレークポイント/状態のスタイルを記述する際は、可読性のためにグループ化して記述する。
+
+#### tailwind-variants (`tv()`) を使用する場合 → 配列記法
+
+```typescript
+const cardVariants = tv({
+  base: [
+    'flex items-center gap-3 rounded-xl bg-white px-3 py-4 shadow-sm',
+    'sm:gap-4 sm:px-5 sm:py-5',
+    'dark:bg-zinc-800',
+  ],
+  variants: {
+    // ...
+  },
+});
+```
+
+#### 通常の `className` を使用する場合 → `clsx`
+
+```tsx
+import clsx from 'clsx';
+
+<div
+  className={clsx(
+    'flex items-center gap-3 rounded-xl bg-white px-3 py-4',
+    'sm:gap-4 sm:px-5 sm:py-5',
+    'dark:bg-zinc-800',
+  )}
+/>
+```
+
+#### グループ化の順序
+
+1. ベーススタイル（モバイルファースト）
+2. `sm:` ブレークポイント
+3. `md:` ブレークポイント
+4. `lg:` ブレークポイント
+5. `dark:` ダークモード
+6. その他の状態（`hover:`, `focus:` など）
+
 ## Test File Convention
 
 - **Location**: Co-located with source files (same directory)

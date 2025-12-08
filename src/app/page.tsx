@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import clsx from 'clsx';
 import PortfolioContent from './_components/PortfolioContent';
 import PortfolioChartSkeleton from './_components/PortfolioChartSkeleton';
 import AssetListSkeleton from './_components/AssetListSkeleton';
@@ -32,7 +33,9 @@ function PortfolioSkeleton() {
     <div className="flex flex-col gap-y-16">
       <PortfolioChartSkeleton />
       <div>
-        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
+        <h2 className={clsx('mb-4 text-xl font-bold text-gray-900', 'dark:text-white')}>
+          保有銘柄
+        </h2>
         <AssetListSkeleton />
       </div>
     </div>
@@ -46,10 +49,12 @@ function PortfolioSkeleton() {
  */
 export default function Home() {
   return (
-    <main className="mx-auto w-full max-w-4xl px-6 py-8">
+    <main className={clsx('mx-auto w-full max-w-4xl px-4 py-8', 'sm:px-6')}>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">ポートフォリオ</h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        <h2 className={clsx('text-2xl font-bold text-gray-900', 'dark:text-white')}>
+          ポートフォリオ
+        </h2>
+        <p className={clsx('mt-1 text-sm text-gray-500', 'dark:text-gray-400')}>
           あなたの資産運用状況を確認できます
         </p>
       </div>

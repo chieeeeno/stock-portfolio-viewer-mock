@@ -13,10 +13,15 @@ import {
 } from '@/utils/formatters';
 import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
+import clsx from 'clsx';
 
 // カードのスタイルバリアント定義
 const cardVariants = tv({
-  base: 'flex items-center gap-4 rounded-xl bg-white px-5 py-5 shadow-sm transition-all duration-200 dark:bg-zinc-800',
+  base: [
+    'flex items-center gap-3 rounded-xl bg-white px-3 py-4 shadow-sm transition-all duration-200',
+    'sm:gap-4 sm:px-5 sm:py-5',
+    'dark:bg-zinc-800',
+  ],
   variants: {
     focused: {
       true: 'ring-2 ring-blue-500',
@@ -25,7 +30,7 @@ const cardVariants = tv({
       true: 'opacity-30',
     },
     clickable: {
-      true: 'cursor-pointer hover:bg-gray-50 dark:hover:bg-zinc-700',
+      true: ['cursor-pointer', 'hover:bg-gray-50', 'dark:hover:bg-zinc-700'],
     },
   },
 });
@@ -79,7 +84,10 @@ export default function AssetCard({
       {/* カラフルな丸アイコン */}
       <div
         data-testid="color-indicator"
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-bold text-white"
+        className={clsx(
+          'flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white',
+          'sm:h-12 sm:w-12 sm:text-base'
+        )}
         style={{ backgroundColor: segmentColor }}
       >
         {imageError ? (
@@ -99,11 +107,11 @@ export default function AssetCard({
       {/* 銘柄情報 */}
       <div className="min-w-0 flex-1">
         {/* T044: 銘柄名 */}
-        <div className="truncate text-base font-semibold text-gray-900 dark:text-white">
+        <div className={clsx('truncate text-base font-semibold text-gray-900', 'dark:text-white')}>
           {assetInfo.name}
         </div>
         {/* T045: ティッカー・比率 */}
-        <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className={clsx('text-sm text-gray-500', 'dark:text-gray-400')}>
           {assetInfo.ticker_symbol} • {formatHoldingRatio(holding_ratio)}
         </div>
       </div>
@@ -111,9 +119,11 @@ export default function AssetCard({
       {/* 損益情報（縦並び） */}
       <div data-testid="asset-gain" className={cn('shrink-0 text-right', gainStatus.colorClass)}>
         {/* 損益額 */}
-        <div className="text-xl font-semibold">{formatGainAmountWithCurrency(gain_amount)}</div>
+        <div className={clsx('text-base font-semibold', 'sm:text-xl')}>
+          {formatGainAmountWithCurrency(gain_amount)}
+        </div>
         {/* 損益率 */}
-        <div className="text-base">{formatGainRatio(gain_ratio)}</div>
+        <div className={clsx('text-sm', 'sm:text-base')}>{formatGainRatio(gain_ratio)}</div>
       </div>
     </div>
   );
