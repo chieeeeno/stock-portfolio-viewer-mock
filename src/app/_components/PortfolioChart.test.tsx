@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioChart from './PortfolioChart';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 
 // Rechartsのモック（ResponsiveContainerはテスト環境でサイズ取得できないため）
 vi.mock('recharts', async () => {

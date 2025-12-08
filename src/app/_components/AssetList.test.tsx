@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import AssetList from './AssetList';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 
 // next/imageのモック
 vi.mock('next/image', () => ({

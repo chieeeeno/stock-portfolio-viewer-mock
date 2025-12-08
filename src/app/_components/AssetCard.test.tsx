@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import AssetCard from './AssetCard';
-import type { HoldingAsset } from '@/types/portfolio';
+import type { HoldingAsset } from '../_types/portfolio';
 import { CHART_COLORS } from '@/utils/constants';
 
 // next/imageのモック
