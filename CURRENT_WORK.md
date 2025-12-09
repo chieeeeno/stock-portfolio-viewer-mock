@@ -5,6 +5,82 @@
 
 ---
 
+## Session Handoff (2025-12-10)
+
+### Current Task
+フェーズ9.5: US8（ヘッダーボタンツールチップ）およびフェーズ10: 仕上げ
+
+### Completed This Session
+- **spec.md更新** ✅
+  - US7（オンボーディングガイド）の仕様を追加
+  - driver.jsライブラリの選定理由と比較表を記載
+  - FR-026〜FR-032: オンボーディング関連の機能要件を追加
+  - US6に#11-#13（ヘッダーボタンツールチップ）のAcceptance Scenariosを追加
+  - FR-033, FR-034: ヘッダーボタンツールチップの機能要件を追加
+  - ツールチップライブラリ選定候補（shadcn/ui, Radix UI, Floating UI, 自前実装）を記載
+
+- **tasks.md更新** ✅
+  - フェーズ9: US7オンボーディングタスク（T126-T153）を追加・完了マーク
+  - フェーズ9.5: US8ヘッダーボタンツールチップタスク（T154-T163）を追加
+  - フェーズ依存関係・推定タスク数を更新（156→166タスク）
+  - コミット: `b8b8d0a`（US7完了マーク）
+
+### Remaining Tasks (20タスク)
+
+#### フェーズ7: US5（1タスク残）
+- [ ] **T094** [US5] タッチデバイスでのツールチップ表示対応（タップで表示） `src/components/PortfolioChart.tsx`
+
+#### フェーズ9.5: US8 ヘッダーボタンツールチップ（10タスク）
+- [ ] **T154** [US8] ツールチップライブラリの調査・比較（shadcn/ui, Radix UI, Floating UI, 自前実装）
+- [ ] **T155** [US8] 選定したライブラリをインストール（必要な場合）
+- [ ] **T156** [P] [US8] ヘルプアイコンボタンのツールチップ表示テストを作成 `src/components/Header.test.tsx`
+- [ ] **T157** [P] [US8] テーマ切り替えボタンのツールチップ表示テストを作成 `src/components/ThemeToggle.test.tsx`
+- [ ] **T158** [US8] 汎用Tooltipコンポーネントを作成 `src/components/Tooltip.tsx`
+- [ ] **T159** [US8] Tooltipコンポーネントにホバー表示/非表示ロジックを実装
+- [ ] **T160** [US8] Tooltipコンポーネントにスタイリング（背景、影、角丸、ダークモード対応）を実装
+- [ ] **T161** [US8] ヘルプアイコンボタンにTooltip統合（「ヘルプを表示する」） `src/components/Header.tsx`
+- [ ] **T162** [US8] テーマ切り替えボタンにTooltip統合 `src/components/ThemeToggle.tsx`
+- [ ] **T163** [US8] 手動テスト: 各ボタンにホバーしてツールチップが表示されることを確認
+
+#### フェーズ10: 仕上げ（9タスク）
+- [ ] **T117** [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
+- [ ] **T118** [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
+- [ ] **T119** [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
+- [ ] **T120** `pnpm test:run` で全テストを実行し、100%パスを確認
+- [ ] **T121** `pnpm lint` でリンターを実行し、問題を修正
+- [ ] **T122** `pnpm format` でフォーマッターを実行し、フォーマットを確認
+- [ ] **T123** `pnpm build` で本番ビルドを実行し、成功を確認
+- [ ] **T124** 手動テスト: Google Chrome最新版で全機能を確認
+- [ ] **T125** quickstart.md検証チェックリストを実行（6項目の動作確認）
+
+### Progress Summary
+- **完了タスク**: 146/166（88.0%）
+- **残りタスク**: 20タスク
+- **完了フェーズ**: 1〜9（セットアップ、基盤、US1〜US7）
+- **残りフェーズ**: フェーズ7の一部（T094）、フェーズ9.5（US8）、フェーズ10（仕上げ）
+
+### Resume Command
+```bash
+# 現在のブランチ確認
+git checkout 001-stock-portfolio-viewer
+
+# テスト実行
+pnpm test:run
+
+# 開発サーバー起動
+pnpm dev
+
+# T094から再開、またはフェーズ10の仕上げタスクを実行
+```
+
+### Technical Notes
+- **driver.js**: オンボーディング用ライブラリ（5kb gzip、ゼロ依存）
+- **US8ツールチップライブラリ候補**: shadcn/ui（第一候補）, Radix UI, Floating UI, 自前実装
+- **US5,US6,US7,US8は並列実行可能**: 互いに依存関係がない（ただしUS8はUS6のHeader完了が前提）
+- **フェーズ10の並列タスク**: T117, T118, T119は並列実行可能
+
+---
+
 ## Session Handoff (2025-12-09 22:00)
 
 ### Current Task
@@ -195,12 +271,15 @@ main
 | Phase 1: セットアップ | T001-T009 | ✅ 完了 | `001-phase1-setup` |
 | Phase 2: 基盤 | T010-T023 | ✅ 完了 | `001-phase2-foundation` |
 | Phase 3: US1 ポートフォリオ全体像 | T024-T037 | ✅ 完了 | `001-phase3-us1` |
-| Phase 4: US2 保有銘柄詳細 | T038-T052 | 🔜 次 | `001-phase4-us2` |
-| Phase 5: US3 フォーカス機能 | T053-T068 | ⏳ 待機 | `001-phase5-us3` |
-| Phase 6: US4 レスポンシブ | T069-T076 | ⏳ 待機 | `001-phase6-us4` |
+| Phase 4: US2 保有銘柄詳細 | T038-T052 | ✅ 完了 | `001-phase4-us2` |
+| Phase 5: US3 フォーカス機能 | T053-T068 | ✅ 完了 | `001-phase5-us3` |
+| Phase 5.5: US3A スケルトン | T068A-T068L | ✅ 完了 | - |
+| Phase 6: US4 レスポンシブ | T069-T076 | ✅ 完了 | `001-phase6-us4` |
 | Phase 7: US5 ツールチップ | T086-T094 | 🔄 進行中 (T094残) | `worktree/phase7-chart-hover-detail-info` |
-| Phase 8: US6 ダークモード | T095-T106 | ⏳ 待機 | `001-phase8-us6` |
-| Phase 9: 仕上げ | T077-T079, T107-T112 | ⏳ 待機 | `001-phase9-polish` |
+| Phase 8: US6 ダークモード | T095-T116 | ✅ 完了 | `worktree/phase8-dark-mode-viewing` |
+| Phase 9: US7 オンボーディング | T126-T153 | ✅ 完了 | `worktree/phase9-onboarding-guide` |
+| Phase 9.5: US8 ヘッダーツールチップ | T154-T163 | ⏳ 待機 | - |
+| Phase 10: 仕上げ | T117-T125 | ⏳ 待機 | - |
 
 ---
 
@@ -253,4 +332,4 @@ bloomo-task/
 
 ---
 
-**最終更新**: 2025-12-09 03:00
+**最終更新**: 2025-12-10
