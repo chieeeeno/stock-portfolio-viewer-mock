@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useSyncExternalStore, useRef, useCallback } from 'react';
 
 // ブレークポイント: モバイル < 640px, タブレット 640-1023px, デスクトップ >= 1024px
 export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
@@ -82,6 +82,20 @@ function cleanupThrottleState(state: ThrottleState): void {
 }
 
 /**
+ * SSR時のブレークポイント（サーバー側ではデスクトップを想定）
+ */
+function getServerSnapshot(): Breakpoint {
+  return 'desktop';
+}
+
+/**
+ * クライアント側で現在のブレークポイントを取得
+ */
+function getClientSnapshot(): Breakpoint {
+  return getBreakpointFromWidth(window.innerWidth);
+}
+
+/**
  * 現在のブレークポイントを取得するカスタムフック
  *
  * Tailwind CSSのブレークポイントに準拠:
@@ -92,36 +106,26 @@ function cleanupThrottleState(state: ThrottleState): void {
  * @param throttleMs - リサイズイベントのthrottle間隔（デフォルト: 100ms）
  */
 export function useBreakpoint(throttleMs: number = DEFAULT_THROTTLE_MS): Breakpoint {
-  // SSR対応: サーバーサイドではwindowがないためデフォルト値を使用
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>(() => {
-    if (typeof window === 'undefined') {
-      return 'desktop';
-    }
-    return getBreakpointFromWidth(window.innerWidth);
-  });
   const throttleStateRef = useRef<ThrottleState>(createThrottleState());
 
-  useEffect(() => {
-    const throttleState = throttleStateRef.current;
+  // resizeイベントを購読する関数
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const throttleState = throttleStateRef.current;
 
-    const handleResize = () => {
-      executeWithThrottle(
-        () => {
-          const newBreakpoint = getBreakpointFromWidth(window.innerWidth);
-          setBreakpoint(newBreakpoint);
-        },
-        throttleState,
-        throttleMs
-      );
-    };
+      const handleResize = () => {
+        executeWithThrottle(onStoreChange, throttleState, throttleMs);
+      };
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cleanupThrottleState(throttleState);
-    };
-  }, [throttleMs]);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        cleanupThrottleState(throttleState);
+      };
+    },
+    [throttleMs]
+  );
 
-  return breakpoint;
+  return useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
 }
