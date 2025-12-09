@@ -68,6 +68,7 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
+      data-driver="theme-toggle"
       onClick={toggleTheme}
       aria-label={showDarkModeIcon ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
       className={clsx(

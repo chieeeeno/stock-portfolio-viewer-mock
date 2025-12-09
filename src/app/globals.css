@@ -26,3 +26,113 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* driver.js カスタムスタイル */
+.driver-popover {
+  background-color: #ffffff;
+  color: #1f2937;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  max-width: 320px;
+}
+
+.driver-popover-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.driver-popover-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.driver-popover-progress-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.driver-popover-footer {
+  margin-top: 1rem;
+}
+
+.driver-popover-navigation-btns {
+  gap: 0.5rem;
+}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.driver-popover-prev-btn {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.driver-popover-prev-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.driver-popover-next-btn {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.driver-popover-next-btn:hover {
+  background-color: #2563eb;
+}
+
+.driver-popover-close-btn {
+  color: #9ca3af;
+}
+
+.driver-popover-close-btn:hover {
+  color: #6b7280;
+}
+
+/* driver.js ダークモードスタイル */
+.dark .driver-popover {
+  background-color: #27272a;
+  color: #f4f4f5;
+}
+
+.dark .driver-popover-description {
+  color: #a1a1aa;
+}
+
+.dark .driver-popover-progress-text {
+  color: #71717a;
+}
+
+.dark .driver-popover-prev-btn {
+  background-color: #3f3f46;
+  color: #e4e4e7;
+}
+
+.dark .driver-popover-prev-btn:hover {
+  background-color: #52525b;
+}
+
+.dark .driver-popover-next-btn {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.dark .driver-popover-next-btn:hover {
+  background-color: #2563eb;
+}
+
+.dark .driver-popover-close-btn {
+  color: #71717a;
+}
+
+.dark .driver-popover-close-btn:hover {
+  color: #a1a1aa;
+}
+

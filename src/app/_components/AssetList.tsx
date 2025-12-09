@@ -32,6 +32,7 @@ export default function AssetList({
   return (
     <div
       data-testid="asset-list"
+      data-driver="asset-list"
       className="flex flex-col gap-4"
       onClick={(e) => e.stopPropagation()}
     >

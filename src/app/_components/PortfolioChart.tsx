@@ -125,7 +125,12 @@ export default function PortfolioChart({
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
 
   return (
-    <div data-testid="portfolio-chart" className="w-full" onClick={(e) => e.stopPropagation()}>
+    <div
+      data-testid="portfolio-chart"
+      data-driver="portfolio-chart"
+      className="w-full"
+      onClick={(e) => e.stopPropagation()}
+    >
       {/* 白いカードで囲む */}
       <div
         className={clsx(
@@ -182,6 +187,7 @@ export default function PortfolioChart({
           {/* ドーナツの穴の部分のみをカバーするように配置 */}
           <div
             data-testid="chart-center"
+            data-driver="chart-center"
             className={chartCenterVariants({ clickable: isCenterClickable })}
             style={{ width: chartSize.centerSize, height: chartSize.centerSize }}
             onClick={isCenterClickable ? onClearFocus : undefined}
