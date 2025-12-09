@@ -142,7 +142,7 @@ export default function PortfolioChart({
           onMouseMove={handleChartMouseMove}
           onMouseLeave={handleChartMouseLeave}
         >
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 300, height: 300 }}>
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
               <Pie
