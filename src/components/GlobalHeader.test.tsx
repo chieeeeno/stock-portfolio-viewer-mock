@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import GlobalHeader from './GlobalHeader';
 import { APP_NAME } from '@/utils/constants';
 
@@ -12,6 +13,27 @@ vi.mock('@/app/_hooks/useTheme', () => ({
     setTheme: vi.fn(),
     isHydrated: true,
   })),
+}));
+
+// useOnboardingフックをモック
+vi.mock('@/hooks/useOnboarding', () => ({
+  useOnboarding: vi.fn(() => ({
+    startTour: vi.fn(),
+    isCompleted: false,
+    isActive: false,
+    isHydrated: true,
+  })),
+}));
+
+// OnboardingProviderをモック
+vi.mock('./OnboardingProvider', () => ({
+  useOnboardingContext: vi.fn(() => ({
+    startTour: vi.fn(),
+    isCompleted: false,
+    isActive: false,
+    isHydrated: true,
+  })),
+  default: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 // localStorageのモック
@@ -69,6 +91,12 @@ describe('GlobalHeader', () => {
 
       // UserIconのデフォルト表示（頭文字）が存在する
       expect(screen.getByText('T')).toBeInTheDocument();
+    });
+
+    it('ヘルプボタンを表示', () => {
+      render(<GlobalHeader />);
+
+      expect(screen.getByRole('button', { name: 'ガイドを再表示' })).toBeInTheDocument();
     });
   });
 
