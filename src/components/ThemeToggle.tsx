@@ -71,7 +71,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={showDarkModeIcon ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
       className={clsx(
-        'flex h-10 w-10 items-center justify-center rounded-full transition-colors',
+        'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-colors',
         'text-gray-600 hover:bg-gray-100',
         'dark:text-gray-300 dark:hover:bg-zinc-700'
       )}

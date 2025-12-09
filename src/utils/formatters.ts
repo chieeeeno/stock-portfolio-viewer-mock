@@ -89,10 +89,10 @@ export function formatGainAmountWithCurrency(amount: number): string {
 export function getGainStatus(amount: number): GainStatusInfo {
   const normalized = normalizeNumber(amount);
   if (normalized > 0) {
-    return { status: 'positive', colorClass: 'text-green-500' };
+    return { status: 'positive', colorClass: 'text-green-600 dark:text-green-300' };
   } else if (normalized < 0) {
-    return { status: 'negative', colorClass: 'text-red-500' };
+    return { status: 'negative', colorClass: 'text-red-600 dark:text-red-400' };
   } else {
-    return { status: 'zero', colorClass: 'text-gray-500' };
+    return { status: 'zero', colorClass: 'text-gray-500 dark:text-gray-400' };
   }
 }
