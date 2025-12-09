@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@/test-utils/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioInteractive from './PortfolioInteractive';
 import type { PortfolioResponse } from '../_types/portfolio';

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@/test-utils/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioChart from './PortfolioChart';
 import type { HoldingAsset } from '../_types/portfolio';
@@ -226,7 +226,7 @@ describe('PortfolioChart', () => {
       );
 
       const gainElement = screen.getByTestId('gain-info');
-      expect(gainElement).toHaveClass('text-green-500');
+      expect(gainElement).toHaveClass('text-green-600');
     });
 
     it('マイナスの評価損益では赤色のスタイルが適用される', () => {
@@ -240,7 +240,7 @@ describe('PortfolioChart', () => {
       );
 
       const gainElement = screen.getByTestId('gain-info');
-      expect(gainElement).toHaveClass('text-red-500');
+      expect(gainElement).toHaveClass('text-red-600');
     });
 
     it('ゼロの評価損益ではグレー色のスタイルが適用される', () => {

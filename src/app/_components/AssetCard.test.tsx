@@ -1,8 +1,8 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act } from '@/test-utils/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import AssetCard from './AssetCard';
 import type { HoldingAsset } from '../_types/portfolio';
-import { CHART_COLORS } from '@/utils/constants';
+import { CHART_COLORS_LIGHT } from '@/utils/constants';
 
 // next/imageのモック
 vi.mock('next/image', () => ({
@@ -90,14 +90,14 @@ describe('AssetCard', () => {
 
       const indicator = screen.getByTestId('color-indicator');
       expect(indicator).toBeInTheDocument();
-      expect(indicator).toHaveStyle({ backgroundColor: CHART_COLORS[0] });
+      expect(indicator).toHaveStyle({ backgroundColor: CHART_COLORS_LIGHT[0] });
     });
 
     it('異なるcolorIndexで正しい色が適用される', () => {
       render(<AssetCard asset={mockAsset} colorIndex={2} />);
 
       const indicator = screen.getByTestId('color-indicator');
-      expect(indicator).toHaveStyle({ backgroundColor: CHART_COLORS[2] });
+      expect(indicator).toHaveStyle({ backgroundColor: CHART_COLORS_LIGHT[2] });
     });
   });
 
@@ -152,14 +152,14 @@ describe('AssetCard', () => {
       render(<AssetCard asset={mockAsset} colorIndex={0} />);
 
       const gainElement = screen.getByTestId('asset-gain');
-      expect(gainElement).toHaveClass('text-green-500');
+      expect(gainElement).toHaveClass('text-green-600');
     });
 
     it('マイナスの損益では赤色のスタイルが適用される', () => {
       render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
 
       const gainElement = screen.getByTestId('asset-gain');
-      expect(gainElement).toHaveClass('text-red-500');
+      expect(gainElement).toHaveClass('text-red-600');
     });
 
     it('ゼロの損益ではグレー色のスタイルが適用される', () => {
