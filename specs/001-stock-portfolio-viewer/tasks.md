@@ -277,40 +277,40 @@
 
 ### US7のセットアップ
 
-- [ ] T126 [US7] driver.jsパッケージをインストール `pnpm add driver.js`
+- [x] T126 [US7] driver.jsパッケージをインストール `pnpm add driver.js`
 
 ### US7のテスト
 
-- [ ] T127 [P] [US7] useOnboardingフックのテストを作成 `src/hooks/useOnboarding.test.ts`
-- [ ] T128 [P] [US7] OnboardingProviderコンポーネントのテストを作成 `src/components/OnboardingProvider.test.tsx`
-- [ ] T129 [P] [US7] オンボーディング完了状態のlocalStorage永続化テストを作成 `src/hooks/useOnboarding.test.ts`
-- [ ] T130 [P] [US7] ガイド再表示ボタンのテストを作成 `src/components/Header.test.tsx`
+- [x] T127 [P] [US7] useOnboardingフックのテストを作成 `src/hooks/useOnboarding.test.ts`
+- [x] T128 [P] [US7] OnboardingProviderコンポーネントのテストを作成 `src/components/OnboardingProvider.test.tsx`
+- [x] T129 [P] [US7] オンボーディング完了状態のlocalStorage永続化テストを作成 `src/hooks/useOnboarding.test.ts`
+- [x] T130 [P] [US7] ガイド再表示ボタンのテストを作成 `src/components/Header.test.tsx`
 
 ### US7の実装
 
-- [ ] T131 [US7] オンボーディングステップ定義の定数ファイルを作成 `src/utils/onboardingSteps.ts`
-- [ ] T132 [US7] ステップ1: パイチャート全体の説明を定義 `src/utils/onboardingSteps.ts`
-- [ ] T133 [US7] ステップ2: パイチャート中央（資産総額・評価損益）の説明を定義 `src/utils/onboardingSteps.ts`
-- [ ] T134 [US7] ステップ3: 銘柄一覧の説明を定義 `src/utils/onboardingSteps.ts`
-- [ ] T135 [US7] ステップ4: フォーカス機能（セグメントクリック）の説明を定義 `src/utils/onboardingSteps.ts`
-- [ ] T136 [US7] ステップ5: テーマ切り替えスイッチの説明を定義 `src/utils/onboardingSteps.ts`
-- [ ] T137 [US7] useOnboardingカスタムフックの骨格を作成 `src/hooks/useOnboarding.ts`
-- [ ] T138 [US7] driver.jsインスタンスの初期化を実装 `src/hooks/useOnboarding.ts`
-- [ ] T139 [US7] オンボーディング開始関数（startTour）を実装 `src/hooks/useOnboarding.ts`
-- [ ] T140 [US7] オンボーディング完了/スキップ時のlocalStorage保存を実装 `src/hooks/useOnboarding.ts`
-- [ ] T141 [US7] 初回訪問判定ロジックを実装（localStorageチェック） `src/hooks/useOnboarding.ts`
-- [ ] T142 [US7] OnboardingProviderコンポーネントを作成 `src/components/OnboardingProvider.tsx`
-- [ ] T143 [US7] layout.tsxにOnboardingProviderを統合 `src/app/layout.tsx`
-- [ ] T144 [US7] page.tsxにオンボーディング対象要素のdata-driver属性を追加 `src/app/page.tsx`
-- [ ] T145 [US7] PortfolioChartにdata-driver属性を追加 `src/components/PortfolioChart.tsx`
-- [ ] T146 [US7] AssetListにdata-driver属性を追加 `src/components/AssetList.tsx`
-- [ ] T147 [US7] Headerに「ガイドを再表示」ボタンを追加 `src/components/Header.tsx`
-- [ ] T148 [US7] 「ガイドを再表示」ボタンのクリックハンドラを実装 `src/components/Header.tsx`
-- [ ] T149 [US7] driver.jsのポップオーバースタイルをカスタマイズ（ダークモード対応） `src/app/globals.css`
-- [ ] T150 [US7] キーボード操作の動作確認（Esc、矢印キー）
-- [ ] T151 [US7] 手動テスト: 初回訪問時にオンボーディングが自動開始されることを確認
-- [ ] T152 [US7] 手動テスト: スキップ/完了後に再訪問してもオンボーディングが開始されないことを確認
-- [ ] T153 [US7] 手動テスト: 「ガイドを再表示」ボタンでオンボーディングが再開されることを確認
+- [x] T131 [US7] オンボーディングステップ定義の定数ファイルを作成 `src/utils/onboardingSteps.ts`
+- [x] T132 [US7] ステップ1: パイチャート全体の説明を定義 `src/utils/onboardingSteps.ts`
+- [x] T133 [US7] ステップ2: パイチャート中央（資産総額・評価損益）の説明を定義 `src/utils/onboardingSteps.ts`
+- [x] T134 [US7] ステップ3: 銘柄一覧の説明を定義 `src/utils/onboardingSteps.ts`
+- [x] T135 [US7] ステップ4: フォーカス機能（セグメントクリック）の説明を定義 `src/utils/onboardingSteps.ts`
+- [x] T136 [US7] ステップ5: テーマ切り替えスイッチの説明を定義 `src/utils/onboardingSteps.ts`
+- [x] T137 [US7] useOnboardingカスタムフックの骨格を作成 `src/hooks/useOnboarding.ts`
+- [x] T138 [US7] driver.jsインスタンスの初期化を実装 `src/hooks/useOnboarding.ts`
+- [x] T139 [US7] オンボーディング開始関数（startTour）を実装 `src/hooks/useOnboarding.ts`
+- [x] T140 [US7] オンボーディング完了/スキップ時のlocalStorage保存を実装 `src/hooks/useOnboarding.ts`
+- [x] T141 [US7] 初回訪問判定ロジックを実装（localStorageチェック） `src/hooks/useOnboarding.ts`
+- [x] T142 [US7] OnboardingProviderコンポーネントを作成 `src/components/OnboardingProvider.tsx`
+- [x] T143 [US7] layout.tsxにOnboardingProviderを統合 `src/app/layout.tsx`
+- [x] T144 [US7] page.tsxにオンボーディング対象要素のdata-driver属性を追加 `src/app/page.tsx`
+- [x] T145 [US7] PortfolioChartにdata-driver属性を追加 `src/components/PortfolioChart.tsx`
+- [x] T146 [US7] AssetListにdata-driver属性を追加 `src/components/AssetList.tsx`
+- [x] T147 [US7] Headerに「ガイドを再表示」ボタンを追加 `src/components/Header.tsx`
+- [x] T148 [US7] 「ガイドを再表示」ボタンのクリックハンドラを実装 `src/components/Header.tsx`
+- [x] T149 [US7] driver.jsのポップオーバースタイルをカスタマイズ（ダークモード対応） `src/app/globals.css`
+- [x] T150 [US7] キーボード操作の動作確認（Esc、矢印キー）
+- [x] T151 [US7] 手動テスト: 初回訪問時にオンボーディングが自動開始されることを確認
+- [x] T152 [US7] 手動テスト: スキップ/完了後に再訪問してもオンボーディングが開始されないことを確認
+- [x] T153 [US7] 手動テスト: 「ガイドを再表示」ボタンでオンボーディングが再開されることを確認
 
 **チェックポイント**: 初回訪問時にオンボーディングガイドが表示され、完了/スキップ後は再表示されない。ヘッダーのボタンから任意に再開可能
 
