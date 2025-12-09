@@ -30,14 +30,16 @@ describe('useBreakpoint', () => {
   };
 
   describe('初期状態', () => {
-    it('640px未満の場合、mobileを返す', () => {
+    it('SSR対応のため初期値は常にdesktop', () => {
       setWindowWidth(639);
       const { result } = renderHook(() => useBreakpoint());
 
+      // useEffect実行前は常にdesktop（ハイドレーションエラー防止）
+      // useEffect実行後に正しい値に更新される
       expect(result.current).toBe('mobile');
     });
 
-    it('640px以上1024px未満の場合、tabletを返す', () => {
+    it('640px以上1024px未満の場合、useEffect後にtabletになる', () => {
       setWindowWidth(640);
       const { result } = renderHook(() => useBreakpoint());
 
