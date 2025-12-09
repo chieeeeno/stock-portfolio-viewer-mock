@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import GlobalHeader from '@/components/GlobalHeader';
+import Providers from './_components/Providers';
 import { APP_NAME, SITE_URL, OG_IMAGE_PATH } from '@/utils/constants';
 import './globals.css';
 
@@ -61,10 +62,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-gray-50 dark:bg-black">
-          <GlobalHeader />
-          {children}
-        </div>
+        <Providers>
+          <div className="min-h-screen bg-gray-50 dark:bg-black">
+            <GlobalHeader />
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );
