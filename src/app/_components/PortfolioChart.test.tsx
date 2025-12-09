@@ -51,17 +51,17 @@ vi.mock('recharts', async () => {
     // Cellコンポーネントをモックしてテスト可能にする
     Cell: ({
       fill,
-      style,
+      className,
       'data-testid': dataTestId,
     }: {
       fill: string;
-      style?: { opacity?: number };
+      className?: string;
       'data-testid'?: string;
     }) => (
       <div
         data-testid={dataTestId}
         data-fill={fill}
-        data-fill-opacity={String(style?.opacity ?? 1)}
+        className={className}
       />
     ),
   };
@@ -321,7 +321,7 @@ describe('PortfolioChart', () => {
 
   // T054: フォーカス状態の透明度変更テスト
   describe('フォーカス状態透明度テスト', () => {
-    it('focusedIndex指定時、フォーカスされたセグメントは透明度1', () => {
+    it('focusedIndex指定時、フォーカスされたセグメントはopacity-100クラス', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -333,11 +333,11 @@ describe('PortfolioChart', () => {
       );
 
       const segments = screen.getAllByTestId('chart-segment');
-      // フォーカスされたセグメント（インデックス0）は透明度1
-      expect(segments[0]).toHaveAttribute('data-fill-opacity', '1');
+      // フォーカスされたセグメント（インデックス0）はopacity-100
+      expect(segments[0]).toHaveClass('opacity-100');
     });
 
-    it('focusedIndex指定時、他のセグメントは透明度0.3', () => {
+    it('focusedIndex指定時、他のセグメントはopacity-30クラス', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -349,12 +349,12 @@ describe('PortfolioChart', () => {
       );
 
       const segments = screen.getAllByTestId('chart-segment');
-      // フォーカスされていないセグメント（インデックス1, 2）は透明度0.3
-      expect(segments[1]).toHaveAttribute('data-fill-opacity', '0.3');
-      expect(segments[2]).toHaveAttribute('data-fill-opacity', '0.3');
+      // フォーカスされていないセグメント（インデックス1, 2）はopacity-30
+      expect(segments[1]).toHaveClass('opacity-30');
+      expect(segments[2]).toHaveClass('opacity-30');
     });
 
-    it('focusedIndexがnullの場合、すべてのセグメントは透明度1', () => {
+    it('focusedIndexがnullの場合、すべてのセグメントはopacity-100クラス', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -367,11 +367,11 @@ describe('PortfolioChart', () => {
 
       const segments = screen.getAllByTestId('chart-segment');
       segments.forEach((segment) => {
-        expect(segment).toHaveAttribute('data-fill-opacity', '1');
+        expect(segment).toHaveClass('opacity-100');
       });
     });
 
-    it('クリック可能なチャートにcursor-pointerがある', () => {
+    it('セグメントにcursor-pointerクラスがある', () => {
       render(
         <PortfolioChart
           holdingAssets={mockHoldingAssets}
@@ -382,9 +382,11 @@ describe('PortfolioChart', () => {
         />
       );
 
-      // Pieコンポーネントにcursor-pointerが適用される
-      const pie = screen.getByTestId('pie');
-      expect(pie).toHaveStyle({ cursor: 'pointer' });
+      // Cellコンポーネントにcursor-pointerクラスが適用される
+      const segments = screen.getAllByTestId('chart-segment');
+      segments.forEach((segment) => {
+        expect(segment).toHaveClass('cursor-pointer');
+      });
     });
   });
 });

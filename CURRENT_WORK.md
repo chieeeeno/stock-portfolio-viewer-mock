@@ -5,6 +5,86 @@
 
 ---
 
+## Session Handoff (2025-12-09 22:00)
+
+### Current Task
+フェーズ7: US5 チャートホバーによる詳細情報の確認（T086-T094）
+
+### Completed This Session
+- **PR作成** ✅
+  - PR #97: https://github.com/chieeeeno/bloomo-task/pull/97
+  - ベース: `001-stock-portfolio-viewer` → ヘッド: `worktree/phase7-chart-hover-detail-info`
+
+- **リファクタリング** ✅
+  - `useChartTooltip` hook: ツールチップのマウス追従・状態管理ロジックを切り出し
+  - `useBreakpoint` hook: レスポンシブ対応のブレークポイント検出を切り出し
+    - `useSyncExternalStore`でSSR/クライアント間のハイドレーションエラー解消
+    - リサイズイベントのthrottle処理（自前実装）
+  - テスト追加（useChartTooltip.test.ts, useBreakpoint.test.ts）
+
+- **バグ修正** ✅
+  - ResponsiveContainerのサイズ警告を`initialDimension`で解消（公式推奨の解決策）
+
+### Commits Made (this PR)
+1. `feat: チャートホバー時のマウス追従ツールチップを実装`
+2. `test: ChartTooltipコンポーネントのテストを追加`
+3. `refactor: ChartセグメントにTailwind Variantsを適用`
+4. `test: Chartセグメントのテストをclassname検証に更新`
+5. `fix: チャートからマウスが外れたときにツールチップを非表示にする`
+6. `refactor: PortfolioChartからhooksを切り出し`
+7. `test: useChartTooltipとuseBreakpointのテストを追加`
+8. `refactor: useBreakpointをuseSyncExternalStoreで実装`
+9. `test: useBreakpointのテストコメントを更新`
+10. `fix: ResponsiveContainerのサイズ警告を解消`
+
+### Remaining Tasks (Phase 7)
+1. **T094: タッチデバイスでのツールチップ表示対応**
+   - 仕様検討が必要:
+     - タップでツールチップ表示 → チャート外タップで非表示？
+     - 同じセグメント再タップで非表示？
+     - フォーカス機能との連携は？
+   - 実装方針:
+     - `onTouchStart`イベントでタップ検出
+     - タップ時にhoveredAssetをセット
+     - チャート外タップまたは同一セグメント再タップで非表示
+
+2. **tasks.mdのフェーズ7タスクを完了としてマーク**
+   - T086-T093は完了、T094完了後に全タスクをマーク
+
+### Resume Command
+```bash
+# メインリポジトリに移動
+cd /Users/tomoki/work/bloomo-task
+
+# PRマージ後、ベースブランチを最新に更新
+git checkout 001-stock-portfolio-viewer
+git pull origin 001-stock-portfolio-viewer
+
+# T094用の新しいworktreeを作成（必要に応じて）
+git worktree add worktree/phase7-touch-support -b worktree/phase7-touch-support
+
+# または直接ブランチで作業
+git checkout -b phase7-touch-support
+
+# テスト実行
+pnpm test:run
+
+# 開発サーバー起動
+pnpm dev
+```
+
+### Technical Notes
+- **createPortal**: document.bodyに直接レンダリングすることでz-index問題を回避
+- **tailwind-variants**: フォーカス状態の透明度制御に使用（opacity-100/opacity-30）
+- **useSyncExternalStore**: SSR/クライアント間の値の不一致を解消するReact 18 hook
+- **initialDimension**: Rechartsの公式推奨、SSR時のフォールバックサイズを指定
+
+---
+
+## Session Handoff (2025-12-09 03:00)
+
+---
+
 ## Session Handoff (2025-12-07 15:30)
 
 ### Current Task
@@ -118,7 +198,7 @@ main
 | Phase 4: US2 保有銘柄詳細 | T038-T052 | 🔜 次 | `001-phase4-us2` |
 | Phase 5: US3 フォーカス機能 | T053-T068 | ⏳ 待機 | `001-phase5-us3` |
 | Phase 6: US4 レスポンシブ | T069-T076 | ⏳ 待機 | `001-phase6-us4` |
-| Phase 7: US5 ツールチップ | T086-T094 | ⏳ 待機 | `001-phase7-us5` |
+| Phase 7: US5 ツールチップ | T086-T094 | 🔄 進行中 (T094残) | `worktree/phase7-chart-hover-detail-info` |
 | Phase 8: US6 ダークモード | T095-T106 | ⏳ 待機 | `001-phase8-us6` |
 | Phase 9: 仕上げ | T077-T079, T107-T112 | ⏳ 待機 | `001-phase9-polish` |
 
@@ -173,4 +253,4 @@ bloomo-task/
 
 ---
 
-**最終更新**: 2025-12-07 15:30
+**最終更新**: 2025-12-09 03:00

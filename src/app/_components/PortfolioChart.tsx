@@ -1,7 +1,11 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import ChartTooltip from './ChartTooltip';
+import { useChartTooltip } from '../_hooks/useChartTooltip';
+import { useBreakpoint } from '../_hooks/useBreakpoint';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
 import {
@@ -14,39 +18,14 @@ import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
 
-// ブレークポイント: モバイル < 640px, タブレット 640-1023px, デスクトップ >= 1024px
-type Breakpoint = 'mobile' | 'tablet' | 'desktop';
+import type { Breakpoint } from '../_hooks/useBreakpoint';
 
 // ブレークポイントに応じたチャートサイズ設定
-const CHART_SIZES = {
+const CHART_SIZES: Record<Breakpoint, { innerRadius: number; outerRadius: number; centerSize: number }> = {
   mobile: { innerRadius: 90, outerRadius: 130, centerSize: 180 },
   tablet: { innerRadius: 110, outerRadius: 160, centerSize: 220 },
   desktop: { innerRadius: 130, outerRadius: 190, centerSize: 260 },
-} as const;
-
-// 現在のブレークポイントを取得するカスタムフック
-function useBreakpoint(): Breakpoint {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>('desktop');
-
-  useEffect(() => {
-    const updateBreakpoint = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setBreakpoint('mobile');
-      } else if (width < 1024) {
-        setBreakpoint('tablet');
-      } else {
-        setBreakpoint('desktop');
-      }
-    };
-
-    updateBreakpoint();
-    window.addEventListener('resize', updateBreakpoint);
-    return () => window.removeEventListener('resize', updateBreakpoint);
-  }, []);
-
-  return breakpoint;
-}
+};
 
 // チャート中央エリアのスタイルバリアント
 const chartCenterVariants = tv({
@@ -59,6 +38,20 @@ const chartCenterVariants = tv({
   },
   defaultVariants: {
     clickable: false,
+  },
+});
+
+// チャートセグメント（Cell）のスタイルバリアント
+const chartSegmentVariants = tv({
+  base: 'cursor-pointer transition-opacity duration-200',
+  variants: {
+    focused: {
+      true: 'opacity-100',
+      false: 'opacity-30',
+    },
+  },
+  defaultVariants: {
+    focused: true,
   },
 });
 
@@ -98,16 +91,27 @@ export default function PortfolioChart({
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
 
+  // マウス追従ツールチップのロジック
+  const {
+    mousePosition,
+    hoveredAsset,
+    handlePieMouseEnter,
+    handleChartMouseMove,
+    handleChartMouseLeave,
+  } = useChartTooltip();
+
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
     return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
   }, [holdingAssets]);
 
-  // チャート用のデータ形式に変換
+  // チャート用のデータ形式に変換（ツールチップ用にHoldingAsset全体を含む）
   const chartData = useMemo(() => {
     return sortedAssets.map((holding) => ({
       name: holding.asset.ticker_symbol,
       value: holding.holding_ratio,
+      // ツールチップでHoldingAsset全体にアクセスするためにpayloadに含める
+      ...holding,
     }));
   }, [sortedAssets]);
 
@@ -128,8 +132,17 @@ export default function PortfolioChart({
           'dark:bg-zinc-800'
         )}
       >
-        <div className={clsx('relative h-[300px] w-full', 'sm:h-[380px]', 'lg:h-[450px]')}>
-          <ResponsiveContainer width="100%" height="100%">
+        <div
+          className={clsx(
+            'relative h-[300px] w-full',
+            'sm:h-[380px]',
+            'lg:h-[450px]',
+            '**:outline-none'
+          )}
+          onMouseMove={handleChartMouseMove}
+          onMouseLeave={handleChartMouseLeave}
+        >
+          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 300, height: 300 }}>
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
               <Pie
@@ -143,18 +156,18 @@ export default function PortfolioChart({
                 endAngle={-270}
                 paddingAngle={1}
                 onClick={onSegmentClick ? (_, index) => onSegmentClick(index) : undefined}
-                style={{ cursor: onSegmentClick ? 'pointer' : 'default' }}
+                onMouseEnter={handlePieMouseEnter}
+                onMouseLeave={handleChartMouseLeave}
               >
                 {/* T033, T061, T062: セグメントの色とフォーカス時の透明度を設定 */}
                 {chartData.map((_, index) => {
                   const isSegmentFocused = focusedIndex === null || focusedIndex === index;
-                  const opacity = isSegmentFocused ? 1 : 0.3;
                   return (
                     <Cell
                       key={`cell-${index}`}
                       data-testid="chart-segment"
                       fill={CHART_COLORS[index % CHART_COLORS.length]}
-                      style={{ opacity, transition: 'opacity 0.2s ease-in-out' }}
+                      className={chartSegmentVariants({ focused: isSegmentFocused })}
                     />
                   );
                 })}
@@ -204,6 +217,22 @@ export default function PortfolioChart({
           </div>
         </div>
       </div>
+      {/* T093, T094: マウス追従ツールチップ（createPortalでbodyに直接レンダリング） */}
+      {hoveredAsset &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            data-testid="floating-tooltip"
+            className="pointer-events-none fixed z-50"
+            style={{
+              left: `${mousePosition.x}px`,
+              top: `${mousePosition.y}px`,
+            }}
+          >
+            <ChartTooltip active payload={[{ payload: hoveredAsset }]} />
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

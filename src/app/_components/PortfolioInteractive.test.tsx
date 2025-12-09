@@ -48,6 +48,7 @@ vi.mock('recharts', () => ({
     </div>
   ),
   Cell: () => <div data-testid="cell" />,
+  Tooltip: () => <div data-testid="tooltip" />,
 }));
 
 const mockData: PortfolioResponse = {
