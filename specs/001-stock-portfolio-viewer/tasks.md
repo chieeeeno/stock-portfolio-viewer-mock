@@ -212,17 +212,17 @@
 
 ### US5のテスト
 
-- [ ] T086 [P] [US5] ツールチップ表示のコンポーネントテストを作成 `src/components/PortfolioChart.test.tsx`
-- [ ] T087 [P] [US5] ツールチップに銘柄名、保有金額、保有比率が表示されることをテスト `src/components/PortfolioChart.test.tsx`
+- [x] T086 [P] [US5] ツールチップ表示のコンポーネントテストを作成 `src/components/PortfolioChart.test.tsx`
+- [x] T087 [P] [US5] ツールチップに銘柄名、保有金額、保有比率が表示されることをテスト `src/components/PortfolioChart.test.tsx`
 
 ### US5の実装
 
-- [ ] T088 [US5] カスタムツールチップコンポーネントを作成 `src/components/ChartTooltip.tsx`
-- [ ] T089 [US5] ツールチップに銘柄名を表示 `src/components/ChartTooltip.tsx`
-- [ ] T090 [US5] ツールチップに保有金額（¥形式）を表示 `src/components/ChartTooltip.tsx`
-- [ ] T091 [US5] ツールチップに保有比率（%形式）を表示 `src/components/ChartTooltip.tsx`
-- [ ] T092 [US5] ツールチップのスタイリング（背景、影、角丸） `src/components/ChartTooltip.tsx`
-- [ ] T093 [US5] RechartsのTooltipコンポーネントにカスタムツールチップを統合 `src/components/PortfolioChart.tsx`
+- [x] T088 [US5] カスタムツールチップコンポーネントを作成 `src/components/ChartTooltip.tsx`
+- [x] T089 [US5] ツールチップに銘柄名を表示 `src/components/ChartTooltip.tsx`
+- [x] T090 [US5] ツールチップに保有金額（¥形式）を表示 `src/components/ChartTooltip.tsx`
+- [x] T091 [US5] ツールチップに保有比率（%形式）を表示 `src/components/ChartTooltip.tsx`
+- [x] T092 [US5] ツールチップのスタイリング（背景、影、角丸） `src/components/ChartTooltip.tsx`
+- [x] T093 [US5] RechartsのTooltipコンポーネントにカスタムツールチップを統合 `src/components/PortfolioChart.tsx`
 - [ ] T094 [US5] タッチデバイスでのツールチップ表示対応（タップで表示） `src/components/PortfolioChart.tsx`
 
 **チェックポイント**: パイチャートセグメントにホバー/タップで詳細情報が表示される
@@ -237,31 +237,31 @@
 
 ### US6のテスト
 
-- [ ] T095 [P] [US6] ThemeToggleコンポーネントのテストを作成 `src/components/ThemeToggle.test.tsx`
-- [ ] T096 [P] [US6] Headerコンポーネントの描画テストを作成 `src/components/Header.test.tsx`
-- [ ] T097 [P] [US6] useThemeフックのテストを作成 `src/hooks/useTheme.test.ts`
-- [ ] T098 [P] [US6] ダークモードでの損益色（緑/赤/グレー）表示テストを作成 `src/components/PortfolioChart.test.tsx`
+- [x] T095 [P] [US6] ThemeToggleコンポーネントのテストを作成 `src/components/ThemeToggle.test.tsx`
+- [x] T096 [P] [US6] Headerコンポーネントの描画テストを作成 `src/components/Header.test.tsx`
+- [x] T097 [P] [US6] useThemeフックのテストを作成 `src/hooks/useTheme.test.ts`
+- [x] T098 [P] [US6] ダークモードでの損益色（緑/赤/グレー）表示テストを作成 `src/components/PortfolioChart.test.tsx`
 
 ### US6の実装
 
-- [ ] T099 [US6] Tailwind CSSのdarkModeを'class'に設定（手動切り替え対応） `tailwind.config.ts`
-- [ ] T100 [US6] useThemeカスタムフックを作成（localStorage保存、システム設定フォールバック） `src/hooks/useTheme.ts`
-- [ ] T101 [US6] ThemeToggleコンポーネントの骨格を作成 `src/components/ThemeToggle.tsx`
-- [ ] T102 [US6] ThemeToggleにトグルボタンUIを実装（太陽/月アイコン） `src/components/ThemeToggle.tsx`
-- [ ] T103 [US6] Headerコンポーネントの骨格を作成 `src/components/Header.tsx`
-- [ ] T104 [US6] HeaderにThemeToggleを配置 `src/components/Header.tsx`
-- [ ] T105 [US6] Headerにレスポンシブスタイルを適用 `src/components/Header.tsx`
-- [ ] T106 [US6] layout.tsxにHeaderを統合 `src/app/layout.tsx`
-- [ ] T107 [US6] layout.tsxにテーマ初期化スクリプトを追加（FOUC防止） `src/app/layout.tsx`
-- [ ] T108 [US6] globals.cssにダークモード用CSS変数を定義 `src/app/globals.css`
-- [ ] T109 [US6] PortfolioChartにダークモード対応スタイルを追加 `src/components/PortfolioChart.tsx`
-- [ ] T110 [US6] ChartTooltipにダークモード対応スタイルを追加 `src/components/ChartTooltip.tsx`
-- [ ] T111 [US6] AssetCardにダークモード対応スタイルを追加 `src/components/AssetCard.tsx`
-- [ ] T112 [US6] AssetListにダークモード対応スタイルを追加 `src/components/AssetList.tsx`
-- [ ] T113 [US6] GAIN_COLORSにダークモード用カラーを追加 `src/utils/constants.ts`
-- [ ] T114 [US6] ダークモードでのチャートセグメント色の視認性を確認・調整 `src/utils/constants.ts`
-- [ ] T115 [US6] 手動テスト: テーマ切り替えスイッチで全コンポーネントのテーマ切り替えを確認
-- [ ] T116 [US6] 手動テスト: ページリロード後もテーマ設定が維持されることを確認
+- [x] T099 [US6] Tailwind CSSのdarkModeを'class'に設定（手動切り替え対応） `tailwind.config.ts`
+- [x] T100 [US6] useThemeカスタムフックを作成（localStorage保存、システム設定フォールバック） `src/hooks/useTheme.ts`
+- [x] T101 [US6] ThemeToggleコンポーネントの骨格を作成 `src/components/ThemeToggle.tsx`
+- [x] T102 [US6] ThemeToggleにトグルボタンUIを実装（太陽/月アイコン） `src/components/ThemeToggle.tsx`
+- [x] T103 [US6] Headerコンポーネントの骨格を作成 `src/components/Header.tsx`
+- [x] T104 [US6] HeaderにThemeToggleを配置 `src/components/Header.tsx`
+- [x] T105 [US6] Headerにレスポンシブスタイルを適用 `src/components/Header.tsx`
+- [x] T106 [US6] layout.tsxにHeaderを統合 `src/app/layout.tsx`
+- [x] T107 [US6] layout.tsxにテーマ初期化スクリプトを追加（FOUC防止） `src/app/layout.tsx`
+- [x] T108 [US6] globals.cssにダークモード用CSS変数を定義 `src/app/globals.css`
+- [x] T109 [US6] PortfolioChartにダークモード対応スタイルを追加 `src/components/PortfolioChart.tsx`
+- [x] T110 [US6] ChartTooltipにダークモード対応スタイルを追加 `src/components/ChartTooltip.tsx`
+- [x] T111 [US6] AssetCardにダークモード対応スタイルを追加 `src/components/AssetCard.tsx`
+- [x] T112 [US6] AssetListにダークモード対応スタイルを追加 `src/components/AssetList.tsx`
+- [x] T113 [US6] GAIN_COLORSにダークモード用カラーを追加 `src/utils/constants.ts`
+- [x] T114 [US6] ダークモードでのチャートセグメント色の視認性を確認・調整 `src/utils/constants.ts`
+- [x] T115 [US6] 手動テスト: テーマ切り替えスイッチで全コンポーネントのテーマ切り替えを確認
+- [x] T116 [US6] 手動テスト: ページリロード後もテーマ設定が維持されることを確認
 
 **チェックポイント**: ヘッダーのテーマ切り替えスイッチでダークモード/ライトモードが切り替わり、設定が永続化される
 
@@ -311,15 +311,15 @@
 
 ### ユーザーストーリー依存関係
 
-| ストーリー | 依存先 | 並列実行可能 |
-|----------|--------|------------|
-| US1 (P1) | フェーズ2 基盤 | - |
-| US2 (P2) | US1（page.tsx構造が必要） | - |
-| US3 (P3) | US1, US2（両コンポーネントが必要） | - |
-| US3A (P2) | US1, US2（スケルトンは既存コンポーネントの形状を模倣） | - |
-| US4 (P2) | US1, US2, US3, US3A（全コンポーネントが必要） | - |
-| US5 (P3) | US1（PortfolioChartが必要） | US6と並列可能 |
-| US6 (P3) | US1, US2（全コンポーネントが必要） | US5と並列可能 |
+| ストーリー | 依存先                                                 | 並列実行可能  |
+| ---------- | ------------------------------------------------------ | ------------- |
+| US1 (P1)   | フェーズ2 基盤                                         | -             |
+| US2 (P2)   | US1（page.tsx構造が必要）                              | -             |
+| US3 (P3)   | US1, US2（両コンポーネントが必要）                     | -             |
+| US3A (P2)  | US1, US2（スケルトンは既存コンポーネントの形状を模倣） | -             |
+| US4 (P2)   | US1, US2, US3, US3A（全コンポーネントが必要）          | -             |
+| US5 (P3)   | US1（PortfolioChartが必要）                            | US6と並列可能 |
+| US6 (P3)   | US1, US2（全コンポーネントが必要）                     | US5と並列可能 |
 
 **注記**: このプロジェクトはコンポーネント統合要件により、ストーリー間に順次依存関係がある。ただしUS5とUS6は互いに独立しており並列実行可能
 
@@ -333,12 +333,14 @@
 ### 並列実行の機会
 
 **フェーズ1（セットアップ）**:
+
 ```bash
 # T001, T002完了後に並列実行可能:
 T003, T004, T005, T006（すべて設定ファイル）
 ```
 
 **フェーズ2（基盤）**:
+
 ```bash
 # 並列実行可能:
 T010, T011, T012, T013（型定義）
@@ -347,30 +349,35 @@ T021, T022（定数）
 ```
 
 **フェーズ3（US1）**:
+
 ```bash
 # テストは並列実行可能:
 T024, T025, T026
 ```
 
 **フェーズ4（US2）**:
+
 ```bash
 # テストは並列実行可能:
 T038, T039, T040, T041
 ```
 
 **フェーズ5.5（US3A）**:
+
 ```bash
 # テストは並列実行可能:
 T068A, T068B, T068C
 ```
 
 **フェーズ7（US5）**:
+
 ```bash
 # テストは並列実行可能:
 T086, T087
 ```
 
 **フェーズ8（US6）**:
+
 ```bash
 # テストは並列実行可能:
 T095, T096
@@ -402,19 +409,19 @@ T095, T096
 
 ### 推定タスク数
 
-| フェーズ | タスク数 | 並列タスク |
-|---------|---------|----------|
-| フェーズ1: セットアップ | 9 | 4 |
-| フェーズ2: 基盤 | 14 | 11 |
-| フェーズ3: US1 | 14 | 3 |
-| フェーズ4: US2 | 15 | 4 |
-| フェーズ5: US3 | 16 | 4 |
-| フェーズ5.5: US3A | 12 | 3 |
-| フェーズ6: US4 | 8 | 0 |
-| フェーズ7: US5 | 9 | 2 |
-| フェーズ8: US6 | 22 | 4 |
-| フェーズ9: 仕上げ | 9 | 3 |
-| **合計** | **128** | **38** |
+| フェーズ                | タスク数 | 並列タスク |
+| ----------------------- | -------- | ---------- |
+| フェーズ1: セットアップ | 9        | 4          |
+| フェーズ2: 基盤         | 14       | 11         |
+| フェーズ3: US1          | 14       | 3          |
+| フェーズ4: US2          | 15       | 4          |
+| フェーズ5: US3          | 16       | 4          |
+| フェーズ5.5: US3A       | 12       | 3          |
+| フェーズ6: US4          | 8        | 0          |
+| フェーズ7: US5          | 9        | 2          |
+| フェーズ8: US6          | 22       | 4          |
+| フェーズ9: 仕上げ       | 9        | 3          |
+| **合計**                | **128**  | **38**     |
 
 ---
 
