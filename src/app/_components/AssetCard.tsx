@@ -38,7 +38,7 @@ const cardVariants = tv({
 interface AssetCardProps {
   /** 保有銘柄の情報 */
   asset: HoldingAsset;
-  /** カラーインデックス（CHART_COLORSの配列インデックス） */
+  /** カラーインデックス（チャートカラー配列のインデックス） */
   colorIndex: number;
   /** フォーカス状態かどうか */
   isFocused?: boolean;

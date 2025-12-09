@@ -49,11 +49,6 @@ export const CHART_COLORS_DARK = [
   colors.orange[400],
 ];
 
-/**
- * パイチャートの各セグメントに使用するカラーパレット
- * @deprecated useChartColorsフックを使用してください
- */
-export const CHART_COLORS = CHART_COLORS_LIGHT;
 
 /**
  * 評価損益の状態に応じた色
