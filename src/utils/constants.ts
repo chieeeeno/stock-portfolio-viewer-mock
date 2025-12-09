@@ -21,9 +21,9 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:30
 export const OG_IMAGE_PATH = '/og-image.png';
 
 /**
- * パイチャートの各セグメントに使用するカラーパレット
+ * パイチャートの各セグメントに使用するカラーパレット（ライトモード用）
  */
-export const CHART_COLORS = [
+export const CHART_COLORS_LIGHT = [
   colors.blue[500],
   colors.emerald[500],
   colors.amber[500],
@@ -33,6 +33,22 @@ export const CHART_COLORS = [
   colors.cyan[500],
   colors.orange[500],
 ];
+
+/**
+ * パイチャートの各セグメントに使用するカラーパレット（ダークモード用）
+ * 彩度を抑えて暗い背景でも見やすくする
+ */
+export const CHART_COLORS_DARK = [
+  colors.blue[400],
+  colors.emerald[400],
+  colors.amber[400],
+  colors.red[400],
+  colors.violet[400],
+  colors.pink[400],
+  colors.cyan[400],
+  colors.orange[400],
+];
+
 
 /**
  * 評価損益の状態に応じた色

@@ -6,6 +6,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import ChartTooltip from './ChartTooltip';
 import { useChartTooltip } from '../_hooks/useChartTooltip';
 import { useBreakpoint } from '../_hooks/useBreakpoint';
+import { useChartColors } from '../_hooks/useChartColors';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
 import {
@@ -14,7 +15,6 @@ import {
   formatGainRatio,
   getGainStatus,
 } from '@/utils/formatters';
-import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
 
@@ -91,6 +91,9 @@ export default function PortfolioChart({
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
 
+  // テーマに応じたチャートカラーを取得
+  const chartColors = useChartColors();
+
   // マウス追従ツールチップのロジック
   const {
     mousePosition,
@@ -166,7 +169,7 @@ export default function PortfolioChart({
                     <Cell
                       key={`cell-${index}`}
                       data-testid="chart-segment"
-                      fill={CHART_COLORS[index % CHART_COLORS.length]}
+                      fill={chartColors[index % chartColors.length]}
                       className={chartSegmentVariants({ focused: isSegmentFocused })}
                     />
                   );

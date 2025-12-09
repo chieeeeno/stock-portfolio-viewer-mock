@@ -54,8 +54,8 @@
         "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/AMZN.svg"
       },
       "asset_amount": 6831,
-      "gain_amount": 738,
-      "gain_ratio": 12.12,
+      "gain_amount": 0,
+      "gain_ratio": 0,
       "holding_ratio": 5.9
     }
   ]

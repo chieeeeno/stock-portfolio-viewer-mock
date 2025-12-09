@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import GlobalHeader from '@/components/GlobalHeader';
+import Providers from './_components/Providers';
 import { APP_NAME, SITE_URL, OG_IMAGE_PATH } from '@/utils/constants';
 import './globals.css';
 
@@ -35,18 +36,38 @@ export const metadata: Metadata = {
   },
 };
 
+// FOUC防止用のテーマ初期化スクリプト
+// Reactハイドレート前に同期的にテーマクラスを適用
+const themeInitScript = `
+  (function() {
+    try {
+      var theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {}
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-gray-50 dark:bg-black">
-          <GlobalHeader />
-          {children}
-        </div>
+        <Providers>
+          <div className="min-h-screen bg-gray-50 dark:bg-black">
+            <GlobalHeader />
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );

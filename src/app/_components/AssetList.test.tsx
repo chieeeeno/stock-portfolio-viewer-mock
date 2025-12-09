@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@/test-utils/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import AssetList from './AssetList';
 import type { HoldingAsset } from '../_types/portfolio';

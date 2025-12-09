@@ -11,7 +11,7 @@ import {
   formatHoldingRatio,
   getGainStatus,
 } from '@/utils/formatters';
-import { CHART_COLORS } from '@/utils/constants';
+import { useChartColors } from '../_hooks/useChartColors';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
 
@@ -38,7 +38,7 @@ const cardVariants = tv({
 interface AssetCardProps {
   /** 保有銘柄の情報 */
   asset: HoldingAsset;
-  /** カラーインデックス（CHART_COLORSの配列インデックス） */
+  /** カラーインデックス（チャートカラー配列のインデックス） */
   colorIndex: number;
   /** フォーカス状態かどうか */
   isFocused?: boolean;
@@ -63,10 +63,11 @@ export default function AssetCard({
   onClick,
 }: AssetCardProps) {
   const [imageError, setImageError] = useState(false);
+  const chartColors = useChartColors();
 
   const { asset: assetInfo, gain_amount, gain_ratio, holding_ratio } = asset;
   const gainStatus = getGainStatus(gain_amount);
-  const segmentColor = CHART_COLORS[colorIndex % CHART_COLORS.length];
+  const segmentColor = chartColors[colorIndex % chartColors.length];
 
   // ティッカーシンボルの先頭2文字を取得
   const tickerInitials = assetInfo.ticker_symbol.slice(0, 2).toUpperCase();
