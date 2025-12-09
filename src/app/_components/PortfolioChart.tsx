@@ -1,9 +1,11 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import ChartTooltip from './ChartTooltip';
+import { useChartTooltip } from '../_hooks/useChartTooltip';
+import { useBreakpoint } from '../_hooks/useBreakpoint';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
 import {
@@ -16,39 +18,14 @@ import { CHART_COLORS } from '@/utils/constants';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
 
-// ブレークポイント: モバイル < 640px, タブレット 640-1023px, デスクトップ >= 1024px
-type Breakpoint = 'mobile' | 'tablet' | 'desktop';
+import type { Breakpoint } from '../_hooks/useBreakpoint';
 
 // ブレークポイントに応じたチャートサイズ設定
-const CHART_SIZES = {
+const CHART_SIZES: Record<Breakpoint, { innerRadius: number; outerRadius: number; centerSize: number }> = {
   mobile: { innerRadius: 90, outerRadius: 130, centerSize: 180 },
   tablet: { innerRadius: 110, outerRadius: 160, centerSize: 220 },
   desktop: { innerRadius: 130, outerRadius: 190, centerSize: 260 },
-} as const;
-
-// 現在のブレークポイントを取得するカスタムフック
-function useBreakpoint(): Breakpoint {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>('desktop');
-
-  useEffect(() => {
-    const updateBreakpoint = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setBreakpoint('mobile');
-      } else if (width < 1024) {
-        setBreakpoint('tablet');
-      } else {
-        setBreakpoint('desktop');
-      }
-    };
-
-    updateBreakpoint();
-    window.addEventListener('resize', updateBreakpoint);
-    return () => window.removeEventListener('resize', updateBreakpoint);
-  }, []);
-
-  return breakpoint;
-}
+};
 
 // チャート中央エリアのスタイルバリアント
 const chartCenterVariants = tv({
@@ -114,9 +91,14 @@ export default function PortfolioChart({
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
 
-  // マウス追従ツールチップ用のstate
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [hoveredAsset, setHoveredAsset] = useState<HoldingAsset | null>(null);
+  // マウス追従ツールチップのロジック
+  const {
+    mousePosition,
+    hoveredAsset,
+    handlePieMouseEnter,
+    handleChartMouseMove,
+    handleChartMouseLeave,
+  } = useChartTooltip();
 
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
@@ -138,35 +120,6 @@ export default function PortfolioChart({
 
   // フォーカス中かつクリアハンドラがある場合、中央エリアをクリック可能にする
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
-
-  // T094: マウス追従ツールチップ用のイベントハンドラ
-  const handlePieMouseEnter = (data: (typeof chartData)[number]) => {
-    // chartDataにはHoldingAssetのプロパティがスプレッドされている
-    setHoveredAsset({
-      asset: data.asset,
-      asset_amount: data.asset_amount,
-      gain_amount: data.gain_amount,
-      gain_ratio: data.gain_ratio,
-      holding_ratio: data.holding_ratio,
-    });
-  };
-
-  const handleChartMouseMove = (e: React.MouseEvent) => {
-    const tooltipWidth = 200;
-    let x = e.clientX + 15;
-    const y = e.clientY + 15;
-
-    // ツールチップが画面右端からはみ出す場合は左側に表示
-    if (x + tooltipWidth > window.innerWidth) {
-      x = e.clientX - tooltipWidth - 15;
-    }
-
-    setMousePosition({ x, y });
-  };
-
-  const handleChartMouseLeave = () => {
-    setHoveredAsset(null);
-  };
 
   return (
     <div data-testid="portfolio-chart" className="w-full" onClick={(e) => e.stopPropagation()}>
