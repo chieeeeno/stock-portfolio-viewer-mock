@@ -166,36 +166,36 @@ describe('getGainStatus', () => {
   it('正の金額に対してpositiveステータスを返す', () => {
     const result = getGainStatus(15500);
     expect(result.status).toBe('positive');
-    expect(result.colorClass).toBe('text-green-500');
+    expect(result.colorClass).toBe('text-green-600 dark:text-green-300');
   });
 
   it('負の金額に対してnegativeステータスを返す', () => {
     const result = getGainStatus(-3000);
     expect(result.status).toBe('negative');
-    expect(result.colorClass).toBe('text-red-500');
+    expect(result.colorClass).toBe('text-red-600 dark:text-red-400');
   });
 
   it('0に対してzeroステータスを返す', () => {
     const result = getGainStatus(0);
     expect(result.status).toBe('zero');
-    expect(result.colorClass).toBe('text-gray-500');
+    expect(result.colorClass).toBe('text-gray-500 dark:text-gray-400');
   });
 
   it('NaNに対してzeroステータスを返す', () => {
     const result = getGainStatus(NaN);
     expect(result.status).toBe('zero');
-    expect(result.colorClass).toBe('text-gray-500');
+    expect(result.colorClass).toBe('text-gray-500 dark:text-gray-400');
   });
 
   it('Infinityに対してzeroステータスを返す', () => {
     const result = getGainStatus(Infinity);
     expect(result.status).toBe('zero');
-    expect(result.colorClass).toBe('text-gray-500');
+    expect(result.colorClass).toBe('text-gray-500 dark:text-gray-400');
   });
 
   it('-Infinityに対してzeroステータスを返す', () => {
     const result = getGainStatus(-Infinity);
     expect(result.status).toBe('zero');
-    expect(result.colorClass).toBe('text-gray-500');
+    expect(result.colorClass).toBe('text-gray-500 dark:text-gray-400');
   });
 });
