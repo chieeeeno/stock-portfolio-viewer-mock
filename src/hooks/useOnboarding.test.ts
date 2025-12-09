@@ -1,7 +1,10 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { useOnboarding } from './useOnboarding';
+import { useOnboarding, type UseOnboardingOptions } from './useOnboarding';
 import { ONBOARDING_COMPLETED_KEY } from '@/utils/onboardingSteps';
+
+// デフォルトのオプション
+const defaultOptions: UseOnboardingOptions = { isDarkMode: false };
 
 // driver.jsをモック
 vi.mock('driver.js', () => ({
@@ -24,7 +27,7 @@ describe('useOnboarding', () => {
 
   describe('初期状態', () => {
     it('localStorageに完了フラグがない場合、isCompletedはfalseである', async () => {
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       // ハイドレーション完了を待つ
       await waitFor(() => {
@@ -37,7 +40,7 @@ describe('useOnboarding', () => {
     it('localStorageに完了フラグがある場合、isCompletedはtrueである', async () => {
       localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
 
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);
@@ -47,7 +50,7 @@ describe('useOnboarding', () => {
     });
 
     it('初期状態ではisActiveはfalseである', async () => {
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);
@@ -57,7 +60,7 @@ describe('useOnboarding', () => {
     });
 
     it('初期状態ではisHydratedはfalseで、その後trueになる', async () => {
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       // 初期状態のチェックは難しいので、最終的にtrueになることを確認
       await waitFor(() => {
@@ -68,7 +71,7 @@ describe('useOnboarding', () => {
 
   describe('startTour', () => {
     it('startTourを呼び出すとisActiveがtrueになる', async () => {
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);
@@ -85,7 +88,7 @@ describe('useOnboarding', () => {
       const { driver } = await import('driver.js');
       const mockDriver = vi.mocked(driver);
 
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);
@@ -113,7 +116,7 @@ describe('useOnboarding', () => {
         } as ReturnType<typeof driver>;
       });
 
-      const { result } = renderHook(() => useOnboarding());
+      const { result } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);
@@ -135,7 +138,7 @@ describe('useOnboarding', () => {
     it('完了フラグがある状態で再訪問してもisCompletedはtrueのまま', async () => {
       localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
 
-      const { result, rerender } = renderHook(() => useOnboarding());
+      const { result, rerender } = renderHook(() => useOnboarding(defaultOptions));
 
       await waitFor(() => {
         expect(result.current.isHydrated).toBe(true);

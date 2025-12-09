@@ -13,6 +13,17 @@ vi.mock('driver.js', () => ({
   })),
 }));
 
+// useThemeフックをモック
+vi.mock('@/app/_hooks/useTheme', () => ({
+  useTheme: vi.fn(() => ({
+    theme: 'light',
+    isDarkMode: false,
+    toggleTheme: vi.fn(),
+    setTheme: vi.fn(),
+    isHydrated: true,
+  })),
+}));
+
 describe('HelpButton', () => {
   beforeEach(() => {
     localStorage.clear();
