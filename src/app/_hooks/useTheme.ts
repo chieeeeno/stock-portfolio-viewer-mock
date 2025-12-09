@@ -18,6 +18,8 @@ export interface UseThemeReturn {
   toggleTheme: () => void;
   /** テーマを明示的に設定 */
   setTheme: (theme: Theme) => void;
+  /** 初期化が完了したかどうか */
+  isHydrated: boolean;
 }
 
 /**
@@ -31,7 +33,7 @@ function getSystemTheme(): Theme {
 /**
  * 保存されたテーマまたはシステム設定からテーマを取得
  */
-function getInitialTheme(): Theme {
+function getStoredTheme(): Theme {
   if (typeof window === 'undefined') return 'light';
 
   // localStorageから取得
@@ -63,9 +65,22 @@ function applyThemeToDOM(theme: Theme): void {
  * - localStorageに保存し永続化
  * - システム設定にフォールバック
  * - document.documentElementにdarkクラスを適用
+ * - ハイドレーション対応: 初期値は固定、useEffectで実際の値を適用
  */
 export function useTheme(): UseThemeReturn {
-  const [theme, setThemeState] = useState<Theme>(() => getInitialTheme());
+  // SSR/クライアント両方で同じ初期値を使用してハイドレーション不一致を防ぐ
+  const [theme, setThemeState] = useState<Theme>('light');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // クライアントサイドでのみ実行: 保存されたテーマを適用
+  // SSRとクライアントで同じ初期値を使い、ハイドレーション後に正しいテーマを適用
+  useEffect(() => {
+    const storedTheme = getStoredTheme();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- ハイドレーション対応のため意図的に使用
+    setThemeState(storedTheme);
+    applyThemeToDOM(storedTheme);
+    setIsHydrated(true);
+  }, []);
 
   // テーマ変更時にDOMとlocalStorageを更新
   const setTheme = useCallback((newTheme: Theme) => {
@@ -79,15 +94,11 @@ export function useTheme(): UseThemeReturn {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   }, [theme, setTheme]);
 
-  // 初期マウント時にDOMにテーマを適用
-  useEffect(() => {
-    applyThemeToDOM(theme);
-  }, [theme]);
-
   return {
     theme,
     isDarkMode: theme === 'dark',
     toggleTheme,
     setTheme,
+    isHydrated,
   };
 }

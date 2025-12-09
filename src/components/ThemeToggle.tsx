@@ -57,22 +57,26 @@ function MoonIcon() {
  * テーマ切り替えトグルボタン
  * - ライトモード: 月アイコン表示（クリックでダークへ）
  * - ダークモード: 太陽アイコン表示（クリックでライトへ）
+ * - ハイドレーション中は月アイコン（ライトモード想定）を表示してSSR/クライアント一致を保証
  */
 export default function ThemeToggle() {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme, isHydrated } = useTheme();
+
+  // ハイドレーション完了前は固定値を使用（SSRと一致させる）
+  const showDarkModeIcon = isHydrated ? isDarkMode : false;
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={isDarkMode ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
+      aria-label={showDarkModeIcon ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
       className={clsx(
         'flex h-10 w-10 items-center justify-center rounded-full transition-colors',
         'text-gray-600 hover:bg-gray-100',
         'dark:text-gray-300 dark:hover:bg-zinc-700'
       )}
     >
-      {isDarkMode ? <SunIcon /> : <MoonIcon />}
+      {showDarkModeIcon ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 }
