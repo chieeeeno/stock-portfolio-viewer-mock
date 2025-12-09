@@ -46,6 +46,7 @@ describe('ThemeToggle', () => {
         isDarkMode: false,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);
@@ -63,6 +64,7 @@ describe('ThemeToggle', () => {
         isDarkMode: true,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);
@@ -73,6 +75,23 @@ describe('ThemeToggle', () => {
       // 太陽アイコンが表示されている（data-testid使用）
       expect(screen.getByTestId('sun-icon')).toBeInTheDocument();
     });
+
+    it('ハイドレーション中は月アイコン（ライトモード）を表示', () => {
+      vi.mocked(useTheme).mockReturnValue({
+        theme: 'dark',
+        isDarkMode: true,
+        toggleTheme: mockToggleTheme,
+        setTheme: vi.fn(),
+        isHydrated: false,
+      });
+
+      render(<ThemeToggle />);
+
+      // ハイドレーション中はダークモードでも月アイコン（SSRと一致）
+      const button = screen.getByRole('button', { name: /ダークモードに切り替え/i });
+      expect(button).toBeInTheDocument();
+      expect(screen.getByTestId('moon-icon')).toBeInTheDocument();
+    });
   });
 
   describe('インタラクション', () => {
@@ -82,6 +101,7 @@ describe('ThemeToggle', () => {
         isDarkMode: false,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);
@@ -100,6 +120,7 @@ describe('ThemeToggle', () => {
         isDarkMode: false,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);
@@ -114,6 +135,7 @@ describe('ThemeToggle', () => {
         isDarkMode: true,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);
@@ -128,6 +150,7 @@ describe('ThemeToggle', () => {
         isDarkMode: false,
         toggleTheme: mockToggleTheme,
         setTheme: vi.fn(),
+        isHydrated: true,
       });
 
       render(<ThemeToggle />);

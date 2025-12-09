@@ -10,6 +10,7 @@ vi.mock('@/app/_hooks/useTheme', () => ({
     isDarkMode: false,
     toggleTheme: vi.fn(),
     setTheme: vi.fn(),
+    isHydrated: true,
   })),
 }));
 

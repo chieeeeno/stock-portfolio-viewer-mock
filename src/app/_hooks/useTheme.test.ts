@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useTheme, THEME_STORAGE_KEY } from './useTheme';
 
 // localStorageのモック
@@ -56,43 +56,73 @@ describe('useTheme', () => {
   });
 
   describe('初期化', () => {
-    it('localStorageに保存値がない場合、システム設定を参照する（ライトモード）', () => {
+    it('localStorageに保存値がない場合、システム設定を参照する（ライトモード）', async () => {
       window.matchMedia = createMatchMedia(false);
       const { result } = renderHook(() => useTheme());
 
+      // useEffect後の状態を待つ
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
+
       expect(result.current.theme).toBe('light');
       expect(document.documentElement.classList.contains('dark')).toBe(false);
     });
 
-    it('localStorageに保存値がない場合、システム設定を参照する（ダークモード）', () => {
+    it('localStorageに保存値がない場合、システム設定を参照する（ダークモード）', async () => {
       window.matchMedia = createMatchMedia(true);
       const { result } = renderHook(() => useTheme());
 
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
+
       expect(result.current.theme).toBe('dark');
       expect(document.documentElement.classList.contains('dark')).toBe(true);
     });
 
-    it('localStorageに"dark"が保存されている場合、ダークモードで初期化', () => {
+    it('localStorageに"dark"が保存されている場合、ダークモードで初期化', async () => {
       localStorageMock.getItem.mockReturnValue('dark');
       const { result } = renderHook(() => useTheme());
 
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
+
       expect(result.current.theme).toBe('dark');
       expect(document.documentElement.classList.contains('dark')).toBe(true);
     });
 
-    it('localStorageに"light"が保存されている場合、ライトモードで初期化', () => {
+    it('localStorageに"light"が保存されている場合、ライトモードで初期化', async () => {
       localStorageMock.getItem.mockReturnValue('light');
       const { result } = renderHook(() => useTheme());
 
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
+
       expect(result.current.theme).toBe('light');
       expect(document.documentElement.classList.contains('dark')).toBe(false);
+    });
+
+    it('初期状態ではisHydratedがfalse、useEffect後にtrueになる', async () => {
+      const { result } = renderHook(() => useTheme());
+
+      // useEffect実行後
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
     });
   });
 
   describe('テーマ切り替え', () => {
-    it('toggleThemeでライトモードからダークモードに切り替え', () => {
+    it('toggleThemeでライトモードからダークモードに切り替え', async () => {
       localStorageMock.getItem.mockReturnValue('light');
       const { result } = renderHook(() => useTheme());
+
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
 
       act(() => {
         result.current.toggleTheme();
@@ -103,9 +133,13 @@ describe('useTheme', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(THEME_STORAGE_KEY, 'dark');
     });
 
-    it('toggleThemeでダークモードからライトモードに切り替え', () => {
+    it('toggleThemeでダークモードからライトモードに切り替え', async () => {
       localStorageMock.getItem.mockReturnValue('dark');
       const { result } = renderHook(() => useTheme());
+
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
 
       act(() => {
         result.current.toggleTheme();
@@ -116,8 +150,12 @@ describe('useTheme', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(THEME_STORAGE_KEY, 'light');
     });
 
-    it('setThemeで明示的にテーマを設定', () => {
+    it('setThemeで明示的にテーマを設定', async () => {
       const { result } = renderHook(() => useTheme());
+
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
 
       act(() => {
         result.current.setTheme('dark');
@@ -136,16 +174,24 @@ describe('useTheme', () => {
   });
 
   describe('isDarkMode', () => {
-    it('ダークモード時にtrueを返す', () => {
+    it('ダークモード時にtrueを返す', async () => {
       localStorageMock.getItem.mockReturnValue('dark');
       const { result } = renderHook(() => useTheme());
+
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
 
       expect(result.current.isDarkMode).toBe(true);
     });
 
-    it('ライトモード時にfalseを返す', () => {
+    it('ライトモード時にfalseを返す', async () => {
       localStorageMock.getItem.mockReturnValue('light');
       const { result } = renderHook(() => useTheme());
+
+      await waitFor(() => {
+        expect(result.current.isHydrated).toBe(true);
+      });
 
       expect(result.current.isDarkMode).toBe(false);
     });
