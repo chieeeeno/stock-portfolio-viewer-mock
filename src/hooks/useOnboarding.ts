@@ -47,7 +47,15 @@ function notifyCompletedChange() {
  * - 完了/スキップ状態をlocalStorageで永続化
  * - 初回訪問時に自動開始
  */
-export function useOnboarding(): UseOnboardingReturn {
+/**
+ * オンボーディングフックの引数
+ */
+export interface UseOnboardingOptions {
+  /** ダークモードかどうか */
+  isDarkMode: boolean;
+}
+
+export function useOnboarding({ isDarkMode }: UseOnboardingOptions): UseOnboardingReturn {
   // useSyncExternalStoreを使用してlocalStorageの状態を監視
   const isCompleted = useSyncExternalStore(
     subscribeToCompleted,
@@ -79,6 +87,9 @@ export function useOnboarding(): UseOnboardingReturn {
       // ハイライト領域の設定（くり抜き効果）
       stagePadding: 10,
       stageRadius: 8,
+      // ダークモード時は白っぽいオーバーレイで対比を強調
+      overlayColor: isDarkMode ? '#ffffff' : '#000000',
+      overlayOpacity: isDarkMode ? 0.3 : 0.7,
       steps: ONBOARDING_STEPS,
       onDestroyed: () => {
         handleComplete();
@@ -86,7 +97,7 @@ export function useOnboarding(): UseOnboardingReturn {
     };
 
     return driver(config);
-  }, [handleComplete]);
+  }, [handleComplete, isDarkMode]);
 
   // オンボーディングを開始
   const startTour = useCallback(() => {

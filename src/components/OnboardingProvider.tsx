@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, type ReactNode } from 'react';
 import { useOnboarding, type UseOnboardingReturn } from '@/hooks/useOnboarding';
+import { useTheme } from '@/app/_hooks/useTheme';
 import 'driver.js/dist/driver.css';
 
 /**
@@ -37,7 +38,8 @@ interface OnboardingProviderProps {
  * - 子コンポーネントからstartTourを呼び出して手動開始も可能
  */
 export default function OnboardingProvider({ children }: OnboardingProviderProps) {
-  const onboarding = useOnboarding();
+  const { isDarkMode } = useTheme();
+  const onboarding = useOnboarding({ isDarkMode });
 
   // 初回訪問時に自動開始（ハイドレーション完了後、未完了の場合）
   useEffect(() => {
