@@ -1,14 +1,7 @@
 'use client';
 
 import { type ComponentProps } from 'react';
-import {
-  Provider,
-  Root,
-  Trigger,
-  Portal,
-  Content,
-  Arrow,
-} from '@radix-ui/react-tooltip';
+import { Provider, Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-tooltip';
 
 import { cn } from '@/lib/utils';
 
@@ -44,7 +37,7 @@ function TooltipContent({
           'z-50 w-fit rounded-md px-3 py-1.5 text-xs text-balance',
           'bg-foreground text-background',
           // アニメーション（表示時）
-          'origin-(--radix-tooltip-content-transform-origin) animate-in fade-in-0 zoom-in-95',
+          'animate-in fade-in-0 zoom-in-95 origin-(--radix-tooltip-content-transform-origin)',
           // アニメーション（非表示時）
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
           // スライド方向
@@ -70,4 +63,4 @@ function TooltipContent({
   );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

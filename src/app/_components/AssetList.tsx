@@ -46,6 +46,7 @@ export default function AssetList({
             key={asset.asset.ticker_symbol}
             asset={asset}
             colorIndex={index}
+            index={index}
             isFocused={isFocused}
             isDimmed={isDimmed}
             onClick={onAssetClick ? (e) => onAssetClick(index, e) : undefined}

@@ -47,12 +47,7 @@ export default function ChartTooltip({ active, payload }: ChartTooltipProps) {
       )}
     >
       {/* 銘柄名 */}
-      <div
-        className={clsx(
-          'truncate text-sm font-semibold text-gray-900',
-          'dark:text-white'
-        )}
-      >
+      <div className={clsx('truncate text-sm font-semibold text-gray-900', 'dark:text-white')}>
         {data.asset.name}
       </div>
 

@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 /* Tailwind v4: クラスベースのダークモードを有効化 */
 @custom-variant dark (&:where(.dark, .dark *));

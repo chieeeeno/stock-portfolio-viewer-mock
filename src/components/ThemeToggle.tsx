@@ -67,9 +67,7 @@ export default function ThemeToggle() {
   // ハイドレーション完了前は固定値を使用（SSRと一致させる）
   const showDarkModeIcon = isHydrated ? isDarkMode : false;
 
-  const tooltipText = showDarkModeIcon
-    ? 'ライトモードに切り替える'
-    : 'ダークモードに切り替える';
+  const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
 
   return (
     <Tooltip>

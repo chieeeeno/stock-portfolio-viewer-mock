@@ -223,9 +223,34 @@
 - [x] T091 [US5] ツールチップに保有比率（%形式）を表示 `src/components/ChartTooltip.tsx`
 - [x] T092 [US5] ツールチップのスタイリング（背景、影、角丸） `src/components/ChartTooltip.tsx`
 - [x] T093 [US5] RechartsのTooltipコンポーネントにカスタムツールチップを統合 `src/components/PortfolioChart.tsx`
-- [ ] T094 [US5] タッチデバイスでのツールチップ表示対応（タップで表示） `src/components/PortfolioChart.tsx`
+- [x] T094 [US5] タッチデバイスでのツールチップ非表示対応 `src/app/_components/PortfolioChart.tsx`
 
-**チェックポイント**: パイチャートセグメントにホバー/タップで詳細情報が表示される
+**チェックポイント**: パイチャートセグメントにホバーで詳細情報が表示される（PCのみ）
+
+---
+
+## フェーズ7.5: ユーザーストーリー4/5補完 - タッチデバイスでのチャートタップスクロール (優先度: P2)
+
+**ゴール**: タッチデバイスでパイチャートセグメントをタップした際に、該当する銘柄カードまでスムーズスクロールする
+
+**独立テスト**: タッチデバイスでセグメントをタップすると、対応する銘柄カードまでスクロールが実行される
+
+### US4/5補完のテスト
+
+- [ ] T164 [P] [US4] useTouchDeviceフックのテストを作成 `src/app/_hooks/useTouchDevice.test.ts`
+- [ ] T165 [P] [US4] AssetCardのdata-asset-index属性テストを作成 `src/app/_components/AssetCard.test.tsx`
+
+### US4/5補完の実装
+
+- [ ] T166 [US4] useTouchDeviceカスタムフックを作成 `src/app/_hooks/useTouchDevice.ts`
+- [ ] T167 [US4] AssetCardにdata-asset-index属性を追加 `src/app/_components/AssetCard.tsx`
+- [ ] T168 [US4] AssetListからAssetCardにindex propsを渡す `src/app/_components/AssetList.tsx`
+- [ ] T169 [US4] PortfolioInteractiveにuseTouchDeviceを統合 `src/app/_components/PortfolioInteractive.tsx`
+- [ ] T170 [US4] タッチデバイス時のスクロール処理を実装 `src/app/_components/PortfolioInteractive.tsx`
+- [ ] T171 [US5] PortfolioChartのツールチップ表示条件をタッチデバイス検出に変更 `src/app/_components/PortfolioChart.tsx`
+- [ ] T172 [US4] 手動テスト: タッチデバイスでセグメントタップ時にスクロールが実行されることを確認
+
+**チェックポイント**: タッチデバイスでパイチャートセグメントをタップすると該当銘柄カードまでスムーズスクロールする
 
 ---
 
@@ -401,6 +426,7 @@
 | US3A (P2)  | US1, US2（スケルトンは既存コンポーネントの形状を模倣） | -                   |
 | US4 (P2)   | US1, US2, US3, US3A（全コンポーネントが必要）          | -                   |
 | US5 (P3)   | US1（PortfolioChartが必要）                            | US6, US7, US8と並列可能  |
+| US4/5補完  | US4, US5（タッチデバイス対応の追加）                   | US6, US7, US8と並列可能  |
 | US6 (P3)   | US1, US2（全コンポーネントが必要）                     | US5, US7と並列可能  |
 | US7 (P3)   | US1, US2, US6（全UIコンポーネントとHeaderが必要）      | US5, US6, US8と並列可能  |
 | US8 (P3)   | US6（Headerが必要）                                    | US5, US7と並列可能  |
@@ -519,11 +545,12 @@ T154, T155
 | フェーズ5.5: US3A       | 12       | 3          |
 | フェーズ6: US4          | 8        | 0          |
 | フェーズ7: US5          | 9        | 2          |
+| フェーズ7.5: US4/5補完  | 9        | 2          |
 | フェーズ8: US6          | 22       | 4          |
 | フェーズ9: US7          | 28       | 4          |
 | フェーズ9.5: US8        | 10       | 2          |
 | フェーズ10: 仕上げ      | 9        | 3          |
-| **合計**                | **166**  | **44**     |
+| **合計**                | **175**  | **46**     |
 
 ---
 

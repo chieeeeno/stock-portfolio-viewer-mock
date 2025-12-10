@@ -57,13 +57,7 @@ vi.mock('recharts', async () => {
       fill: string;
       className?: string;
       'data-testid'?: string;
-    }) => (
-      <div
-        data-testid={dataTestId}
-        data-fill={fill}
-        className={className}
-      />
-    ),
+    }) => <div data-testid={dataTestId} data-fill={fill} className={className} />,
   };
 });
 

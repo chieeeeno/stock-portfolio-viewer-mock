@@ -81,9 +81,7 @@ describe('GlobalHeader', () => {
       render(<GlobalHeader />);
 
       // テーマ切り替えボタンが存在する
-      expect(
-        screen.getByRole('button', { name: /モードに切り替え/i })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /モードに切り替え/i })).toBeInTheDocument();
     });
 
     it('ユーザーアイコンを表示', () => {

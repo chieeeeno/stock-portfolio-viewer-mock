@@ -6,6 +6,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import ChartTooltip from './ChartTooltip';
 import { useChartTooltip } from '../_hooks/useChartTooltip';
 import { useBreakpoint } from '../_hooks/useBreakpoint';
+import { useTouchDevice } from '../_hooks/useTouchDevice';
 import { useChartColors } from '../_hooks/useChartColors';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
@@ -21,7 +22,10 @@ import clsx from 'clsx';
 import type { Breakpoint } from '../_hooks/useBreakpoint';
 
 // ブレークポイントに応じたチャートサイズ設定
-const CHART_SIZES: Record<Breakpoint, { innerRadius: number; outerRadius: number; centerSize: number }> = {
+const CHART_SIZES: Record<
+  Breakpoint,
+  { innerRadius: number; outerRadius: number; centerSize: number }
+> = {
   mobile: { innerRadius: 90, outerRadius: 130, centerSize: 180 },
   tablet: { innerRadius: 110, outerRadius: 160, centerSize: 220 },
   desktop: { innerRadius: 130, outerRadius: 190, centerSize: 260 },
@@ -91,6 +95,9 @@ export default function PortfolioChart({
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
 
+  // タッチデバイス検出（ツールチップ表示制御用）
+  const isTouchDevice = useTouchDevice();
+
   // テーマに応じたチャートカラーを取得
   const chartColors = useChartColors();
 
@@ -150,7 +157,11 @@ export default function PortfolioChart({
           onMouseMove={handleChartMouseMove}
           onMouseLeave={handleChartMouseLeave}
         >
-          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 300, height: 300 }}>
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            initialDimension={{ width: 300, height: 300 }}
+          >
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
               <Pie
@@ -227,7 +238,9 @@ export default function PortfolioChart({
         </div>
       </div>
       {/* T093, T094: マウス追従ツールチップ（createPortalでbodyに直接レンダリング） */}
-      {hoveredAsset &&
+      {/* タッチデバイスではツールチップを非表示 */}
+      {!isTouchDevice &&
+        hoveredAsset &&
         typeof document !== 'undefined' &&
         createPortal(
           <div

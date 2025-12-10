@@ -49,7 +49,7 @@ function PortfolioSkeleton() {
  */
 export default function Home() {
   return (
-    <main className={clsx('mx-auto w-full max-w-4xl px-4 py-8', 'sm:px-6')}>
+    <main className={clsx('mx-auto w-full max-w-4xl px-4 py-4', 'sm:px-6 sm:py-8')}>
       <div className="mb-6">
         <h2 className={clsx('text-2xl font-bold text-gray-900', 'dark:text-white')}>
           ポートフォリオ
