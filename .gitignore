@@ -429,7 +429,12 @@ vite.config.ts.timestamp-*
 # ====================================
 # Worktree working directories
 /worktree/
-docs/
+
+# ====================================
+# Documentation
+# ====================================
+# Private/local documents (PDFs, etc.)
+docs/*.pdf
 
 # Playwright MCP
 .playwright-mcp/
