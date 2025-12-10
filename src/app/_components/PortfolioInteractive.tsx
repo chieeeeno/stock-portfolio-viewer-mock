@@ -59,7 +59,9 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
         onClearFocus={handleClearFocus}
       />
       <div onClick={(e) => e.stopPropagation()}>
-        <h2 className={clsx('mb-2 text-xl font-bold text-gray-900 dark:text-white', 'sm:mb-4')}>保有銘柄</h2>
+        <h2 className={clsx('mb-2 text-xl font-bold text-gray-900 dark:text-white', 'sm:mb-4')}>
+          保有銘柄
+        </h2>
         {/* T064: AssetListにfocusedIndexとハンドラを渡す */}
         <AssetList
           holdingAssets={data.holding_assets}

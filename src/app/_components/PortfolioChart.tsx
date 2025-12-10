@@ -21,7 +21,10 @@ import clsx from 'clsx';
 import type { Breakpoint } from '../_hooks/useBreakpoint';
 
 // ブレークポイントに応じたチャートサイズ設定
-const CHART_SIZES: Record<Breakpoint, { innerRadius: number; outerRadius: number; centerSize: number }> = {
+const CHART_SIZES: Record<
+  Breakpoint,
+  { innerRadius: number; outerRadius: number; centerSize: number }
+> = {
   mobile: { innerRadius: 90, outerRadius: 130, centerSize: 180 },
   tablet: { innerRadius: 110, outerRadius: 160, centerSize: 220 },
   desktop: { innerRadius: 130, outerRadius: 190, centerSize: 260 },
@@ -150,7 +153,11 @@ export default function PortfolioChart({
           onMouseMove={handleChartMouseMove}
           onMouseLeave={handleChartMouseLeave}
         >
-          <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 300, height: 300 }}>
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+            initialDimension={{ width: 300, height: 300 }}
+          >
             <PieChart>
               {/* T028, T029: ドーナツ形状、12時位置起点（startAngle=90）、時計回り（endAngle=-270） */}
               <Pie

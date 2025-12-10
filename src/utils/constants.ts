@@ -49,7 +49,6 @@ export const CHART_COLORS_DARK = [
   colors.orange[400],
 ];
 
-
 /**
  * 評価損益の状態に応じた色
  */

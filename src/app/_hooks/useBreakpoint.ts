@@ -46,11 +46,7 @@ function createThrottleState(): ThrottleState {
  * @param state - throttle状態（副作用で更新される）
  * @param intervalMs - throttle間隔（ミリ秒）
  */
-function executeWithThrottle(
-  callback: () => void,
-  state: ThrottleState,
-  intervalMs: number
-): void {
+function executeWithThrottle(callback: () => void, state: ThrottleState, intervalMs: number): void {
   const now = Date.now();
   const timeSinceLastExecution = now - state.lastExecutedAt;
 
