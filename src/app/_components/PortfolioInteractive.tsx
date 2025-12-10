@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, type MouseEvent } from 'react';
 import type { PortfolioResponse } from '../_types/portfolio';
 import PortfolioChart from './PortfolioChart';
 import AssetList from './AssetList';
+import clsx from 'clsx';
 
 interface PortfolioInteractiveProps {
   /** ポートフォリオデータ */
@@ -46,7 +47,7 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
   }, [focusedIndex]);
 
   return (
-    <div className="flex flex-col gap-y-16">
+    <div className="flex flex-col gap-y-8 sm:gap-y-16">
       {/* T060: PortfolioChartにfocusedIndexとハンドラを渡す */}
       <PortfolioChart
         holdingAssets={data.holding_assets}
@@ -58,7 +59,7 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
         onClearFocus={handleClearFocus}
       />
       <div onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">保有銘柄</h2>
+        <h2 className={clsx('mb-2 text-xl font-bold text-gray-900 dark:text-white', 'sm:mb-4')}>保有銘柄</h2>
         {/* T064: AssetListにfocusedIndexとハンドラを渡す */}
         <AssetList
           holdingAssets={data.holding_assets}
