@@ -213,6 +213,64 @@ flowchart TD
 - ブラウザ動作確認
 - 最終調整
 
+## タッチデバイス対応設計
+
+### タッチデバイス検出
+
+タッチデバイスとPCで異なるUXを提供するため、`useTouchDevice`カスタムフックを作成する。
+
+```typescript
+// src/app/_hooks/useTouchDevice.ts
+export function useTouchDevice(): boolean {
+  // SSR時はfalseを返す
+  // クライアント側でnavigator.maxTouchPointsをチェック
+}
+```
+
+**検出ロジック**:
+- `navigator.maxTouchPoints > 0` でタッチデバイスを判定
+- SSR時は`false`（非タッチデバイス）として扱う
+
+### チャートセグメントタップ時のスクロール
+
+```mermaid
+flowchart TD
+    A[セグメントタップ] --> B{タッチデバイス?}
+    B -->|Yes| C[該当銘柄カードへスクロール]
+    C --> D[フォーカス状態を設定]
+    B -->|No| D
+```
+
+**実装箇所**: `PortfolioInteractive.tsx`
+
+**スクロール処理**:
+```typescript
+const scrollToAssetCard = (index: number) => {
+  const card = document.querySelector(`[data-asset-index="${index}"]`);
+  card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+```
+
+### 銘柄カードのdata属性
+
+`AssetCard`コンポーネントに`data-asset-index`属性を追加し、スクロールターゲットとして使用する。
+
+```tsx
+// AssetCard.tsx
+<div
+  data-testid="asset-card"
+  data-asset-index={index}
+  ...
+>
+```
+
+### ツールチップ表示の条件変更
+
+現在の実装（ブレークポイントによる判定）をタッチデバイス検出に変更する。
+
+**変更前**: `breakpoint !== 'mobile'`
+**変更後**: `!isTouchDevice`
+
 ## Related Documents
 
 - [spec.md](./spec.md) - 機能仕様書
