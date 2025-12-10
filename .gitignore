@@ -433,3 +433,5 @@ docs/
 
 # Playwright MCP
 .playwright-mcp/
+
+CURRENT_WORK.md
