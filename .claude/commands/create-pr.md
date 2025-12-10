@@ -122,7 +122,7 @@ git push -u origin <現在のブランチ名>
 `mcp__github__create_pull_request` を使用してPRを作成：
 
 - **owner**: リモートURLから抽出（例: `tomoki`）
-- **repo**: リモートURLから抽出（例: `bloomo-task`）
+- **repo**: リモートURLから抽出（例: `stock-portfolio-viewer-mock`）
 - **title**: Step 4で生成したタイトル
 - **body**: Step 4で生成した本文
 - **head**: 現在のブランチ名

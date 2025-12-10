@@ -1,27 +1,27 @@
-# bloomo-task Development Guidelines
+# stock-portfolio-viewer-mock Development Guidelines
 
 Last updated: 2025-12-08
 
 ## Technology Stack
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Framework | Next.js (App Router) | 16.0.7 |
-| Language | TypeScript | 5.9.3 |
-| UI | React | 19.2.0 |
-| Charts | Recharts | 3.5.1 |
-| Styling | Tailwind CSS | 4.1.17 |
-| Testing | Vitest | 4.0.15 |
-| Testing | React Testing Library | 16.3.0 |
-| Linter | ESLint | 9.39.1 |
-| Formatter | Prettier | 3.7.4 |
-| Package Manager | pnpm | 10.24.x |
-| Runtime | Node.js | 24.x |
+| Category        | Technology            | Version |
+| --------------- | --------------------- | ------- |
+| Framework       | Next.js (App Router)  | 16.0.7  |
+| Language        | TypeScript            | 5.9.3   |
+| UI              | React                 | 19.2.0  |
+| Charts          | Recharts              | 3.5.1   |
+| Styling         | Tailwind CSS          | 4.1.17  |
+| Testing         | Vitest                | 4.0.15  |
+| Testing         | React Testing Library | 16.3.0  |
+| Linter          | ESLint                | 9.39.1  |
+| Formatter       | Prettier              | 3.7.4   |
+| Package Manager | pnpm                  | 10.24.x |
+| Runtime         | Node.js               | 24.x    |
 
 ## Project Structure
 
 ```text
-bloomo-task/
+stock-portfolio-viewer-mock/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── _components/        # Page-specific components (colocation)
@@ -57,12 +57,12 @@ bloomo-task/
 
 ### 基本原則
 
-| ディレクトリ | 用途 | 例 |
-|-------------|------|-----|
-| `src/app/_components/` | ページ固有のコンポーネント | PortfolioChart, AssetCard |
-| `src/app/_types/` | ページ固有の型定義 | portfolio.ts |
-| `src/components/` | 複数ページで共有するコンポーネント | GlobalHeader, UserIcon |
-| `src/utils/` | 共有ユーティリティ関数 | formatters.ts, constants.ts |
+| ディレクトリ           | 用途                               | 例                          |
+| ---------------------- | ---------------------------------- | --------------------------- |
+| `src/app/_components/` | ページ固有のコンポーネント         | PortfolioChart, AssetCard   |
+| `src/app/_types/`      | ページ固有の型定義                 | portfolio.ts                |
+| `src/components/`      | 複数ページで共有するコンポーネント | GlobalHeader, UserIcon      |
+| `src/utils/`           | 共有ユーティリティ関数             | formatters.ts, constants.ts |
 
 ### `_`プレフィックスについて
 
@@ -140,9 +140,9 @@ import clsx from 'clsx';
   className={clsx(
     'flex items-center gap-3 rounded-xl bg-white px-3 py-4',
     'sm:gap-4 sm:px-5 sm:py-5',
-    'dark:bg-zinc-800',
+    'dark:bg-zinc-800'
   )}
-/>
+/>;
 ```
 
 #### グループ化の順序
@@ -170,11 +170,13 @@ import clsx from 'clsx';
 ```
 
 **理由:**
+
 - 一貫性のあるデザインシステムを維持するため
 - マジックナンバーを避け、保守性を向上させるため
 - デザイントークンとして管理しやすくするため
 
 **対応方法:**
+
 1. まず標準のTailwindクラスで代替できないか検討する
 2. 標準クラスで対応できない場合は、`globals.css` にカスタムクラスを追加する
 3. 頻繁に使用する値は Tailwind の設定（`@theme`）に追加することを検討する
@@ -250,21 +252,26 @@ When the context window remaining drops below 10%:
 2. **Notify the user** that context is running low and handoff is prepared
 
 3. **Format for CURRENT_WORK.md update**:
+
    ```markdown
    ## Session Handoff (YYYY-MM-DD HH:MM)
 
    ### Current Task
+
    [What was being worked on]
 
    ### Completed This Session
+
    - [Item 1]
    - [Item 2]
 
    ### Next Steps
+
    1. [Next action]
    2. [Following action]
 
    ### Resume Command
+
    `/speckit.tasks` or specific command to continue
    ```
 
