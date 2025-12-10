@@ -237,18 +237,18 @@
 
 ### US4/5補完のテスト
 
-- [ ] T164 [P] [US4] useTouchDeviceフックのテストを作成 `src/app/_hooks/useTouchDevice.test.ts`
-- [ ] T165 [P] [US4] AssetCardのdata-asset-index属性テストを作成 `src/app/_components/AssetCard.test.tsx`
+- [x] T164 [P] [US4] useTouchDeviceフックのテストを作成 `src/app/_hooks/useTouchDevice.test.ts`
+- [x] T165 [P] [US4] AssetCardのdata-asset-index属性テストを作成 `src/app/_components/AssetCard.test.tsx`
 
 ### US4/5補完の実装
 
-- [ ] T166 [US4] useTouchDeviceカスタムフックを作成 `src/app/_hooks/useTouchDevice.ts`
-- [ ] T167 [US4] AssetCardにdata-asset-index属性を追加 `src/app/_components/AssetCard.tsx`
-- [ ] T168 [US4] AssetListからAssetCardにindex propsを渡す `src/app/_components/AssetList.tsx`
-- [ ] T169 [US4] PortfolioInteractiveにuseTouchDeviceを統合 `src/app/_components/PortfolioInteractive.tsx`
-- [ ] T170 [US4] タッチデバイス時のスクロール処理を実装 `src/app/_components/PortfolioInteractive.tsx`
-- [ ] T171 [US5] PortfolioChartのツールチップ表示条件をタッチデバイス検出に変更 `src/app/_components/PortfolioChart.tsx`
-- [ ] T172 [US4] 手動テスト: タッチデバイスでセグメントタップ時にスクロールが実行されることを確認
+- [x] T166 [US4] useTouchDeviceカスタムフックを作成 `src/app/_hooks/useTouchDevice.ts`
+- [x] T167 [US4] AssetCardにdata-asset-index属性を追加 `src/app/_components/AssetCard.tsx`
+- [x] T168 [US4] AssetListからAssetCardにindex propsを渡す `src/app/_components/AssetList.tsx`
+- [x] T169 [US4] PortfolioInteractiveにuseTouchDeviceを統合 `src/app/_components/PortfolioInteractive.tsx`
+- [x] T170 [US4] タッチデバイス時のスクロール処理を実装 `src/app/_components/PortfolioInteractive.tsx`
+- [x] T171 [US5] PortfolioChartのツールチップ表示条件をタッチデバイス検出に変更 `src/app/_components/PortfolioChart.tsx`
+- [x] T172 [US4] 手動テスト: タッチデバイスでセグメントタップ時にスクロールが実行されることを確認
 
 **チェックポイント**: タッチデバイスでパイチャートセグメントをタップすると該当銘柄カードまでスムーズスクロールする
 
