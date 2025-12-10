@@ -40,6 +40,8 @@ interface AssetCardProps {
   asset: HoldingAsset;
   /** カラーインデックス（チャートカラー配列のインデックス） */
   colorIndex: number;
+  /** 銘柄のインデックス（スクロールターゲット用） */
+  index: number;
   /** フォーカス状態かどうか */
   isFocused?: boolean;
   /** 半透過状態かどうか */
@@ -58,6 +60,7 @@ interface AssetCardProps {
 export default function AssetCard({
   asset,
   colorIndex,
+  index,
   isFocused = false,
   isDimmed = false,
   onClick,
@@ -75,6 +78,7 @@ export default function AssetCard({
   return (
     <div
       data-testid="asset-card"
+      data-asset-index={index}
       className={cardVariants({
         focused: isFocused,
         dimmed: isDimmed,

@@ -6,6 +6,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import ChartTooltip from './ChartTooltip';
 import { useChartTooltip } from '../_hooks/useChartTooltip';
 import { useBreakpoint } from '../_hooks/useBreakpoint';
+import { useTouchDevice } from '../_hooks/useTouchDevice';
 import { useChartColors } from '../_hooks/useChartColors';
 import { tv } from 'tailwind-variants';
 import type { HoldingAsset } from '../_types/portfolio';
@@ -93,6 +94,9 @@ export default function PortfolioChart({
   // ブレークポイントに応じたサイズを取得
   const breakpoint = useBreakpoint();
   const chartSize = CHART_SIZES[breakpoint];
+
+  // タッチデバイス検出（ツールチップ表示制御用）
+  const isTouchDevice = useTouchDevice();
 
   // テーマに応じたチャートカラーを取得
   const chartColors = useChartColors();
@@ -234,8 +238,8 @@ export default function PortfolioChart({
         </div>
       </div>
       {/* T093, T094: マウス追従ツールチップ（createPortalでbodyに直接レンダリング） */}
-      {/* SPではツールチップを非表示 */}
-      {breakpoint !== 'mobile' &&
+      {/* タッチデバイスではツールチップを非表示 */}
+      {!isTouchDevice &&
         hoveredAsset &&
         typeof document !== 'undefined' &&
         createPortal(

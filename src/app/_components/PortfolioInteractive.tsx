@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, type MouseEvent } from 'react';
 import type { PortfolioResponse } from '../_types/portfolio';
 import PortfolioChart from './PortfolioChart';
 import AssetList from './AssetList';
+import { useTouchDevice } from '../_hooks/useTouchDevice';
 import clsx from 'clsx';
 
 interface PortfolioInteractiveProps {
@@ -23,11 +24,29 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
   // T057: フォーカス中の銘柄インデックス（null=フォーカスなし）
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
-  // T058: 銘柄クリックハンドラ（同じ銘柄でトグル、別の銘柄でフォーカス設定）
-  const handleAssetClick = useCallback((index: number, e?: MouseEvent) => {
-    e?.stopPropagation();
-    setFocusedIndex((prev) => (prev === index ? null : index));
+  // タッチデバイス検出
+  const isTouchDevice = useTouchDevice();
+
+  // 該当する銘柄カードへスクロール
+  const scrollToAssetCard = useCallback((index: number) => {
+    const card = document.querySelector(`[data-asset-index="${index}"]`);
+    card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, []);
+
+  // T058: 銘柄クリックハンドラ（同じ銘柄でトグル、別の銘柄でフォーカス設定）
+  // タッチデバイスの場合は該当銘柄カードへスクロールも実行
+  const handleAssetClick = useCallback(
+    (index: number, e?: MouseEvent) => {
+      e?.stopPropagation();
+      setFocusedIndex((prev) => (prev === index ? null : index));
+
+      // タッチデバイスの場合、該当銘柄カードへスクロール
+      if (isTouchDevice) {
+        scrollToAssetCard(index);
+      }
+    },
+    [isTouchDevice, scrollToAssetCard]
+  );
 
   // T059: フォーカス解除ハンドラ
   const handleClearFocus = useCallback(() => {
