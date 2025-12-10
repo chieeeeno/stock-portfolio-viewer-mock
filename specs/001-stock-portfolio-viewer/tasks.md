@@ -324,22 +324,22 @@
 
 ### US8のライブラリ選定
 
-- [ ] T154 [US8] ツールチップライブラリの調査・比較（shadcn/ui, Radix UI, Floating UI, 自前実装）
-- [ ] T155 [US8] 選定したライブラリをインストール（必要な場合）
+- [x] T154 [US8] ツールチップライブラリの調査・比較（shadcn/ui, Radix UI, Floating UI, 自前実装）
+- [x] T155 [US8] 選定したライブラリをインストール（必要な場合）
 
 ### US8のテスト
 
-- [ ] T156 [P] [US8] ヘルプアイコンボタンのツールチップ表示テストを作成 `src/components/Header.test.tsx`
-- [ ] T157 [P] [US8] テーマ切り替えボタンのツールチップ表示テストを作成（ライト/ダーク両モード） `src/components/ThemeToggle.test.tsx`
+- [x] T156 [P] [US8] ヘルプアイコンボタンのツールチップ表示テストを作成 `src/components/Header.test.tsx`
+- [x] T157 [P] [US8] テーマ切り替えボタンのツールチップ表示テストを作成（ライト/ダーク両モード） `src/components/ThemeToggle.test.tsx`
 
 ### US8の実装
 
-- [ ] T158 [US8] 汎用Tooltipコンポーネントを作成 `src/components/Tooltip.tsx`
-- [ ] T159 [US8] Tooltipコンポーネントにホバー表示/非表示ロジックを実装 `src/components/Tooltip.tsx`
-- [ ] T160 [US8] Tooltipコンポーネントにスタイリング（背景、影、角丸、ダークモード対応）を実装 `src/components/Tooltip.tsx`
-- [ ] T161 [US8] ヘルプアイコンボタンにTooltipを統合（「ヘルプを表示する」） `src/components/Header.tsx`
-- [ ] T162 [US8] テーマ切り替えボタンにTooltipを統合（「ライトモードに切り替える」/「ダークモードに切り替える」） `src/components/ThemeToggle.tsx`
-- [ ] T163 [US8] 手動テスト: 各ボタンにホバーしてツールチップが表示されることを確認
+- [x] T158 [US8] 汎用Tooltipコンポーネントを作成 `src/components/Tooltip.tsx`
+- [x] T159 [US8] Tooltipコンポーネントにホバー表示/非表示ロジックを実装 `src/components/Tooltip.tsx`
+- [x] T160 [US8] Tooltipコンポーネントにスタイリング（背景、影、角丸、ダークモード対応）を実装 `src/components/Tooltip.tsx`
+- [x] T161 [US8] ヘルプアイコンボタンにTooltipを統合（「ヘルプを表示する」） `src/components/Header.tsx`
+- [x] T162 [US8] テーマ切り替えボタンにTooltipを統合（「ライトモードに切り替える」/「ダークモードに切り替える」） `src/components/ThemeToggle.tsx`
+- [x] T163 [US8] 手動テスト: 各ボタンにホバーしてツールチップが表示されることを確認
 
 **チェックポイント**: ヘッダーの各ボタンにホバーすると適切なツールチップが表示される
 
