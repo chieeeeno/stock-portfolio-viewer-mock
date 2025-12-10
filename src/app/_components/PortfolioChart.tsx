@@ -234,7 +234,9 @@ export default function PortfolioChart({
         </div>
       </div>
       {/* T093, T094: マウス追従ツールチップ（createPortalでbodyに直接レンダリング） */}
-      {hoveredAsset &&
+      {/* SPではツールチップを非表示 */}
+      {breakpoint !== 'mobile' &&
+        hoveredAsset &&
         typeof document !== 'undefined' &&
         createPortal(
           <div
