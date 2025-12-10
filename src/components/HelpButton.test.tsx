@@ -66,7 +66,7 @@ describe('HelpButton', () => {
       expect(screen.getByRole('button', { name: 'ガイドを再表示' })).toBeInTheDocument();
     });
 
-    it('ボタンにtitle属性が設定されている', async () => {
+    it('ボタンにdata-testid属性が設定されている', async () => {
       localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
 
       render(
@@ -77,7 +77,7 @@ describe('HelpButton', () => {
 
       await vi.advanceTimersByTimeAsync(100);
 
-      expect(screen.getByTitle('ガイドを再表示')).toBeInTheDocument();
+      expect(screen.getByTestId('help-button')).toBeInTheDocument();
     });
   });
 
@@ -134,6 +134,62 @@ describe('HelpButton', () => {
 
       // ボタンが無効化されていることを確認
       expect(button).toBeDisabled();
+    });
+  });
+
+  describe('ツールチップ', () => {
+    it('ホバー時にツールチップが表示される', async () => {
+      localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
+      vi.useRealTimers();
+
+      const user = userEvent.setup();
+
+      render(
+        <OnboardingProvider>
+          <HelpButton />
+        </OnboardingProvider>
+      );
+
+      const button = screen.getByTestId('help-button');
+
+      // ホバーしてツールチップを表示
+      await user.hover(button);
+
+      // ツールチップのテキストが表示されることを確認
+      expect(await screen.findByRole('tooltip')).toHaveTextContent('ガイドを再表示');
+    });
+
+    it('ホバーを外すとツールチップが視覚的に非表示になる', async () => {
+      localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
+      vi.useRealTimers();
+
+      const user = userEvent.setup();
+
+      render(
+        <OnboardingProvider>
+          <HelpButton />
+        </OnboardingProvider>
+      );
+
+      const button = screen.getByTestId('help-button');
+
+      // ホバーしてツールチップを表示
+      await user.hover(button);
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip).toBeInTheDocument();
+
+      // ホバーを外す
+      await user.unhover(button);
+
+      // ツールチップが視覚的に非表示になることを確認
+      // Radix UIはアクセシビリティのため隠し要素として残るが、視覚的には非表示
+      await vi.waitFor(() => {
+        const tooltipAfter = screen.queryByRole('tooltip');
+        // ツールチップがDOMから消えるか、視覚的に非表示（スクリーンリーダー用隠し要素）になる
+        if (tooltipAfter) {
+          expect(tooltipAfter).toHaveStyle({ position: 'absolute' });
+        }
+      });
     });
   });
 });

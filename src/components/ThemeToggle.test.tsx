@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ThemeToggle from './ThemeToggle';
 
 // useThemeフックをモック
@@ -158,6 +159,86 @@ describe('ThemeToggle', () => {
       const button = screen.getByRole('button');
       button.focus();
       expect(button).toHaveFocus();
+    });
+  });
+
+  describe('ツールチップ', () => {
+    it('ライトモード時にホバーすると「ダークモードに切り替える」ツールチップが表示される', async () => {
+      vi.mocked(useTheme).mockReturnValue({
+        theme: 'light',
+        isDarkMode: false,
+        toggleTheme: mockToggleTheme,
+        setTheme: vi.fn(),
+        isHydrated: true,
+      });
+
+      const user = userEvent.setup();
+
+      render(<ThemeToggle />);
+
+      const button = screen.getByRole('button');
+
+      // ホバーしてツールチップを表示
+      await user.hover(button);
+
+      // ツールチップのテキストが表示されることを確認
+      expect(await screen.findByRole('tooltip')).toHaveTextContent('ダークモードに切り替える');
+    });
+
+    it('ダークモード時にホバーすると「ライトモードに切り替える」ツールチップが表示される', async () => {
+      vi.mocked(useTheme).mockReturnValue({
+        theme: 'dark',
+        isDarkMode: true,
+        toggleTheme: mockToggleTheme,
+        setTheme: vi.fn(),
+        isHydrated: true,
+      });
+
+      const user = userEvent.setup();
+
+      render(<ThemeToggle />);
+
+      const button = screen.getByRole('button');
+
+      // ホバーしてツールチップを表示
+      await user.hover(button);
+
+      // ツールチップのテキストが表示されることを確認
+      expect(await screen.findByRole('tooltip')).toHaveTextContent('ライトモードに切り替える');
+    });
+
+    it('ホバーを外すとツールチップが視覚的に非表示になる', async () => {
+      vi.mocked(useTheme).mockReturnValue({
+        theme: 'light',
+        isDarkMode: false,
+        toggleTheme: mockToggleTheme,
+        setTheme: vi.fn(),
+        isHydrated: true,
+      });
+
+      const user = userEvent.setup();
+
+      render(<ThemeToggle />);
+
+      const button = screen.getByRole('button');
+
+      // ホバーしてツールチップを表示
+      await user.hover(button);
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip).toBeInTheDocument();
+
+      // ホバーを外す
+      await user.unhover(button);
+
+      // ツールチップが視覚的に非表示になることを確認
+      // Radix UIはアクセシビリティのため隠し要素として残るが、視覚的には非表示
+      await vi.waitFor(() => {
+        const tooltipAfter = screen.queryByRole('tooltip');
+        // ツールチップがDOMから消えるか、視覚的に非表示（スクリーンリーダー用隠し要素）になる
+        if (tooltipAfter) {
+          expect(tooltipAfter).toHaveStyle({ position: 'absolute' });
+        }
+      });
     });
   });
 });

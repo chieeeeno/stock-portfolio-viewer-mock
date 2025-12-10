@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { useTheme } from '@/app/_hooks/useTheme';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 /**
  * 太陽アイコン（ライトモード用）
@@ -58,6 +59,7 @@ function MoonIcon() {
  * - ライトモード: 月アイコン表示（クリックでダークへ）
  * - ダークモード: 太陽アイコン表示（クリックでライトへ）
  * - ハイドレーション中は月アイコン（ライトモード想定）を表示してSSR/クライアント一致を保証
+ * - ホバー時にツールチップを表示
  */
 export default function ThemeToggle() {
   const { isDarkMode, toggleTheme, isHydrated } = useTheme();
@@ -65,19 +67,30 @@ export default function ThemeToggle() {
   // ハイドレーション完了前は固定値を使用（SSRと一致させる）
   const showDarkModeIcon = isHydrated ? isDarkMode : false;
 
+  const tooltipText = showDarkModeIcon
+    ? 'ライトモードに切り替える'
+    : 'ダークモードに切り替える';
+
   return (
-    <button
-      type="button"
-      data-driver="theme-toggle"
-      onClick={toggleTheme}
-      aria-label={showDarkModeIcon ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
-      className={clsx(
-        'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-colors',
-        'text-gray-600 hover:bg-gray-100',
-        'dark:text-gray-300 dark:hover:bg-zinc-700'
-      )}
-    >
-      {showDarkModeIcon ? <SunIcon /> : <MoonIcon />}
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          data-driver="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={showDarkModeIcon ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
+          className={clsx(
+            'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-colors',
+            'text-gray-600 hover:bg-gray-100',
+            'dark:text-gray-300 dark:hover:bg-zinc-700'
+          )}
+        >
+          {showDarkModeIcon ? <SunIcon /> : <MoonIcon />}
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom" sideOffset={4}>
+        {tooltipText}
+      </TooltipContent>
+    </Tooltip>
   );
 }
