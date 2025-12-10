@@ -24,8 +24,8 @@ export default function GlobalHeader({ appName = APP_NAME, userName }: GlobalHea
   return (
     <header
       className={clsx(
-        'sticky top-0 z-50 w-full border-b border-gray-200 bg-white',
-        'dark:border-zinc-800 dark:bg-zinc-900'
+        'sticky top-0 z-50 w-full border-b border-gray-200 bg-white/70 backdrop-blur-md',
+        'dark:border-zinc-800 dark:bg-zinc-900/80'
       )}
     >
       <div className={clsx('flex h-14 items-center justify-between px-4', 'sm:h-16 sm:px-6')}>
