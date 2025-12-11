@@ -5,7 +5,7 @@ import { useOnboardingContext } from '@/components/OnboardingProvider';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
 import { iconButtonVariants } from './iconButtonVariants';
-import { HEADER_ICON_SIZE } from './constants';
+import { HEADER_ICON_CLASS } from './constants';
 
 const TOOLTIP_TEXT = 'ガイドを再表示';
 
@@ -28,7 +28,7 @@ export default function HelpButton() {
           aria-label={TOOLTIP_TEXT}
           className={iconButtonVariants()}
         >
-          <Icon path={mdiHelpCircleOutline} className={HEADER_ICON_SIZE} data-testid="help-icon" />
+          <Icon path={mdiHelpCircleOutline} className={HEADER_ICON_CLASS} data-testid="help-icon" />
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" sideOffset={4}>

@@ -6,13 +6,13 @@
  */
 
 /**
- * ヘッダーアイコン用サイズ（ThemeToggle, HelpButton）
+ * ヘッダーアイコン用Tailwindクラス（ThemeToggle, HelpButton）
  * SP: 20px → タブレット以上: 24px
  */
-export const HEADER_ICON_SIZE = 'h-5 w-5 sm:h-6 sm:w-6';
+export const HEADER_ICON_CLASS = 'h-5 w-5 sm:h-6 sm:w-6';
 
 /**
- * ユーザーアバター用サイズ（UserIcon）
+ * ユーザーアバター用Tailwindクラス（UserIcon）
  * SP: 32px → タブレット以上: 40px
  */
-export const HEADER_AVATAR_SIZE = 'h-8 w-8 sm:h-10 sm:w-10';
+export const HEADER_AVATAR_CLASS = 'h-8 w-8 sm:h-10 sm:w-10';
