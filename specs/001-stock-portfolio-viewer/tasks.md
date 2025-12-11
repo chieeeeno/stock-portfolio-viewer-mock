@@ -435,9 +435,9 @@
 
 **目的**: 最終改善と品質保証
 
-- [ ] T117 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
-- [ ] T118 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
-- [ ] T119 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
+- [x] T117 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
+- [x] T118 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
+- [x] T119 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
 - [ ] T120 `pnpm test:run` で全テストを実行し、100%パスを確認
 - [ ] T121 `pnpm lint` でリンターを実行し、問題を修正
 - [ ] T122 `pnpm format` でフォーマッターを実行し、フォーマットを確認
@@ -631,3 +631,122 @@ T154, T155
 - 任意のチェックポイントで停止してストーリーを独立して検証可能
 - すべてのファイルパスはリポジトリルートからの相対パス
 - Rechartsを使用するコンポーネントには `'use client'` ディレクティブを使用
+
+---
+
+## フェーズ11: リファクタリング（コード品質改善）
+
+**目的**: コードの保守性・一貫性・再利用性の向上
+**参照**: `specs/001-stock-portfolio-viewer/refactoring.md`
+
+**⚠️ 重要**: 機能に影響を与えない非破壊的な改善。各タスク完了後にテストがパスすることを確認
+
+### Phase 11.1: ユーティリティ関数の改善（優先度高）
+
+- [ ] T197 [P] [R001] formatWithSign ヘルパー関数を作成 `src/utils/formatters.ts`
+- [ ] T198 [R001] formatGainRatio を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [ ] T199 [R001] formatGainAmount を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [ ] T200 [R001] formatGainAmountWithCurrency を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [ ] T201 [R001] formatWithSign のユニットテストを追加 `src/utils/formatters.test.ts`
+- [ ] T202 [P] [R002] sortAssetsByHoldingRatio ユーティリティ関数を作成 `src/utils/assetUtils.ts`
+- [ ] T203 [R002] sortAssetsByHoldingRatio のユニットテストを作成 `src/utils/assetUtils.test.ts`
+- [ ] T204 [R002] PortfolioChart のソート処理を共通関数に置換 `src/app/_components/PortfolioChart.tsx`
+- [ ] T205 [R002] AssetList のソート処理を共通関数に置換 `src/app/_components/AssetList.tsx`
+- [ ] T206 [P] [R005] ツールチップ位置計算の定数を抽出 `src/app/_hooks/useChartTooltip.ts`
+
+**チェックポイント**: ユーティリティ関数がDRY原則に従い、テストがパス
+
+### Phase 11.2: 共通定数の整理（優先度高）
+
+- [ ] T207 [P] [R003] レスポンシブサイズ定数ファイルを作成 `src/utils/responsiveClasses.ts`
+- [ ] T208 [R003] ThemeToggle のアイコンサイズを共通定数に置換 `src/components/ThemeToggle.tsx`
+- [ ] T209 [R003] HelpButton のアイコンサイズを共通定数に置換 `src/components/HelpButton.tsx`
+- [ ] T210 [R003] UserIcon のサイズを共通定数に置換 `src/components/UserIcon.tsx`
+
+**チェックポイント**: レスポンシブサイズ定数が一元管理され、一貫性が向上
+
+### Phase 11.3: 設計改善（優先度中）
+
+- [ ] T211 [P] [R004] GainStatus 用のスタイル定数ファイルを作成 `src/utils/gainStatusStyles.ts`
+- [ ] T212 [R004] getGainStatus 関数をシンプル化（GainStatus のみ返す） `src/utils/formatters.ts`
+- [ ] T213 [R004] GainStatusInfo インターフェースを削除 `src/app/_types/portfolio.ts`
+- [ ] T214 [R004] AssetCard の損益色ロジックを新方式に更新 `src/app/_components/AssetCard.tsx`
+- [ ] T215 [R004] PortfolioChart の損益色ロジックを新方式に更新 `src/app/_components/PortfolioChart.tsx`
+- [ ] T216 [R004] ChartTooltip の損益色ロジックを新方式に更新 `src/app/_components/ChartTooltip.tsx`
+- [ ] T217 [R004] formatters.test.ts を新方式に合わせて更新 `src/utils/formatters.test.ts`
+- [ ] T218 [P] [R006] CLAUDE.md に Tailwind クラス結合ガイドラインを追記 `CLAUDE.md`
+
+**チェックポイント**: データとプレゼンテーションが分離され、テストがパス
+
+### Phase 11.4: テスト改善（優先度低）
+
+- [ ] T219 [P] [R008] テストモックデータファクトリを作成 `src/test-utils/mockData.ts`
+- [ ] T220 [R008] AssetCard.test.tsx をモックデータファクトリに移行 `src/app/_components/AssetCard.test.tsx`
+- [ ] T221 [R008] PortfolioChart.test.tsx をモックデータファクトリに移行 `src/app/_components/PortfolioChart.test.tsx`
+
+**チェックポイント**: テストモックデータが一元管理され、保守性が向上
+
+### Phase 11.5: 検証
+
+- [ ] T222 `pnpm test:run` で全テストを実行し、100%パスを確認
+- [ ] T223 `pnpm lint` でリンターを実行し、問題がないことを確認
+- [ ] T224 `pnpm build` で本番ビルドを実行し、成功を確認
+
+**チェックポイント**: すべてのリファクタリングが完了し、品質が維持されている
+
+---
+
+## 依存関係（フェーズ11追加分）
+
+```
+フェーズ10: 仕上げ ─────────────────────────────────────────┐
+                                                            │
+フェーズ11: リファクタリング ←─────────────────────────────┘
+    │
+    ├──→ Phase 11.1: ユーティリティ関数の改善
+    │         │
+    │         └──→ Phase 11.2: 共通定数の整理
+    │                   │
+    │                   └──→ Phase 11.3: 設計改善
+    │                             │
+    │                             └──→ Phase 11.4: テスト改善
+    │                                       │
+    │                                       └──→ Phase 11.5: 検証
+```
+
+### 並列実行の機会（フェーズ11）
+
+```bash
+# Phase 11.1 で並列実行可能:
+T197, T202, T206（独立したユーティリティ追加）
+
+# Phase 11.2 で並列実行可能:
+T207（定数ファイル作成後）
+
+# Phase 11.3 で並列実行可能:
+T211, T218（独立したファイル作成）
+
+# Phase 11.4 で並列実行可能:
+T219（モックデータファクトリ作成後）
+```
+
+### 推定タスク数（フェーズ11追加分）
+
+| フェーズ | タスク数 | 並列タスク |
+|---------|---------|-----------|
+| Phase 11.1: ユーティリティ改善 | 10 | 3 |
+| Phase 11.2: 共通定数整理 | 4 | 1 |
+| Phase 11.3: 設計改善 | 8 | 2 |
+| Phase 11.4: テスト改善 | 3 | 1 |
+| Phase 11.5: 検証 | 3 | 0 |
+| **フェーズ11 合計** | **28** | **7** |
+
+---
+
+## 更新された総タスク数
+
+| フェーズ | タスク数 | 並列タスク |
+|---------|---------|-----------|
+| フェーズ1〜10 | 190 | 50 |
+| フェーズ11: リファクタリング | 28 | 7 |
+| **総合計** | **218** | **57** |
