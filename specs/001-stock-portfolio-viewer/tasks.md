@@ -680,9 +680,9 @@ T154, T155
 
 ### Phase 11.4: テスト改善（優先度低）
 
-- [ ] T219 [P] [R008] テストモックデータファクトリを作成 `src/test-utils/mockData.ts`
-- [ ] T220 [R008] AssetCard.test.tsx をモックデータファクトリに移行 `src/app/_components/AssetCard.test.tsx`
-- [ ] T221 [R008] PortfolioChart.test.tsx をモックデータファクトリに移行 `src/app/_components/PortfolioChart.test.tsx`
+- [x] T219 [P] [R008] テストモックデータファクトリを作成 `src/test-utils/mockData.ts`
+- [x] T220 [R008] AssetCard.test.tsx をモックデータファクトリに移行 `src/app/_components/AssetCard.test.tsx`
+- [x] T221 [R008] PortfolioChart.test.tsx をモックデータファクトリに移行 `src/app/_components/PortfolioChart.test.tsx`
 
 **チェックポイント**: テストモックデータが一元管理され、保守性が向上
 
