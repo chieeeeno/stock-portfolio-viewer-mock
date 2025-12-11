@@ -42,15 +42,17 @@ export default function OnboardingProvider({ children }: OnboardingProviderProps
   const onboarding = useOnboarding({ isDarkMode });
 
   // 初回訪問時に自動開始（ハイドレーション完了後、未完了の場合）
+  // 依存配列は個別プロパティを列挙している（オブジェクト全体を入れると不要な再実行が発生）
+  const { isHydrated, isCompleted, isActive, startTour } = onboarding;
   useEffect(() => {
-    if (onboarding.isHydrated && !onboarding.isCompleted && !onboarding.isActive) {
+    if (isHydrated && !isCompleted && !isActive) {
       // DOMが完全に描画されるまで少し待つ
       const timer = setTimeout(() => {
-        onboarding.startTour();
+        startTour();
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [onboarding.isHydrated, onboarding.isCompleted, onboarding.isActive, onboarding.startTour]);
+  }, [isHydrated, isCompleted, isActive, startTour]);
 
   return <OnboardingContext.Provider value={onboarding}>{children}</OnboardingContext.Provider>;
 }
