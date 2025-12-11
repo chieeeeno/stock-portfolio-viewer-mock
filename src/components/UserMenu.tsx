@@ -6,9 +6,32 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import UserIcon from './UserIcon';
+
+/**
+ * 設定アイコン
+ */
+function SettingsIcon() {
+  return (
+    <svg
+      data-testid="settings-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4"
+    >
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  );
+}
 
 /**
  * ログアウトアイコン
@@ -33,6 +56,34 @@ function LogoutIcon() {
   );
 }
 
+interface MenuItem {
+  /** メニューアイテムのID */
+  id: string;
+  /** 表示ラベル */
+  label: string;
+  /** アイコンコンポーネント */
+  Icon: React.ComponentType<{ className?: string }>;
+  /** セパレーターを表示するか（このアイテムの前に表示） */
+  hasSeparatorBefore?: boolean;
+}
+
+/**
+ * メニューアイテムの定義
+ */
+const MENU_ITEMS: MenuItem[] = [
+  {
+    id: 'settings',
+    label: '設定',
+    Icon: SettingsIcon,
+  },
+  {
+    id: 'logout',
+    label: 'ログアウト',
+    Icon: LogoutIcon,
+    hasSeparatorBefore: true,
+  },
+];
+
 interface UserMenuProps {
   /** ユーザー名（頭文字表示用） */
   userName?: string;
@@ -48,9 +99,9 @@ interface UserMenuProps {
  * - Escキーでメニューを閉じる
  */
 export default function UserMenu({ userName = 'User', imageUrl }: UserMenuProps) {
-  const handleLogoutClick = () => {
-    // モック実装: 実際のログアウト機能は動作しない
-    console.log('ログアウトがクリックされました（モック実装）');
+  const handleMenuItemClick = (itemId: string) => {
+    // モック実装: 実際の機能は動作しない
+    console.log(`${itemId}がクリックされました（モック実装）`);
   };
 
   return (
@@ -78,10 +129,15 @@ export default function UserMenu({ userName = 'User', imageUrl }: UserMenuProps)
         </TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end" sideOffset={8}>
-        <DropdownMenuItem onClick={handleLogoutClick}>
-          <LogoutIcon />
-          <span>ログアウト</span>
-        </DropdownMenuItem>
+        {MENU_ITEMS.map((item) => (
+          <div key={item.id}>
+            {item.hasSeparatorBefore && <DropdownMenuSeparator />}
+            <DropdownMenuItem onClick={() => handleMenuItemClick(item.id)}>
+              <item.Icon />
+              <span>{item.label}</span>
+            </DropdownMenuItem>
+          </div>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
