@@ -16,6 +16,7 @@ import {
   formatGainRatio,
   getGainStatus,
 } from '@/utils/formatters';
+import { sortAssetsByHoldingRatio } from '@/utils/assetUtils';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
 
@@ -118,7 +119,7 @@ export default function PortfolioChart({
 
   // T034: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
-    return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
+    return sortAssetsByHoldingRatio(holdingAssets);
   }, [holdingAssets]);
 
   // T119: 小さい比率のセグメントに最小表示サイズを適用
