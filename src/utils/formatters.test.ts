@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  formatWithSign,
   formatCurrency,
   formatGainRatio,
   formatHoldingRatio,
@@ -7,6 +8,45 @@ import {
   formatGainAmountWithCurrency,
   getGainStatus,
 } from './formatters';
+
+describe('formatWithSign', () => {
+  const identityFormatter = (v: number) => v.toString();
+
+  it('正の値にプラス符号を付ける', () => {
+    expect(formatWithSign(100, identityFormatter)).toBe('+100');
+  });
+
+  it('負の値にマイナス符号を付け、絶対値を使用する', () => {
+    expect(formatWithSign(-100, identityFormatter)).toBe('-100');
+  });
+
+  it('0には符号を付けない', () => {
+    expect(formatWithSign(0, identityFormatter)).toBe('0');
+  });
+
+  it('カスタムフォーマッターで正の値をフォーマットする', () => {
+    const formatter = (v: number) => `${v.toFixed(2)}%`;
+    expect(formatWithSign(12.5, formatter)).toBe('+12.50%');
+  });
+
+  it('カスタムフォーマッターで負の値をフォーマットする', () => {
+    const formatter = (v: number) => `¥${v.toLocaleString('ja-JP')}`;
+    expect(formatWithSign(-1500, formatter)).toBe('-¥1,500');
+  });
+
+  it('カスタムフォーマッターで0をフォーマットする', () => {
+    const formatter = (v: number) => `¥${v.toLocaleString('ja-JP')}`;
+    expect(formatWithSign(0, formatter)).toBe('¥0');
+  });
+
+  it('小数点以下の正の値を正しくフォーマットする', () => {
+    expect(formatWithSign(0.5, identityFormatter)).toBe('+0.5');
+  });
+
+  it('小数点以下の負の値を正しくフォーマットする', () => {
+    expect(formatWithSign(-0.5, identityFormatter)).toBe('-0.5');
+  });
+});
 
 describe('formatCurrency', () => {
   it('正の整数をカンマ区切りでフォーマットする', () => {
