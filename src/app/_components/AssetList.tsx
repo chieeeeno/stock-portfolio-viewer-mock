@@ -2,6 +2,7 @@
 
 import { useMemo, type MouseEvent } from 'react';
 import type { HoldingAsset } from '../_types/portfolio';
+import { sortAssetsByHoldingRatio } from '@/utils/assetUtils';
 import AssetCard from './AssetCard';
 
 interface AssetListProps {
@@ -26,7 +27,7 @@ export default function AssetList({
 }: AssetListProps) {
   // T051: holding_ratioの降順で銘柄をソート
   const sortedAssets = useMemo(() => {
-    return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
+    return sortAssetsByHoldingRatio(holdingAssets);
   }, [holdingAssets]);
 
   return (

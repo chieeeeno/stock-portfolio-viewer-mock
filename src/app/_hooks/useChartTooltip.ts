@@ -3,6 +3,16 @@
 import { useState, useCallback } from 'react';
 import type { HoldingAsset } from '../_types/portfolio';
 
+/**
+ * ツールチップ表示の設定値
+ */
+const TOOLTIP_CONFIG = {
+  /** ツールチップの推定幅（px） */
+  width: 200,
+  /** マウスカーソルからのオフセット（px） */
+  offset: 15,
+} as const;
+
 interface MousePosition {
   x: number;
   y: number;
@@ -46,13 +56,13 @@ export function useChartTooltip(): UseChartTooltipReturn {
 
   // チャート上でマウスが動いた時（ツールチップ位置更新）
   const handleChartMouseMove = useCallback((e: React.MouseEvent) => {
-    const tooltipWidth = 200;
-    let x = e.clientX + 15;
-    const y = e.clientY + 15;
+    const { width: tooltipWidth, offset } = TOOLTIP_CONFIG;
+    let x = e.clientX + offset;
+    const y = e.clientY + offset;
 
     // ツールチップが画面右端からはみ出す場合は左側に表示
     if (x + tooltipWidth > window.innerWidth) {
-      x = e.clientX - tooltipWidth - 15;
+      x = e.clientX - tooltipWidth - offset;
     }
 
     setMousePosition({ x, y });
