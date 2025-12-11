@@ -1,18 +1,7 @@
 import clsx from 'clsx';
 import { mdiAccountCircle } from '@mdi/js';
 import Icon from '@/components/Icon';
-
-/**
- * コンテナのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
- * SP: 32px, タブレット以上: 40px
- */
-const CONTAINER_CLASS = 'h-8 w-8 sm:h-10 sm:w-10';
-
-/**
- * アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
- * SP: 32px, タブレット以上: 40px
- */
-const ICON_CLASS = clsx('h-8 w-8 sm:h-10 sm:w-10', 'text-gray-500 dark:text-gray-400');
+import { HEADER_AVATAR_SIZE } from './constants';
 
 interface UserIconProps {
   /** ユーザー名（alt属性用） */
@@ -36,7 +25,7 @@ export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
       <div
         className={clsx(
           'flex items-center justify-center overflow-hidden rounded-full',
-          CONTAINER_CLASS
+          HEADER_AVATAR_SIZE
         )}
       >
         {/* NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用 */}
@@ -54,5 +43,11 @@ export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
     );
   }
 
-  return <Icon path={mdiAccountCircle} data-testid="user-icon" className={ICON_CLASS} />;
+  return (
+    <Icon
+      path={mdiAccountCircle}
+      data-testid="user-icon"
+      className={clsx(HEADER_AVATAR_SIZE, 'text-gray-500 dark:text-gray-400')}
+    />
+  );
 }

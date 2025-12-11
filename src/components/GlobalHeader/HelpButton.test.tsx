@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import HelpButton from './HelpButton';
-import OnboardingProvider from './OnboardingProvider';
+import OnboardingProvider from '@/components/OnboardingProvider';
 import { ONBOARDING_COMPLETED_KEY } from '@/utils/onboardingSteps';
 
 // driver.jsをモック

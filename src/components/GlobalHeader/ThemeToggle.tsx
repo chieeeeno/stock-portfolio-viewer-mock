@@ -5,9 +5,7 @@ import { useTheme } from '@/app/_hooks/useTheme';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
 import { iconButtonVariants } from './iconButtonVariants';
-
-/** アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止） */
-const ICON_CLASS = 'h-5 w-5 sm:h-6 sm:w-6';
+import { HEADER_ICON_SIZE } from './constants';
 
 /**
  * テーマ切り替えトグルボタン
@@ -24,9 +22,9 @@ export default function ThemeToggle() {
 
   const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
   const themeIcon = showDarkModeIcon ? (
-    <Icon path={mdiWeatherSunny} className={ICON_CLASS} data-testid="sun-icon" />
+    <Icon path={mdiWeatherSunny} className={HEADER_ICON_SIZE} data-testid="sun-icon" />
   ) : (
-    <Icon path={mdiWeatherNight} className={ICON_CLASS} data-testid="moon-icon" />
+    <Icon path={mdiWeatherNight} className={HEADER_ICON_SIZE} data-testid="moon-icon" />
   );
 
   return (
