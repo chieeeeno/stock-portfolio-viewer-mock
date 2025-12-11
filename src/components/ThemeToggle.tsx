@@ -21,9 +21,9 @@ export default function ThemeToggle() {
 
   const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
   const themeIcon = showDarkModeIcon ? (
-    <Icon path={mdiWeatherSunny} data-testid="sun-icon" />
+    <Icon path={mdiWeatherSunny} size='lg' data-testid="sun-icon" />
   ) : (
-    <Icon path={mdiWeatherNight} data-testid="moon-icon" />
+    <Icon path={mdiWeatherNight} size='lg' data-testid="moon-icon" />
   );
 
   return (
