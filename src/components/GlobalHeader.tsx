@@ -30,7 +30,7 @@ export default function GlobalHeader({ appName = APP_NAME, userName }: GlobalHea
     >
       <div className={clsx('flex h-14 items-center justify-between px-4', 'sm:h-16 sm:px-6')}>
         <h1 className={clsx('text-xl font-bold text-gray-900', 'dark:text-white')}>{appName}</h1>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <HelpButton />
           <ThemeToggle />
           <UserMenu userName={userName} />
