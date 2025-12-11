@@ -59,6 +59,12 @@ const chartSegmentVariants = tv({
   },
 });
 
+// T119: 小さいセグメントの最小表示サイズ設定
+/** この比率未満のセグメントに最小サイズを適用 */
+const MIN_SEGMENT_THRESHOLD = 0.1;
+/** 最小表示比率 0.5% */
+const MIN_SEGMENT_DISPLAY_RATIO = 0.5;
+
 interface PortfolioChartProps {
   /** 保有銘柄のリスト */
   holdingAssets: HoldingAsset[];
@@ -118,13 +124,13 @@ export default function PortfolioChart({
   // T119: 小さい比率のセグメントに最小表示サイズを適用
   // チャート用のデータ形式に変換（ツールチップ用にHoldingAsset全体を含む）
   const chartData = useMemo(() => {
-    const MIN_THRESHOLD = 0.1; // この比率未満のセグメントに最小サイズを適用
-    const MIN_DISPLAY_RATIO = 0.5; // 最小表示比率 0.5%
-
     return sortedAssets.map((holding) => ({
       name: holding.asset.ticker_symbol,
       // 0.1%未満の場合は最小表示サイズを適用（視認性・クリック可能性確保）
-      value: holding.holding_ratio < MIN_THRESHOLD ? MIN_DISPLAY_RATIO : holding.holding_ratio,
+      value:
+        holding.holding_ratio < MIN_SEGMENT_THRESHOLD
+          ? MIN_SEGMENT_DISPLAY_RATIO
+          : holding.holding_ratio,
       // ツールチップでHoldingAsset全体にアクセスするためにpayloadに含める
       ...holding,
     }));
