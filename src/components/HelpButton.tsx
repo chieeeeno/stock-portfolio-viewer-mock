@@ -32,7 +32,7 @@ export default function HelpButton() {
             'disabled:cursor-not-allowed disabled:opacity-50'
           )}
         >
-          <Icon path={mdiHelpCircleOutline} size='lg' data-testid="help-icon" />
+          <Icon path={mdiHelpCircleOutline} size="lg" data-testid="help-icon" />
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" sideOffset={4}>
