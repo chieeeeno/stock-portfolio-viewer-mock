@@ -115,11 +115,16 @@ export default function PortfolioChart({
     return [...holdingAssets].sort((a, b) => b.holding_ratio - a.holding_ratio);
   }, [holdingAssets]);
 
+  // T119: 小さい比率のセグメントに最小表示サイズを適用
   // チャート用のデータ形式に変換（ツールチップ用にHoldingAsset全体を含む）
   const chartData = useMemo(() => {
+    const MIN_THRESHOLD = 0.1; // この比率未満のセグメントに最小サイズを適用
+    const MIN_DISPLAY_RATIO = 0.5; // 最小表示比率 0.5%
+
     return sortedAssets.map((holding) => ({
       name: holding.asset.ticker_symbol,
-      value: holding.holding_ratio,
+      // 0.1%未満の場合は最小表示サイズを適用（視認性・クリック可能性確保）
+      value: holding.holding_ratio < MIN_THRESHOLD ? MIN_DISPLAY_RATIO : holding.holding_ratio,
       // ツールチップでHoldingAsset全体にアクセスするためにpayloadに含める
       ...holding,
     }));
