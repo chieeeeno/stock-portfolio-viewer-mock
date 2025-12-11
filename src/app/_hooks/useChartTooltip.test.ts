@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useChartTooltip } from './useChartTooltip';
 import type { HoldingAsset } from '../_types/portfolio';
@@ -6,7 +6,6 @@ import type { HoldingAsset } from '../_types/portfolio';
 // モックデータ
 const mockHoldingAsset: HoldingAsset = {
   asset: {
-    asset_id: 1,
     name: 'S&P 500 ETF (Vanguard)',
     ticker_symbol: 'VOO',
     logo_url: 'https://example.com/voo.png',
