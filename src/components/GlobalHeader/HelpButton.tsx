@@ -1,15 +1,13 @@
 'use client';
 
 import { mdiHelpCircleOutline } from '@mdi/js';
-import { useOnboardingContext } from './OnboardingProvider';
+import { useOnboardingContext } from '@/components/OnboardingProvider';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
 import { iconButtonVariants } from './iconButtonVariants';
+import { HEADER_ICON_CLASS } from './constants';
 
 const TOOLTIP_TEXT = 'ガイドを再表示';
-
-/** アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止） */
-const ICON_CLASS = 'h-5 w-5 sm:h-6 sm:w-6';
 
 /**
  * ガイド再表示ボタンコンポーネント
@@ -30,7 +28,7 @@ export default function HelpButton() {
           aria-label={TOOLTIP_TEXT}
           className={iconButtonVariants()}
         >
-          <Icon path={mdiHelpCircleOutline} className={ICON_CLASS} data-testid="help-icon" />
+          <Icon path={mdiHelpCircleOutline} className={HEADER_ICON_CLASS} data-testid="help-icon" />
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" sideOffset={4}>

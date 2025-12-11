@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
-import GlobalHeader from './GlobalHeader';
+import GlobalHeader from './index';
 import { APP_NAME } from '@/utils/constants';
 
 // useThemeフックをモック
@@ -26,7 +26,7 @@ vi.mock('@/hooks/useOnboarding', () => ({
 }));
 
 // OnboardingProviderをモック
-vi.mock('./OnboardingProvider', () => ({
+vi.mock('@/components/OnboardingProvider', () => ({
   useOnboardingContext: vi.fn(() => ({
     startTour: vi.fn(),
     isCompleted: false,
