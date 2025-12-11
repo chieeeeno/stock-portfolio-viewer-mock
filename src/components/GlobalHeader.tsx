@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import UserIcon from './UserIcon';
+import UserMenu from './UserMenu';
 import ThemeToggle from './ThemeToggle';
 import HelpButton from './HelpButton';
 import { APP_NAME } from '@/utils/constants';
@@ -33,7 +33,7 @@ export default function GlobalHeader({ appName = APP_NAME, userName }: GlobalHea
         <div className="flex items-center gap-2">
           <HelpButton />
           <ThemeToggle />
-          <UserIcon name={userName} />
+          <UserMenu userName={userName} />
         </div>
       </div>
     </header>
