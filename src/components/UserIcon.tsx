@@ -1,65 +1,51 @@
-import { tv } from 'tailwind-variants';
+import clsx from 'clsx';
 import { mdiAccountCircle } from '@mdi/js';
 import Icon from '@/components/Icon';
 
-type IconSize = 'md' | 'lg';
+/**
+ * コンテナのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
+ * SP: 32px, タブレット以上: 40px
+ */
+const CONTAINER_CLASS = 'h-8 w-8 sm:h-10 sm:w-10';
 
-const containerVariants = tv({
-  base: 'flex items-center justify-center overflow-hidden rounded-full',
-  variants: {
-    size: {
-      md: 'h-8 w-8',
-      lg: 'h-10 w-10',
-    },
-  },
-  defaultVariants: {
-    size: 'lg',
-  },
-});
-
-// アイコンのスタイル（色とサイズ）
-// Note: IconコンポーネントのsizeプロップはSVGの基本サイズを設定するが、
-// UserIconではボタンサイズに合わせて大きく表示するためclassNameで上書きする
-const iconVariants = tv({
-  base: 'text-gray-500 dark:text-gray-400',
-  variants: {
-    size: {
-      md: 'h-8 w-8',
-      lg: 'h-10 w-10',
-    },
-  },
-  defaultVariants: {
-    size: 'lg',
-  },
-});
+/**
+ * アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
+ * SP: 32px, タブレット以上: 40px
+ */
+const ICON_CLASS = clsx('h-8 w-8 sm:h-10 sm:w-10', 'text-gray-500 dark:text-gray-400');
 
 interface UserIconProps {
   /** ユーザー名（alt属性用） */
   name?: string;
   /** ユーザーアイコン画像のURL */
   imageUrl?: string;
-  /** アイコンサイズ */
-  size?: IconSize;
 }
-
-const IMG_SIZES = { md: 32, lg: 40 } as const;
 
 /**
  * ユーザーアイコンコンポーネント
  * - 画像URLが指定されている場合は画像を表示
  * - 画像がない場合はMDIのアカウントアイコンを表示
+ *
+ * Note: レスポンシブ対応はCSSメディアクエリで行い、
+ * useBreakpointによるJSベースの切り替えは使用しない。
+ * これによりSSR/ハイドレーション時のレイアウトシフトを防ぐ。
  */
-export default function UserIcon({ name = 'User', imageUrl, size = 'lg' }: UserIconProps) {
+export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
   if (imageUrl) {
     return (
-      <div className={containerVariants({ size })}>
+      <div
+        className={clsx(
+          'flex items-center justify-center overflow-hidden rounded-full',
+          CONTAINER_CLASS
+        )}
+      >
         {/* NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
           alt={name}
-          width={IMG_SIZES[size]}
-          height={IMG_SIZES[size]}
+          width={40}
+          height={40}
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover"
@@ -68,12 +54,5 @@ export default function UserIcon({ name = 'User', imageUrl, size = 'lg' }: UserI
     );
   }
 
-  return (
-    <Icon
-      path={mdiAccountCircle}
-      size={size}
-      data-testid="user-icon"
-      className={iconVariants({ size })}
-    />
-  );
+  return <Icon path={mdiAccountCircle} data-testid="user-icon" className={ICON_CLASS} />;
 }

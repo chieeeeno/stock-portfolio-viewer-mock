@@ -10,7 +10,6 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { useBreakpoint } from '@/app/_hooks/useBreakpoint';
 import Icon from '@/components/Icon';
 import UserIcon from './UserIcon';
 
@@ -71,11 +70,6 @@ interface UserMenuProps {
  * - Escキーでメニューを閉じる
  */
 export default function UserMenu({ userName = 'User', imageUrl }: UserMenuProps) {
-  const breakpoint = useBreakpoint();
-
-  // SP時はアイコンを小さく表示
-  const iconSize = breakpoint === 'mobile' ? 'md' : 'lg';
-
   const handleMenuItemClick = (itemId: string) => {
     // モック実装: 実際の機能は動作しない
     console.log(`${itemId}がクリックされました（モック実装）`);
@@ -97,7 +91,7 @@ export default function UserMenu({ userName = 'User', imageUrl }: UserMenuProps)
                 'dark:focus:ring-offset-zinc-900'
               )}
             >
-              <UserIcon name={userName} imageUrl={imageUrl} size={iconSize} />
+              <UserIcon name={userName} imageUrl={imageUrl} />
             </button>
           </DropdownMenuTrigger>
         </TooltipTrigger>

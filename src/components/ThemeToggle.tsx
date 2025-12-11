@@ -2,10 +2,12 @@
 
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
 import { useTheme } from '@/app/_hooks/useTheme';
-import { useBreakpoint } from '@/app/_hooks/useBreakpoint';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
 import { iconButtonVariants } from './iconButtonVariants';
+
+/** アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止） */
+const ICON_CLASS = 'h-5 w-5 sm:h-6 sm:w-6';
 
 /**
  * テーマ切り替えトグルボタン
@@ -16,19 +18,15 @@ import { iconButtonVariants } from './iconButtonVariants';
  */
 export default function ThemeToggle() {
   const { isDarkMode, toggleTheme, isHydrated } = useTheme();
-  const breakpoint = useBreakpoint();
 
   // ハイドレーション完了前は固定値を使用（SSRと一致させる）
   const showDarkModeIcon = isHydrated ? isDarkMode : false;
 
-  // SP時はアイコンとボタンを小さく表示
-  const size = breakpoint === 'mobile' ? 'md' : 'lg';
-
   const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
   const themeIcon = showDarkModeIcon ? (
-    <Icon path={mdiWeatherSunny} size={size} data-testid="sun-icon" />
+    <Icon path={mdiWeatherSunny} className={ICON_CLASS} data-testid="sun-icon" />
   ) : (
-    <Icon path={mdiWeatherNight} size={size} data-testid="moon-icon" />
+    <Icon path={mdiWeatherNight} className={ICON_CLASS} data-testid="moon-icon" />
   );
 
   return (
@@ -39,7 +37,7 @@ export default function ThemeToggle() {
           data-driver="theme-toggle"
           onClick={toggleTheme}
           aria-label={tooltipText}
-          className={iconButtonVariants({ size })}
+          className={iconButtonVariants()}
         >
           {themeIcon}
         </button>
