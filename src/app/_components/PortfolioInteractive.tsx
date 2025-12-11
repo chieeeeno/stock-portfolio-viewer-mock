@@ -65,6 +65,22 @@ export default function PortfolioInteractive({ data }: PortfolioInteractiveProps
     return () => document.removeEventListener('click', handleDocumentClick);
   }, [focusedIndex]);
 
+  // T117: 空のポートフォリオエッジケースを処理
+  // Note: Hooksのルールに従い、全てのHooksの後で早期returnを行う
+  if (data.holding_assets.length === 0) {
+    return (
+      <div
+        data-testid="empty-portfolio"
+        className={clsx(
+          'flex flex-col items-center justify-center rounded-2xl bg-white px-6 py-16 shadow-sm',
+          'dark:bg-zinc-800'
+        )}
+      >
+        <p className={clsx('text-lg text-gray-500', 'dark:text-gray-400')}>保有銘柄がありません</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-y-8 sm:gap-y-16">
       {/* T060: PortfolioChartにfocusedIndexとハンドラを渡す */}
