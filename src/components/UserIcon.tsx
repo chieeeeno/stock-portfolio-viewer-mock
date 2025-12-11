@@ -1,8 +1,34 @@
-import clsx from 'clsx';
+import { tv } from 'tailwind-variants';
 import { mdiAccountCircle } from '@mdi/js';
 import Icon from '@/components/Icon';
 
 type IconSize = 'md' | 'lg';
+
+const containerVariants = tv({
+  base: 'flex items-center justify-center overflow-hidden rounded-full',
+  variants: {
+    size: {
+      md: 'h-8 w-8',
+      lg: 'h-10 w-10',
+    },
+  },
+  defaultVariants: {
+    size: 'lg',
+  },
+});
+
+const iconVariants = tv({
+  base: 'text-gray-500 dark:text-gray-400',
+  variants: {
+    size: {
+      md: 'h-8 w-8',
+      lg: 'h-10 w-10',
+    },
+  },
+  defaultVariants: {
+    size: 'lg',
+  },
+});
 
 interface UserIconProps {
   /** ユーザー名（alt属性用） */
@@ -13,36 +39,24 @@ interface UserIconProps {
   size?: IconSize;
 }
 
+const IMG_SIZES = { md: 32, lg: 40 } as const;
+
 /**
  * ユーザーアイコンコンポーネント
  * - 画像URLが指定されている場合は画像を表示
  * - 画像がない場合はMDIのアカウントアイコンを表示
  */
 export default function UserIcon({ name = 'User', imageUrl, size = 'lg' }: UserIconProps) {
-  // サイズに応じたクラス名
-  const sizeClasses = {
-    md: 'h-8 w-8',
-    lg: 'h-10 w-10',
-  };
-
-  const containerClass = sizeClasses[size];
-  const imgSize = size === 'md' ? 32 : 40;
-
   if (imageUrl) {
     return (
-      <div
-        className={clsx(
-          'flex items-center justify-center overflow-hidden rounded-full',
-          containerClass
-        )}
-      >
+      <div className={containerVariants({ size })}>
         {/* NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
           alt={name}
-          width={imgSize}
-          height={imgSize}
+          width={IMG_SIZES[size]}
+          height={IMG_SIZES[size]}
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover"
@@ -56,7 +70,7 @@ export default function UserIcon({ name = 'User', imageUrl, size = 'lg' }: UserI
       path={mdiAccountCircle}
       size={size}
       data-testid="user-icon"
-      className={clsx(containerClass, 'text-gray-500 dark:text-gray-400')}
+      className={iconVariants({ size })}
     />
   );
 }

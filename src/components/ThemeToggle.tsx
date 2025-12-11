@@ -1,11 +1,28 @@
 'use client';
 
-import clsx from 'clsx';
+import { tv } from 'tailwind-variants';
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
 import { useTheme } from '@/app/_hooks/useTheme';
 import { useBreakpoint } from '@/app/_hooks/useBreakpoint';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
+
+const buttonVariants = tv({
+  base: [
+    'flex cursor-pointer items-center justify-center rounded-full transition-colors',
+    'text-gray-600 hover:bg-gray-100',
+    'dark:text-gray-300 dark:hover:bg-zinc-700',
+  ],
+  variants: {
+    size: {
+      md: 'h-8 w-8',
+      lg: 'h-10 w-10',
+    },
+  },
+  defaultVariants: {
+    size: 'lg',
+  },
+});
 
 /**
  * テーマ切り替えトグルボタン
@@ -22,15 +39,13 @@ export default function ThemeToggle() {
   const showDarkModeIcon = isHydrated ? isDarkMode : false;
 
   // SP時はアイコンとボタンを小さく表示
-  const isMobile = breakpoint === 'mobile';
-  const iconSize = isMobile ? 'md' : 'lg';
-  const buttonSize = isMobile ? 'h-8 w-8' : 'h-10 w-10';
+  const size = breakpoint === 'mobile' ? 'md' : 'lg';
 
   const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
   const themeIcon = showDarkModeIcon ? (
-    <Icon path={mdiWeatherSunny} size={iconSize} data-testid="sun-icon" />
+    <Icon path={mdiWeatherSunny} size={size} data-testid="sun-icon" />
   ) : (
-    <Icon path={mdiWeatherNight} size={iconSize} data-testid="moon-icon" />
+    <Icon path={mdiWeatherNight} size={size} data-testid="moon-icon" />
   );
 
   return (
@@ -41,12 +56,7 @@ export default function ThemeToggle() {
           data-driver="theme-toggle"
           onClick={toggleTheme}
           aria-label={tooltipText}
-          className={clsx(
-            'flex cursor-pointer items-center justify-center rounded-full transition-colors',
-            buttonSize,
-            'text-gray-600 hover:bg-gray-100',
-            'dark:text-gray-300 dark:hover:bg-zinc-700'
-          )}
+          className={buttonVariants({ size })}
         >
           {themeIcon}
         </button>
