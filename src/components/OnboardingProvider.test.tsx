@@ -89,7 +89,7 @@ describe('OnboardingProvider', () => {
       vi.mocked(driver).mockReturnValue({
         drive: mockDrive,
         destroy: vi.fn(),
-      } as ReturnType<typeof driver>);
+      } as unknown as ReturnType<typeof driver>);
 
       render(
         <OnboardingProvider>
@@ -111,7 +111,7 @@ describe('OnboardingProvider', () => {
       vi.mocked(driver).mockReturnValue({
         drive: mockDrive,
         destroy: vi.fn(),
-      } as ReturnType<typeof driver>);
+      } as unknown as ReturnType<typeof driver>);
 
       render(
         <OnboardingProvider>
@@ -138,7 +138,7 @@ describe('OnboardingProvider', () => {
       vi.mocked(driver).mockReturnValue({
         drive: mockDrive,
         destroy: vi.fn(),
-      } as ReturnType<typeof driver>);
+      } as unknown as ReturnType<typeof driver>);
 
       render(
         <OnboardingProvider>

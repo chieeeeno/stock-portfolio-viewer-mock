@@ -109,11 +109,11 @@ describe('useOnboarding', () => {
       let onDestroyedCallback: (() => void) | undefined;
 
       mockDriver.mockImplementation((config) => {
-        onDestroyedCallback = config?.onDestroyed;
+        onDestroyedCallback = config?.onDestroyed as (() => void) | undefined;
         return {
           drive: vi.fn(),
           destroy: vi.fn(),
-        } as ReturnType<typeof driver>;
+        } as unknown as ReturnType<typeof driver>;
       });
 
       const { result } = renderHook(() => useOnboarding(defaultOptions));

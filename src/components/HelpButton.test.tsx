@@ -93,7 +93,7 @@ describe('HelpButton', () => {
       vi.mocked(driver).mockReturnValue({
         drive: mockDrive,
         destroy: vi.fn(),
-      } as ReturnType<typeof driver>);
+      } as unknown as ReturnType<typeof driver>);
 
       render(
         <OnboardingProvider>
@@ -119,7 +119,7 @@ describe('HelpButton', () => {
       vi.mocked(driver).mockReturnValue({
         drive: vi.fn(),
         destroy: vi.fn(),
-      } as ReturnType<typeof driver>);
+      } as unknown as ReturnType<typeof driver>);
 
       render(
         <OnboardingProvider>

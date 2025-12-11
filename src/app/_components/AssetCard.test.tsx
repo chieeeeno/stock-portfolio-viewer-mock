@@ -65,13 +65,13 @@ describe('AssetCard', () => {
   // T038: AssetCardの描画コンポーネントテスト
   describe('描画テスト', () => {
     it('AssetCardが正しく描画される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       expect(screen.getByTestId('asset-card')).toBeInTheDocument();
     });
 
     it('ロゴ画像が表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       const logo = screen.getByTestId('asset-logo');
       expect(logo).toBeInTheDocument();
@@ -80,13 +80,13 @@ describe('AssetCard', () => {
     });
 
     it('銘柄名が表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       expect(screen.getByText('S&P 500 ETF (Vanguard)')).toBeInTheDocument();
     });
 
     it('カラーインジケーターバーが表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       const indicator = screen.getByTestId('color-indicator');
       expect(indicator).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('AssetCard', () => {
     });
 
     it('異なるcolorIndexで正しい色が適用される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={2} />);
+      render(<AssetCard asset={mockAsset} colorIndex={2} index={0} />);
 
       const indicator = screen.getByTestId('color-indicator');
       expect(indicator).toHaveStyle({ backgroundColor: CHART_COLORS_LIGHT[2] });
@@ -104,7 +104,7 @@ describe('AssetCard', () => {
   // T040: 「VOO • 39.8%」形式の表示テスト
   describe('ティッカー/比率表示テスト', () => {
     it('ティッカーシンボルと保有比率が表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       // テキストが分割されているため、個別に確認
       expect(screen.getByText(/VOO/)).toBeInTheDocument();
@@ -112,7 +112,7 @@ describe('AssetCard', () => {
     });
 
     it('異なる銘柄でも正しく表示される', () => {
-      render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
+      render(<AssetCard asset={mockAssetNegative} colorIndex={0} index={0} />);
 
       expect(screen.getByText(/TSLA/)).toBeInTheDocument();
       expect(screen.getByText(/9\.9%/)).toBeInTheDocument();
@@ -122,7 +122,7 @@ describe('AssetCard', () => {
   // T041: 損益表示テスト（額と率は別行で表示）
   describe('損益表示テスト', () => {
     it('プラスの損益額と損益率が表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       // 損益率
       expect(screen.getByText(/\+12\.87%/)).toBeInTheDocument();
@@ -131,7 +131,7 @@ describe('AssetCard', () => {
     });
 
     it('マイナスの損益額と損益率が表示される', () => {
-      render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
+      render(<AssetCard asset={mockAssetNegative} colorIndex={0} index={0} />);
 
       // 損益率
       expect(screen.getByText(/-15\.38%/)).toBeInTheDocument();
@@ -140,7 +140,7 @@ describe('AssetCard', () => {
     });
 
     it('ゼロの損益が正しく表示される', () => {
-      render(<AssetCard asset={mockAssetZero} colorIndex={0} />);
+      render(<AssetCard asset={mockAssetZero} colorIndex={0} index={0} />);
 
       expect(screen.getByText(/0\.00%/)).toBeInTheDocument();
     });
@@ -149,21 +149,21 @@ describe('AssetCard', () => {
   // T048: 損益テキストに損益色（緑/赤/グレー）を適用
   describe('損益色テスト', () => {
     it('プラスの損益では緑色のスタイルが適用される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       const gainElement = screen.getByTestId('asset-gain');
       expect(gainElement).toHaveClass('text-green-600');
     });
 
     it('マイナスの損益では赤色のスタイルが適用される', () => {
-      render(<AssetCard asset={mockAssetNegative} colorIndex={0} />);
+      render(<AssetCard asset={mockAssetNegative} colorIndex={0} index={0} />);
 
       const gainElement = screen.getByTestId('asset-gain');
       expect(gainElement).toHaveClass('text-red-600');
     });
 
     it('ゼロの損益ではグレー色のスタイルが適用される', () => {
-      render(<AssetCard asset={mockAssetZero} colorIndex={0} />);
+      render(<AssetCard asset={mockAssetZero} colorIndex={0} index={0} />);
 
       const gainElement = screen.getByTestId('asset-gain');
       expect(gainElement).toHaveClass('text-gray-500');
@@ -173,7 +173,7 @@ describe('AssetCard', () => {
   // T043: ロゴ画像エラー時のフォールバック
   describe('ロゴフォールバックテスト', () => {
     it('ロゴ画像エラー時にティッカーシンボルの先頭2文字がフォールバック表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       // ロゴのonErrorをトリガー（actでラップしてReact状態更新を待つ）
       const logo = screen.getByTestId('asset-logo');
@@ -191,7 +191,7 @@ describe('AssetCard', () => {
   describe('カードクリックハンドラテスト', () => {
     it('カードクリック時にonClickが呼ばれる', () => {
       const handleClick = vi.fn();
-      render(<AssetCard asset={mockAsset} colorIndex={0} onClick={handleClick} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} onClick={handleClick} />);
 
       const card = screen.getByTestId('asset-card');
       card.click();
@@ -200,7 +200,7 @@ describe('AssetCard', () => {
     });
 
     it('onClickが渡されていない場合でもエラーが発生しない', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} />);
 
       const card = screen.getByTestId('asset-card');
       expect(() => card.click()).not.toThrow();
@@ -208,7 +208,7 @@ describe('AssetCard', () => {
 
     it('クリック可能な場合にcursor-pointerが適用される', () => {
       const handleClick = vi.fn();
-      render(<AssetCard asset={mockAsset} colorIndex={0} onClick={handleClick} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} onClick={handleClick} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).toHaveClass('cursor-pointer');
@@ -218,35 +218,35 @@ describe('AssetCard', () => {
   // T056: 半透過状態（opacity 0.3）のテスト
   describe('半透過状態テスト', () => {
     it('isDimmed=trueの場合、opacity 0.3が適用される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} isDimmed={true} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} isDimmed={true} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).toHaveClass('opacity-30');
     });
 
     it('isDimmed=falseの場合、opacity 0.3が適用されない', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} isDimmed={false} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} isDimmed={false} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).not.toHaveClass('opacity-30');
     });
 
     it('isFocused=trueの場合、opacity 1が適用される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={true} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} isFocused={true} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).not.toHaveClass('opacity-30');
     });
 
     it('フォーカス状態でリング表示される', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={true} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} isFocused={true} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).toHaveClass('ring-2');
     });
 
     it('非フォーカス状態ではリング表示されない', () => {
-      render(<AssetCard asset={mockAsset} colorIndex={0} isFocused={false} />);
+      render(<AssetCard asset={mockAsset} colorIndex={0} index={0} isFocused={false} />);
 
       const card = screen.getByTestId('asset-card');
       expect(card).not.toHaveClass('ring-2');

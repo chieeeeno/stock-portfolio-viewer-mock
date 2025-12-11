@@ -6,7 +6,6 @@ import type { HoldingAsset } from '../_types/portfolio';
 // モックデータ
 const mockHoldingAsset: HoldingAsset = {
   asset: {
-    asset_id: 1,
     name: 'S&P 500 ETF (Vanguard)',
     ticker_symbol: 'VOO',
     logo_url: 'https://example.com/voo.png',
