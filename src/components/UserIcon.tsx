@@ -1,5 +1,18 @@
+import clsx from 'clsx';
 import { mdiAccountCircle } from '@mdi/js';
 import Icon from '@/components/Icon';
+
+/**
+ * コンテナのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
+ * SP: 32px, タブレット以上: 40px
+ */
+const CONTAINER_CLASS = 'h-8 w-8 sm:h-10 sm:w-10';
+
+/**
+ * アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止）
+ * SP: 32px, タブレット以上: 40px
+ */
+const ICON_CLASS = clsx('h-8 w-8 sm:h-10 sm:w-10', 'text-gray-500 dark:text-gray-400');
 
 interface UserIconProps {
   /** ユーザー名（alt属性用） */
@@ -12,11 +25,20 @@ interface UserIconProps {
  * ユーザーアイコンコンポーネント
  * - 画像URLが指定されている場合は画像を表示
  * - 画像がない場合はMDIのアカウントアイコンを表示
+ *
+ * Note: レスポンシブ対応はCSSメディアクエリで行い、
+ * useBreakpointによるJSベースの切り替えは使用しない。
+ * これによりSSR/ハイドレーション時のレイアウトシフトを防ぐ。
  */
 export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
   if (imageUrl) {
     return (
-      <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+      <div
+        className={clsx(
+          'flex items-center justify-center overflow-hidden rounded-full',
+          CONTAINER_CLASS
+        )}
+      >
         {/* NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -32,12 +54,5 @@ export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
     );
   }
 
-  return (
-    <Icon
-      path={mdiAccountCircle}
-      size="lg"
-      data-testid="user-icon"
-      className="h-10 w-10 text-gray-500 dark:text-gray-400"
-    />
-  );
+  return <Icon path={mdiAccountCircle} data-testid="user-icon" className={ICON_CLASS} />;
 }

@@ -1,10 +1,13 @@
 'use client';
 
-import clsx from 'clsx';
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
 import { useTheme } from '@/app/_hooks/useTheme';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
+import { iconButtonVariants } from './iconButtonVariants';
+
+/** アイコンのレスポンシブサイズ（CSSメディアクエリでレイアウトシフト防止） */
+const ICON_CLASS = 'h-5 w-5 sm:h-6 sm:w-6';
 
 /**
  * テーマ切り替えトグルボタン
@@ -21,9 +24,9 @@ export default function ThemeToggle() {
 
   const tooltipText = showDarkModeIcon ? 'ライトモードに切り替える' : 'ダークモードに切り替える';
   const themeIcon = showDarkModeIcon ? (
-    <Icon path={mdiWeatherSunny} size='lg' data-testid="sun-icon" />
+    <Icon path={mdiWeatherSunny} className={ICON_CLASS} data-testid="sun-icon" />
   ) : (
-    <Icon path={mdiWeatherNight} size='lg' data-testid="moon-icon" />
+    <Icon path={mdiWeatherNight} className={ICON_CLASS} data-testid="moon-icon" />
   );
 
   return (
@@ -34,11 +37,7 @@ export default function ThemeToggle() {
           data-driver="theme-toggle"
           onClick={toggleTheme}
           aria-label={tooltipText}
-          className={clsx(
-            'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-colors',
-            'text-gray-600 hover:bg-gray-100',
-            'dark:text-gray-300 dark:hover:bg-zinc-700'
-          )}
+          className={iconButtonVariants()}
         >
           {themeIcon}
         </button>
