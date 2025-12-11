@@ -1,0 +1,62 @@
+{
+  "total_asset_amount": 115500,
+  "total_gain_amount": 11130,
+  "total_gain_ratio": 10.67,
+  "holding_assets": [
+    {
+      "asset": {
+        "name": "S&P 500 ETF (Vanguard)",
+        "ticker_symbol": "VOO",
+        "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/VOO.svg"
+      },
+      "asset_amount": 45969,
+      "gain_amount": 5242,
+      "gain_ratio": 12.87,
+      "holding_ratio": 39.8
+    },
+    {
+      "asset": {
+        "name": "Apple Inc.",
+        "ticker_symbol": "AAPL",
+        "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/AAPL.svg"
+      },
+      "asset_amount": 28500,
+      "gain_amount": 4200,
+      "gain_ratio": 17.28,
+      "holding_ratio": 24.7
+    },
+    {
+      "asset": {
+        "name": "Microsoft Corporation",
+        "ticker_symbol": "MSFT",
+        "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/MSFT.svg"
+      },
+      "asset_amount": 22800,
+      "gain_amount": 3800,
+      "gain_ratio": 20.0,
+      "holding_ratio": 19.7
+    },
+    {
+      "asset": {
+        "name": "Tesla Inc.",
+        "ticker_symbol": "TSLA",
+        "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/TSLA.svg"
+      },
+      "asset_amount": 11400,
+      "gain_amount": -2850,
+      "gain_ratio": -20.0,
+      "holding_ratio": 9.9
+    },
+    {
+      "asset": {
+        "name": "Amazon.com Inc.",
+        "ticker_symbol": "AMZN",
+        "logo_url": "https://storage.googleapis.com/brooklyn-asset-logo/alpaca/AMZN.svg"
+      },
+      "asset_amount": 6831,
+      "gain_amount": 0,
+      "gain_ratio": 0,
+      "holding_ratio": 5.9
+    }
+  ]
+}

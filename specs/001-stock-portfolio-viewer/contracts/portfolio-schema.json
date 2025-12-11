@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "portfolio-response",
+  "title": "PortfolioResponse",
+  "description": "顧客の保有株式ポートフォリオのレスポンス形式",
+  "type": "object",
+  "required": ["total_asset_amount", "total_gain_amount", "total_gain_ratio", "holding_assets"],
+  "properties": {
+    "total_asset_amount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "資産総額（円）"
+    },
+    "total_gain_amount": {
+      "type": "integer",
+      "description": "評価損益額（円、プラス/マイナス可）"
+    },
+    "total_gain_ratio": {
+      "type": "number",
+      "description": "評価損益率（%）"
+    },
+    "holding_assets": {
+      "type": "array",
+      "description": "保有銘柄のリスト",
+      "items": {
+        "$ref": "#/definitions/HoldingAsset"
+      }
+    }
+  },
+  "definitions": {
+    "Asset": {
+      "type": "object",
+      "description": "銘柄の基本情報",
+      "required": ["name", "ticker_symbol", "logo_url"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "銘柄名"
+        },
+        "ticker_symbol": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Z0-9.]+$",
+          "description": "ティッカーシンボル（英大文字、数字、ドット）"
+        },
+        "logo_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "ロゴ画像のURL"
+        }
+      }
+    },
+    "HoldingAsset": {
+      "type": "object",
+      "description": "保有銘柄の詳細情報",
+      "required": ["asset", "asset_amount", "gain_amount", "gain_ratio", "holding_ratio"],
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/Asset"
+        },
+        "asset_amount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "保有金額（円）"
+        },
+        "gain_amount": {
+          "type": "integer",
+          "description": "評価損益額（円、プラス/マイナス可）"
+        },
+        "gain_ratio": {
+          "type": "number",
+          "description": "評価損益率（%、小数点以下2桁）"
+        },
+        "holding_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "保有比率（%、小数点以下1桁、0-100）"
+        }
+      }
+    }
+  }
+}
