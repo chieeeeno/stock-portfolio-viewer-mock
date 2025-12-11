@@ -1,4 +1,4 @@
-import type { GainStatusInfo } from '@/app/_types/portfolio';
+import type { GainStatus } from '@/app/_types/portfolio';
 
 /**
  * 数値が有効かどうかをチェック（NaN, Infinity, -Infinityを除外）
@@ -86,16 +86,12 @@ export function formatGainAmountWithCurrency(amount: number): string {
 /**
  * 評価損益の状態を判定
  * @param amount - 評価損益額
- * @returns GainStatusInfo オブジェクト
- * @remarks NaN, Infinityの場合はzeroステータスを返す
+ * @returns GainStatus（'positive' | 'negative' | 'zero'）
+ * @remarks NaN, Infinityの場合は'zero'を返す
  */
-export function getGainStatus(amount: number): GainStatusInfo {
+export function getGainStatus(amount: number): GainStatus {
   const normalized = normalizeNumber(amount);
-  if (normalized > 0) {
-    return { status: 'positive', colorClass: 'text-green-600 dark:text-green-300' };
-  } else if (normalized < 0) {
-    return { status: 'negative', colorClass: 'text-red-600 dark:text-red-400' };
-  } else {
-    return { status: 'zero', colorClass: 'text-gray-500 dark:text-gray-400' };
-  }
+  if (normalized > 0) return 'positive';
+  if (normalized < 0) return 'negative';
+  return 'zero';
 }

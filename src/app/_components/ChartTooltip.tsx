@@ -9,6 +9,7 @@ import {
   formatGainRatio,
   getGainStatus,
 } from '@/utils/formatters';
+import { getGainStatusColor } from '@/utils/gainStatusStyles';
 
 /**
  * Rechartsのツールチップから渡されるペイロードの型
@@ -35,7 +36,7 @@ export default function ChartTooltip({ active, payload }: ChartTooltipProps) {
   }
 
   const data = payload[0].payload;
-  const gainStatus = getGainStatus(data.gain_amount);
+  const gainColorClass = getGainStatusColor(getGainStatus(data.gain_amount));
 
   return (
     <div
@@ -69,7 +70,7 @@ export default function ChartTooltip({ active, payload }: ChartTooltipProps) {
         </div>
 
         {/* 評価損益（色付き） */}
-        <div className={gainStatus.colorClass}>
+        <div className={gainColorClass}>
           評価損益: {formatGainAmount(data.gain_amount)}円 ({formatGainRatio(data.gain_ratio)})
         </div>
       </div>
