@@ -667,14 +667,14 @@ T154, T155
 
 ### Phase 11.3: 設計改善（優先度中）
 
-- [ ] T211 [P] [R004] GainStatus 用のスタイル定数ファイルを作成 `src/utils/gainStatusStyles.ts`
-- [ ] T212 [R004] getGainStatus 関数をシンプル化（GainStatus のみ返す） `src/utils/formatters.ts`
-- [ ] T213 [R004] GainStatusInfo インターフェースを削除 `src/app/_types/portfolio.ts`
-- [ ] T214 [R004] AssetCard の損益色ロジックを新方式に更新 `src/app/_components/AssetCard.tsx`
-- [ ] T215 [R004] PortfolioChart の損益色ロジックを新方式に更新 `src/app/_components/PortfolioChart.tsx`
-- [ ] T216 [R004] ChartTooltip の損益色ロジックを新方式に更新 `src/app/_components/ChartTooltip.tsx`
-- [ ] T217 [R004] formatters.test.ts を新方式に合わせて更新 `src/utils/formatters.test.ts`
-- [ ] T218 [P] [R006] CLAUDE.md に Tailwind クラス結合ガイドラインを追記 `CLAUDE.md`
+- [x] T211 [P] [R004] GainStatus 用のスタイル定数ファイルを作成 `src/utils/gainStatusStyles.ts`
+- [x] T212 [R004] getGainStatus 関数をシンプル化（GainStatus のみ返す） `src/utils/formatters.ts`
+- [x] T213 [R004] GainStatusInfo インターフェースを削除 `src/app/_types/portfolio.ts`
+- [x] T214 [R004] AssetCard の損益色ロジックを新方式に更新 `src/app/_components/AssetCard.tsx`
+- [x] T215 [R004] PortfolioChart の損益色ロジックを新方式に更新 `src/app/_components/PortfolioChart.tsx`
+- [x] T216 [R004] ChartTooltip の損益色ロジックを新方式に更新 `src/app/_components/ChartTooltip.tsx`
+- [x] T217 [R004] formatters.test.ts を新方式に合わせて更新 `src/utils/formatters.test.ts`
+- [x] T218 [P] [R006] CLAUDE.md に Tailwind クラス結合ガイドラインを追記 `CLAUDE.md`
 
 **チェックポイント**: データとプレゼンテーションが分離され、テストがパス
 
