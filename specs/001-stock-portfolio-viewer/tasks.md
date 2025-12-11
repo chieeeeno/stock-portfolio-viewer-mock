@@ -643,16 +643,16 @@ T154, T155
 
 ### Phase 11.1: ユーティリティ関数の改善（優先度高）
 
-- [ ] T197 [P] [R001] formatWithSign ヘルパー関数を作成 `src/utils/formatters.ts`
-- [ ] T198 [R001] formatGainRatio を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
-- [ ] T199 [R001] formatGainAmount を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
-- [ ] T200 [R001] formatGainAmountWithCurrency を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
-- [ ] T201 [R001] formatWithSign のユニットテストを追加 `src/utils/formatters.test.ts`
-- [ ] T202 [P] [R002] sortAssetsByHoldingRatio ユーティリティ関数を作成 `src/utils/assetUtils.ts`
-- [ ] T203 [R002] sortAssetsByHoldingRatio のユニットテストを作成 `src/utils/assetUtils.test.ts`
-- [ ] T204 [R002] PortfolioChart のソート処理を共通関数に置換 `src/app/_components/PortfolioChart.tsx`
-- [ ] T205 [R002] AssetList のソート処理を共通関数に置換 `src/app/_components/AssetList.tsx`
-- [ ] T206 [P] [R005] ツールチップ位置計算の定数を抽出 `src/app/_hooks/useChartTooltip.ts`
+- [x] T197 [P] [R001] formatWithSign ヘルパー関数を作成 `src/utils/formatters.ts`
+- [x] T198 [R001] formatGainRatio を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [x] T199 [R001] formatGainAmount を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [x] T200 [R001] formatGainAmountWithCurrency を formatWithSign を使用するようリファクタ `src/utils/formatters.ts`
+- [x] T201 [R001] formatWithSign のユニットテストを追加 `src/utils/formatters.test.ts`
+- [x] T202 [P] [R002] sortAssetsByHoldingRatio ユーティリティ関数を作成 `src/utils/assetUtils.ts`
+- [x] T203 [R002] sortAssetsByHoldingRatio のユニットテストを作成 `src/utils/assetUtils.test.ts`
+- [x] T204 [R002] PortfolioChart のソート処理を共通関数に置換 `src/app/_components/PortfolioChart.tsx`
+- [x] T205 [R002] AssetList のソート処理を共通関数に置換 `src/app/_components/AssetList.tsx`
+- [x] T206 [P] [R005] ツールチップ位置計算の定数を抽出 `src/app/_hooks/useChartTooltip.ts`
 
 **チェックポイント**: ユーティリティ関数がDRY原則に従い、テストがパス
 
