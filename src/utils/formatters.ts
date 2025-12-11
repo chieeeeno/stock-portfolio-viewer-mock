@@ -19,6 +19,18 @@ function normalizeNumber(value: number): number {
 }
 
 /**
+ * 符号付きの値をフォーマットするヘルパー関数
+ * @param value - フォーマットする数値
+ * @param formatter - 絶対値をフォーマットする関数
+ * @returns 符号付きでフォーマットされた文字列
+ */
+export function formatWithSign(value: number, formatter: (v: number) => string): string {
+  if (value > 0) return `+${formatter(value)}`;
+  if (value < 0) return `-${formatter(Math.abs(value))}`;
+  return formatter(value);
+}
+
+/**
  * 数値を日本円形式でフォーマット（カンマ区切り）
  * @param amount - 金額（円）
  * @returns フォーマットされた文字列 (例: "115,500")
@@ -36,8 +48,7 @@ export function formatCurrency(amount: number): string {
  */
 export function formatGainRatio(ratio: number): string {
   const normalized = normalizeNumber(ratio);
-  const sign = normalized > 0 ? '+' : '';
-  return `${sign}${normalized.toFixed(2)}%`;
+  return formatWithSign(normalized, (v) => `${v.toFixed(2)}%`);
 }
 
 /**
@@ -58,8 +69,7 @@ export function formatHoldingRatio(ratio: number): string {
  */
 export function formatGainAmount(amount: number): string {
   const normalized = normalizeNumber(amount);
-  const sign = normalized > 0 ? '+' : '';
-  return `${sign}${normalized.toLocaleString('ja-JP')}`;
+  return formatWithSign(normalized, (v) => v.toLocaleString('ja-JP'));
 }
 
 /**
@@ -70,14 +80,7 @@ export function formatGainAmount(amount: number): string {
  */
 export function formatGainAmountWithCurrency(amount: number): string {
   const normalized = normalizeNumber(amount);
-  const absAmount = Math.abs(normalized).toLocaleString('ja-JP');
-  if (normalized > 0) {
-    return `+¥${absAmount}`;
-  } else if (normalized < 0) {
-    return `-¥${absAmount}`;
-  } else {
-    return `¥${absAmount}`;
-  }
+  return formatWithSign(normalized, (v) => `¥${v.toLocaleString('ja-JP')}`);
 }
 
 /**
