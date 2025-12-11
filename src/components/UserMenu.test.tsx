@@ -122,7 +122,7 @@ describe('UserMenu', () => {
       await user.click(logoutItem);
 
       // コンソールログ出力のみで、エラーは発生しない
-      expect(consoleSpy).toHaveBeenCalledWith('ログアウトがクリックされました（モック実装）');
+      expect(consoleSpy).toHaveBeenCalledWith('logoutがクリックされました（モック実装）');
 
       consoleSpy.mockRestore();
     });
