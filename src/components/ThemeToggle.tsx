@@ -1,28 +1,11 @@
 'use client';
 
-import { tv } from 'tailwind-variants';
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js';
 import { useTheme } from '@/app/_hooks/useTheme';
 import { useBreakpoint } from '@/app/_hooks/useBreakpoint';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import Icon from '@/components/Icon';
-
-const buttonVariants = tv({
-  base: [
-    'flex cursor-pointer items-center justify-center rounded-full transition-colors',
-    'text-gray-600 hover:bg-gray-100',
-    'dark:text-gray-300 dark:hover:bg-zinc-700',
-  ],
-  variants: {
-    size: {
-      md: 'h-8 w-8',
-      lg: 'h-10 w-10',
-    },
-  },
-  defaultVariants: {
-    size: 'lg',
-  },
-});
+import { iconButtonVariants } from './iconButtonVariants';
 
 /**
  * テーマ切り替えトグルボタン
@@ -56,7 +39,7 @@ export default function ThemeToggle() {
           data-driver="theme-toggle"
           onClick={toggleTheme}
           aria-label={tooltipText}
-          className={buttonVariants({ size })}
+          className={iconButtonVariants({ size })}
         >
           {themeIcon}
         </button>
