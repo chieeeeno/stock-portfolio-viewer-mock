@@ -20,16 +20,10 @@ describe('UserMenu', () => {
       expect(button).toBeInTheDocument();
     });
 
-    it('デフォルトでユーザー名の頭文字が「U」で表示される', () => {
+    it('画像URLが指定されていない場合、MDIのユーザーアイコンが表示される', () => {
       render(<UserMenu />);
 
-      expect(screen.getByText('U')).toBeInTheDocument();
-    });
-
-    it('ユーザー名が指定された場合、その頭文字が表示される', () => {
-      render(<UserMenu userName="田中太郎" />);
-
-      expect(screen.getByText('田')).toBeInTheDocument();
+      expect(screen.getByTestId('user-icon')).toBeInTheDocument();
     });
 
     it('data-testid属性が設定されている', () => {

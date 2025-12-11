@@ -1,5 +1,8 @@
+import { mdiAccountCircle } from '@mdi/js';
+import Icon from '@/components/Icon';
+
 interface UserIconProps {
-  /** ユーザー名（頭文字表示用） */
+  /** ユーザー名（alt属性用） */
   name?: string;
   /** ユーザーアイコン画像のURL */
   imageUrl?: string;
@@ -8,17 +11,14 @@ interface UserIconProps {
 /**
  * ユーザーアイコンコンポーネント
  * - 画像URLが指定されている場合は画像を表示
- * - 画像がない場合はユーザー名の頭文字を表示
- * - デフォルトは「U」
+ * - 画像がない場合はMDIのアカウントアイコンを表示
  */
 export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
-  const initial = name.charAt(0).toUpperCase();
-
-  return (
-    <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-blue-500 text-sm font-bold text-white">
-      {imageUrl ? (
-        // NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用
-        // eslint-disable-next-line @next/next/no-img-element
+  if (imageUrl) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+        {/* NOTE: プリミティブコンポーネントとしてNext.jsから疎結合にするため、標準のimg要素を使用 */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrl}
           alt={name}
@@ -28,9 +28,16 @@ export default function UserIcon({ name = 'User', imageUrl }: UserIconProps) {
           decoding="async"
           className="h-full w-full object-cover"
         />
-      ) : (
-        initial
-      )}
-    </div>
+      </div>
+    );
+  }
+
+  return (
+    <Icon
+      path={mdiAccountCircle}
+      size="lg"
+      data-testid="user-icon"
+      className="h-10 w-10 text-gray-500 dark:text-gray-400"
+    />
   );
 }

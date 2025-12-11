@@ -87,8 +87,8 @@ describe('GlobalHeader', () => {
     it('ユーザーアイコンを表示', () => {
       render(<GlobalHeader userName="Test User" />);
 
-      // UserIconのデフォルト表示（頭文字）が存在する
-      expect(screen.getByText('T')).toBeInTheDocument();
+      // UserIconのMDIアイコンが表示される
+      expect(screen.getByTestId('user-icon')).toBeInTheDocument();
     });
 
     it('ヘルプボタンを表示', () => {

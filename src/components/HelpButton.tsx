@@ -1,31 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
+import { mdiHelpCircleOutline } from '@mdi/js';
 import { useOnboardingContext } from './OnboardingProvider';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
-/**
- * クエスチョンマークアイコン（ヘルプ用）
- */
-function HelpIcon() {
-  return (
-    <svg
-      data-testid="help-icon"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-      <line x1="12" y1="17" x2="12.01" y2="17" />
-    </svg>
-  );
-}
+import Icon from '@/components/Icon';
 
 const TOOLTIP_TEXT = 'ガイドを再表示';
 
@@ -53,7 +32,7 @@ export default function HelpButton() {
             'disabled:cursor-not-allowed disabled:opacity-50'
           )}
         >
-          <HelpIcon />
+          <Icon path={mdiHelpCircleOutline} size='lg' data-testid="help-icon" />
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" sideOffset={4}>
