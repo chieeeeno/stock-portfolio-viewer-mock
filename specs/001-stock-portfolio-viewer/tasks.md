@@ -380,27 +380,27 @@
 
 ### US6Aのセットアップ
 
-- [ ] T173 [US6A] shadcn/ui Dropdown Menuコンポーネントを追加 `pnpm dlx shadcn@latest add dropdown-menu`
+- [x] T173 [US6A] shadcn/ui Dropdown Menuコンポーネントを追加 `pnpm dlx shadcn@latest add dropdown-menu`
 
 ### US6Aのテスト
 
-- [ ] T174 [P] [US6A] UserMenuコンポーネントの描画テストを作成 `src/components/UserMenu.test.tsx`
-- [ ] T175 [P] [US6A] ドロップダウン開閉のテストを作成 `src/components/UserMenu.test.tsx`
-- [ ] T176 [P] [US6A] ログアウトリンク表示のテストを作成 `src/components/UserMenu.test.tsx`
-- [ ] T177 [P] [US6A] Escキーでメニューが閉じるテストを作成 `src/components/UserMenu.test.tsx`
+- [x] T174 [P] [US6A] UserMenuコンポーネントの描画テストを作成 `src/components/UserMenu.test.tsx`
+- [x] T175 [P] [US6A] ドロップダウン開閉のテストを作成 `src/components/UserMenu.test.tsx`
+- [x] T176 [P] [US6A] ログアウトリンク表示のテストを作成 `src/components/UserMenu.test.tsx`
+- [x] T177 [P] [US6A] Escキーでメニューが閉じるテストを作成 `src/components/UserMenu.test.tsx`
 
 ### US6Aの実装
 
-- [ ] T178 [US6A] UserMenuコンポーネントの骨格を作成 `src/components/UserMenu.tsx`
-- [ ] T179 [US6A] shadcn/uiのDropdownMenuコンポーネントを統合 `src/components/UserMenu.tsx`
-- [ ] T180 [US6A] ユーザーアイコン（トリガーボタン）を実装 `src/components/UserMenu.tsx`
-- [ ] T181 [US6A] ドロップダウンメニューコンテンツを実装 `src/components/UserMenu.tsx`
-- [ ] T182 [US6A] 「ログアウト」メニューアイテムを追加（機能なし） `src/components/UserMenu.tsx`
-- [ ] T183 [US6A] ドロップダウンにダークモード対応スタイルを適用 `src/components/UserMenu.tsx`
-- [ ] T184 [US6A] ユーザーアイコンにツールチップ（「ユーザーメニュー」）を追加 `src/components/UserMenu.tsx`
-- [ ] T185 [US6A] HeaderにUserMenuを統合 `src/components/Header.tsx`
-- [ ] T186 [US6A] 手動テスト: ユーザーアイコンクリックでドロップダウンが表示されることを確認
-- [ ] T187 [US6A] 手動テスト: メニュー外クリック/Escキーでメニューが閉じることを確認
+- [x] T178 [US6A] UserMenuコンポーネントの骨格を作成 `src/components/UserMenu.tsx`
+- [x] T179 [US6A] shadcn/uiのDropdownMenuコンポーネントを統合 `src/components/UserMenu.tsx`
+- [x] T180 [US6A] ユーザーアイコン（トリガーボタン）を実装 `src/components/UserMenu.tsx`
+- [x] T181 [US6A] ドロップダウンメニューコンテンツを実装 `src/components/UserMenu.tsx`
+- [x] T182 [US6A] 「ログアウト」メニューアイテムを追加（機能なし） `src/components/UserMenu.tsx`
+- [x] T183 [US6A] ドロップダウンにダークモード対応スタイルを適用 `src/components/UserMenu.tsx`
+- [x] T184 [US6A] ユーザーアイコンにツールチップ（「ユーザーメニュー」）を追加 `src/components/UserMenu.tsx`
+- [x] T185 [US6A] HeaderにUserMenuを統合 `src/components/Header.tsx`
+- [x] T186 [US6A] 手動テスト: ユーザーアイコンクリックでドロップダウンが表示されることを確認
+- [x] T187 [US6A] 手動テスト: メニュー外クリック/Escキーでメニューが閉じることを確認
 
 **チェックポイント**: ヘッダーのユーザーアイコンをクリックするとドロップダウンメニューが表示され、ログアウトリンクが含まれている
 
