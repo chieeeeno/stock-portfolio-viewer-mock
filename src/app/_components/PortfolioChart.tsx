@@ -16,6 +16,7 @@ import {
   formatGainRatio,
   getGainStatus,
 } from '@/utils/formatters';
+import { getGainStatusColor } from '@/utils/gainStatusStyles';
 import { sortAssetsByHoldingRatio } from '@/utils/assetUtils';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
@@ -137,8 +138,8 @@ export default function PortfolioChart({
     }));
   }, [sortedAssets]);
 
-  // T032: 評価損益の状態を取得
-  const gainStatus = getGainStatus(totalGainAmount);
+  // T032: 評価損益の状態に対応するカラークラスを取得
+  const gainColorClass = getGainStatusColor(getGainStatus(totalGainAmount));
 
   // フォーカス中かつクリアハンドラがある場合、中央エリアをクリック可能にする
   const isCenterClickable = focusedIndex !== null && !!onClearFocus;
@@ -238,7 +239,7 @@ export default function PortfolioChart({
               ¥{formatCurrency(totalAssetAmount)}
             </div>
             {/* 評価損益（額と率を別行で表示） */}
-            <div data-testid="gain-info" className={cn('text-center', gainStatus.colorClass)}>
+            <div data-testid="gain-info" className={cn('text-center', gainColorClass)}>
               <div className={clsx('text-lg font-semibold', 'sm:text-xl', 'lg:text-2xl')}>
                 {formatGainAmountWithCurrency(totalGainAmount)}
               </div>

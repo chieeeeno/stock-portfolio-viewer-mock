@@ -11,6 +11,7 @@ import {
   formatHoldingRatio,
   getGainStatus,
 } from '@/utils/formatters';
+import { getGainStatusColor } from '@/utils/gainStatusStyles';
 import { useChartColors } from '../_hooks/useChartColors';
 import { cn } from '@/utils/cn';
 import clsx from 'clsx';
@@ -69,7 +70,7 @@ export default function AssetCard({
   const chartColors = useChartColors();
 
   const { asset: assetInfo, gain_amount, gain_ratio, holding_ratio } = asset;
-  const gainStatus = getGainStatus(gain_amount);
+  const gainColorClass = getGainStatusColor(getGainStatus(gain_amount));
   const segmentColor = chartColors[colorIndex % chartColors.length];
 
   // ティッカーシンボルの先頭2文字を取得
@@ -122,7 +123,7 @@ export default function AssetCard({
       </div>
 
       {/* 損益情報（縦並び） */}
-      <div data-testid="asset-gain" className={cn('shrink-0 text-right', gainStatus.colorClass)}>
+      <div data-testid="asset-gain" className={cn('shrink-0 text-right', gainColorClass)}>
         {/* 損益額 */}
         <div className={clsx('text-base font-semibold', 'sm:text-xl')}>
           {formatGainAmountWithCurrency(gain_amount)}

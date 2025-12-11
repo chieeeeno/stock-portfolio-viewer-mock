@@ -50,14 +50,9 @@ export interface PortfolioResponse {
 }
 
 /**
- * 評価損益の状態を表す列挙型
+ * 評価損益の状態を表す型
+ * - positive: プラスの損益
+ * - negative: マイナスの損益
+ * - zero: 損益なし
  */
 export type GainStatus = 'positive' | 'negative' | 'zero';
-
-/**
- * 評価損益の状態を判定するユーティリティ関数の戻り値型
- */
-export interface GainStatusInfo {
-  status: GainStatus;
-  colorClass: string; // Tailwind CSSクラス
-}

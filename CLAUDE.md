@@ -154,6 +154,36 @@ import clsx from 'clsx';
 5. `dark:` ダークモード
 6. その他の状態（`hover:`, `focus:` など）
 
+### Tailwind クラス結合の使い分け
+
+このプロジェクトでは、以下の3つのAPIを使い分けてTailwindクラスを結合する。
+
+| ユースケース                             | 使用するAPI | 例                                                  |
+| ---------------------------------------- | ----------- | --------------------------------------------------- |
+| 静的なクラスのグループ化                 | `clsx()`    | `clsx('flex items-center', 'sm:gap-4')`             |
+| 動的なクラスの結合（競合の可能性あり）   | `cn()`      | `cn(baseClass, props.className)`                    |
+| コンポーネントのバリアント定義           | `tv()`      | `tv({ base: '...', variants: {...} })`              |
+
+**使い分けの詳細:**
+
+1. **`clsx()`**: 単純なクラス文字列の結合。条件付きクラスの追加。競合を解決しない。
+   ```tsx
+   className={clsx('text-base', 'sm:text-lg', isDark && 'dark:bg-zinc-800')}
+   ```
+
+2. **`cn()`**: `clsx` + `tailwind-merge`。外部から渡されるclassNameとの結合時など、クラスの競合が発生する可能性がある場合に使用。
+   ```tsx
+   className={cn('px-4 py-2', props.className)} // props.classNameがpx-6なら、px-6が優先される
+   ```
+
+3. **`tv()`**: コンポーネントのバリアント（サイズ、色、状態など）を宣言的に定義する場合に使用。
+   ```tsx
+   const buttonVariants = tv({
+     base: 'rounded-lg font-medium',
+     variants: { size: { sm: 'px-2 py-1', md: 'px-4 py-2' } }
+   });
+   ```
+
 #### 任意の値（Arbitrary Values）の禁止
 
 `h-[180px]` や `w-[calc(100%-20px)]` のような任意の値（角括弧記法）は**使用しないこと**。
