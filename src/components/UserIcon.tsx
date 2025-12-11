@@ -17,18 +17,8 @@ const containerVariants = tv({
   },
 });
 
-const iconVariants = tv({
-  base: 'text-gray-500 dark:text-gray-400',
-  variants: {
-    size: {
-      md: 'h-8 w-8',
-      lg: 'h-10 w-10',
-    },
-  },
-  defaultVariants: {
-    size: 'lg',
-  },
-});
+// アイコンの色のみを管理（サイズはIconコンポーネントのsizeプロップで制御）
+const ICON_COLOR_CLASS = 'text-gray-500 dark:text-gray-400';
 
 interface UserIconProps {
   /** ユーザー名（alt属性用） */
@@ -70,7 +60,7 @@ export default function UserIcon({ name = 'User', imageUrl, size = 'lg' }: UserI
       path={mdiAccountCircle}
       size={size}
       data-testid="user-icon"
-      className={iconVariants({ size })}
+      className={ICON_COLOR_CLASS}
     />
   );
 }
