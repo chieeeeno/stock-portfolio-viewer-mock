@@ -414,18 +414,18 @@
 
 ### セットアップ
 
-- [ ] T188 @mdi/js パッケージをインストール `pnpm add @mdi/js`
-- [ ] T189 汎用Iconコンポーネントを作成 `src/components/Icon.tsx`
+- [x] T188 @mdi/js パッケージをインストール `pnpm add @mdi/js`
+- [x] T189 汎用Iconコンポーネントを作成 `src/components/Icon.tsx`
 
 ### 実装
 
-- [ ] T190 ThemeToggleの太陽アイコンをMDIに置換（mdiWeatherSunny） `src/components/ThemeToggle.tsx`
-- [ ] T191 ThemeToggleの月アイコンをMDIに置換（mdiWeatherNight） `src/components/ThemeToggle.tsx`
-- [ ] T192 HelpButtonのヘルプアイコンをMDIに置換（mdiHelpCircleOutline） `src/components/HelpButton.tsx`
-- [ ] T193 UserMenuのユーザーアイコンをMDIに置換（mdiAccountCircle） `src/components/UserMenu.tsx`
-- [ ] T194 UserMenuのログアウトアイコンをMDIに置換（mdiLogout） `src/components/UserMenu.tsx`
-- [ ] T195 手動テスト: 全アイコンが正しく表示されることを確認
-- [ ] T196 手動テスト: ダークモードでアイコンの色が適切に変化することを確認
+- [x] T190 ThemeToggleの太陽アイコンをMDIに置換（mdiWeatherSunny） `src/components/ThemeToggle.tsx`
+- [x] T191 ThemeToggleの月アイコンをMDIに置換（mdiWeatherNight） `src/components/ThemeToggle.tsx`
+- [x] T192 HelpButtonのヘルプアイコンをMDIに置換（mdiHelpCircleOutline） `src/components/HelpButton.tsx`
+- [x] T193 UserMenuのユーザーアイコンをMDIに置換（mdiAccountCircle） `src/components/UserMenu.tsx`
+- [x] T194 UserMenuのログアウトアイコンをMDIに置換（mdiLogout） `src/components/UserMenu.tsx`
+- [x] T195 手動テスト: 全アイコンが正しく表示されることを確認
+- [x] T196 手動テスト: ダークモードでアイコンの色が適切に変化することを確認
 
 **チェックポイント**: 全てのアイコンがMaterial Design Iconsで統一され、一貫したデザインになっている
 
