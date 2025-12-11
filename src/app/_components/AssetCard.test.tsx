@@ -1,7 +1,7 @@
 import { render, screen, act } from '@/test-utils/test-utils';
+import { mockAssetScenarios } from '@/test-utils/mockData';
 import { describe, expect, it, vi } from 'vitest';
 import AssetCard from './AssetCard';
-import type { HoldingAsset } from '../_types/portfolio';
 import { CHART_COLORS_LIGHT } from '@/utils/constants';
 
 // next/imageのモック
@@ -24,42 +24,10 @@ vi.mock('next/image', () => ({
   },
 }));
 
-// テスト用のモックデータ
-const mockAsset: HoldingAsset = {
-  asset: {
-    name: 'S&P 500 ETF (Vanguard)',
-    ticker_symbol: 'VOO',
-    logo_url: 'https://example.com/voo.svg',
-  },
-  asset_amount: 45969,
-  gain_amount: 5242,
-  gain_ratio: 12.87,
-  holding_ratio: 39.8,
-};
-
-const mockAssetNegative: HoldingAsset = {
-  asset: {
-    name: 'Tesla Inc.',
-    ticker_symbol: 'TSLA',
-    logo_url: 'https://example.com/tsla.svg',
-  },
-  asset_amount: 11400,
-  gain_amount: -1520,
-  gain_ratio: -15.38,
-  holding_ratio: 9.9,
-};
-
-const mockAssetZero: HoldingAsset = {
-  asset: {
-    name: 'Microsoft Corporation',
-    ticker_symbol: 'MSFT',
-    logo_url: 'https://example.com/msft.svg',
-  },
-  asset_amount: 22800,
-  gain_amount: 0,
-  gain_ratio: 0,
-  holding_ratio: 19.7,
-};
+// モックデータファクトリからテスト用データを取得
+const mockAsset = mockAssetScenarios.positive();
+const mockAssetNegative = mockAssetScenarios.negative();
+const mockAssetZero = mockAssetScenarios.zero();
 
 describe('AssetCard', () => {
   // T038: AssetCardの描画コンポーネントテスト

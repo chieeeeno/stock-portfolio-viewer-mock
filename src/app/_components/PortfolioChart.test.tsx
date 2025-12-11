@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@/test-utils/test-utils';
+import { portfolioChartTestPresets } from '@/test-utils/mockData';
 import { describe, expect, it, vi } from 'vitest';
 import PortfolioChart from './PortfolioChart';
-import type { HoldingAsset } from '../_types/portfolio';
 
 // Rechartsのモック（ResponsiveContainerはテスト環境でサイズ取得できないため）
 vi.mock('recharts', async () => {
@@ -61,42 +61,8 @@ vi.mock('recharts', async () => {
   };
 });
 
-// テスト用のモックデータ
-const mockHoldingAssets: HoldingAsset[] = [
-  {
-    asset: {
-      name: 'S&P 500 ETF (Vanguard)',
-      ticker_symbol: 'VOO',
-      logo_url: 'https://example.com/voo.svg',
-    },
-    asset_amount: 45969,
-    gain_amount: 5242,
-    gain_ratio: 12.87,
-    holding_ratio: 39.8,
-  },
-  {
-    asset: {
-      name: 'Apple Inc.',
-      ticker_symbol: 'AAPL',
-      logo_url: 'https://example.com/aapl.svg',
-    },
-    asset_amount: 28500,
-    gain_amount: 4200,
-    gain_ratio: 17.28,
-    holding_ratio: 24.7,
-  },
-  {
-    asset: {
-      name: 'Microsoft Corporation',
-      ticker_symbol: 'MSFT',
-      logo_url: 'https://example.com/msft.svg',
-    },
-    asset_amount: 22800,
-    gain_amount: -1500,
-    gain_ratio: -6.17,
-    holding_ratio: 19.7,
-  },
-];
+// モックデータファクトリからプリセットを取得
+const { standard, negativeGain, zeroGain, empty } = portfolioChartTestPresets;
 
 describe('PortfolioChart', () => {
   // T024: PortfolioChartの描画コンポーネントテスト
@@ -104,10 +70,10 @@ describe('PortfolioChart', () => {
     it('ドーナツチャートが正しく描画される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
         />
       );
 
@@ -118,10 +84,10 @@ describe('PortfolioChart', () => {
     it('保有銘柄のセグメントが表示される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
         />
       );
 
@@ -132,10 +98,10 @@ describe('PortfolioChart', () => {
     it('空の保有銘柄配列でもエラーなく描画される', () => {
       render(
         <PortfolioChart
-          holdingAssets={[]}
-          totalAssetAmount={0}
-          totalGainAmount={0}
-          totalGainRatio={0}
+          holdingAssets={empty.holdingAssets}
+          totalAssetAmount={empty.totalAssetAmount}
+          totalGainAmount={empty.totalGainAmount}
+          totalGainRatio={empty.totalGainRatio}
         />
       );
 
@@ -148,10 +114,10 @@ describe('PortfolioChart', () => {
     it('資産総額が正しいフォーマットで表示される（¥115,500形式）', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
         />
       );
 
@@ -162,10 +128,10 @@ describe('PortfolioChart', () => {
     it('評価損益率と評価損益額が正しく表示される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
         />
       );
 
@@ -179,10 +145,10 @@ describe('PortfolioChart', () => {
     it('マイナスの評価損益が正しく表示される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={100000}
-          totalGainAmount={-5000}
-          totalGainRatio={-4.76}
+          holdingAssets={negativeGain.holdingAssets}
+          totalAssetAmount={negativeGain.totalAssetAmount}
+          totalGainAmount={negativeGain.totalGainAmount}
+          totalGainRatio={negativeGain.totalGainRatio}
         />
       );
 
@@ -195,10 +161,10 @@ describe('PortfolioChart', () => {
     it('評価損益がゼロの場合も正しく表示される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={100000}
-          totalGainAmount={0}
-          totalGainRatio={0}
+          holdingAssets={zeroGain.holdingAssets}
+          totalAssetAmount={zeroGain.totalAssetAmount}
+          totalGainAmount={zeroGain.totalGainAmount}
+          totalGainRatio={zeroGain.totalGainRatio}
         />
       );
 
@@ -212,10 +178,10 @@ describe('PortfolioChart', () => {
     it('プラスの評価損益では緑色のスタイルが適用される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
         />
       );
 
@@ -226,10 +192,10 @@ describe('PortfolioChart', () => {
     it('マイナスの評価損益では赤色のスタイルが適用される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={100000}
-          totalGainAmount={-5000}
-          totalGainRatio={-4.76}
+          holdingAssets={negativeGain.holdingAssets}
+          totalAssetAmount={negativeGain.totalAssetAmount}
+          totalGainAmount={negativeGain.totalGainAmount}
+          totalGainRatio={negativeGain.totalGainRatio}
         />
       );
 
@@ -240,10 +206,10 @@ describe('PortfolioChart', () => {
     it('ゼロの評価損益ではグレー色のスタイルが適用される', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={100000}
-          totalGainAmount={0}
-          totalGainRatio={0}
+          holdingAssets={zeroGain.holdingAssets}
+          totalAssetAmount={zeroGain.totalAssetAmount}
+          totalGainAmount={zeroGain.totalGainAmount}
+          totalGainRatio={zeroGain.totalGainRatio}
         />
       );
 
@@ -258,10 +224,10 @@ describe('PortfolioChart', () => {
       const handleSegmentClick = vi.fn();
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           onSegmentClick={handleSegmentClick}
         />
       );
@@ -277,10 +243,10 @@ describe('PortfolioChart', () => {
       const handleSegmentClick = vi.fn();
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           onSegmentClick={handleSegmentClick}
         />
       );
@@ -296,10 +262,10 @@ describe('PortfolioChart', () => {
       const handleClearFocus = vi.fn();
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           focusedIndex={0}
           onClearFocus={handleClearFocus}
         />
@@ -318,10 +284,10 @@ describe('PortfolioChart', () => {
     it('focusedIndex指定時、フォーカスされたセグメントはopacity-100クラス', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           focusedIndex={0}
         />
       );
@@ -334,10 +300,10 @@ describe('PortfolioChart', () => {
     it('focusedIndex指定時、他のセグメントはopacity-30クラス', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           focusedIndex={0}
         />
       );
@@ -351,10 +317,10 @@ describe('PortfolioChart', () => {
     it('focusedIndexがnullの場合、すべてのセグメントはopacity-100クラス', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           focusedIndex={null}
         />
       );
@@ -368,10 +334,10 @@ describe('PortfolioChart', () => {
     it('セグメントにcursor-pointerクラスがある', () => {
       render(
         <PortfolioChart
-          holdingAssets={mockHoldingAssets}
-          totalAssetAmount={115500}
-          totalGainAmount={15500}
-          totalGainRatio={15.5}
+          holdingAssets={standard.holdingAssets}
+          totalAssetAmount={standard.totalAssetAmount}
+          totalGainAmount={standard.totalGainAmount}
+          totalGainRatio={standard.totalGainRatio}
           onSegmentClick={vi.fn()}
         />
       );

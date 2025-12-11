@@ -438,12 +438,12 @@
 - [x] T117 [P] 空のポートフォリオエッジケースを処理（「保有銘柄がありません」メッセージを表示） `src/app/page.tsx`
 - [x] T118 [P] ロゴ画像読み込みエラー時のティッカーシンボルへのフォールバックを処理 `src/components/AssetCard.tsx`
 - [x] T119 [P] 小さい比率（< 0.1%）のセグメントに最小サイズを追加 `src/components/PortfolioChart.tsx`
-- [ ] T120 `pnpm test:run` で全テストを実行し、100%パスを確認
-- [ ] T121 `pnpm lint` でリンターを実行し、問題を修正
-- [ ] T122 `pnpm format` でフォーマッターを実行し、フォーマットを確認
-- [ ] T123 `pnpm build` で本番ビルドを実行し、成功を確認
-- [ ] T124 手動テスト: Google Chrome最新版で全機能を確認
-- [ ] T125 quickstart.md検証チェックリストを実行（6項目の動作確認）
+- [x] T120 `pnpm test:run` で全テストを実行し、100%パスを確認
+- [x] T121 `pnpm lint` でリンターを実行し、問題を修正
+- [x] T122 `pnpm format` でフォーマッターを実行し、フォーマットを確認
+- [x] T123 `pnpm build` で本番ビルドを実行し、成功を確認
+- [x] T124 手動テスト: Google Chrome最新版で全機能を確認
+- [x] T125 quickstart.md検証チェックリストを実行（6項目の動作確認）
 
 ---
 
@@ -680,17 +680,17 @@ T154, T155
 
 ### Phase 11.4: テスト改善（優先度低）
 
-- [ ] T219 [P] [R008] テストモックデータファクトリを作成 `src/test-utils/mockData.ts`
-- [ ] T220 [R008] AssetCard.test.tsx をモックデータファクトリに移行 `src/app/_components/AssetCard.test.tsx`
-- [ ] T221 [R008] PortfolioChart.test.tsx をモックデータファクトリに移行 `src/app/_components/PortfolioChart.test.tsx`
+- [x] T219 [P] [R008] テストモックデータファクトリを作成 `src/test-utils/mockData.ts`
+- [x] T220 [R008] AssetCard.test.tsx をモックデータファクトリに移行 `src/app/_components/AssetCard.test.tsx`
+- [x] T221 [R008] PortfolioChart.test.tsx をモックデータファクトリに移行 `src/app/_components/PortfolioChart.test.tsx`
 
 **チェックポイント**: テストモックデータが一元管理され、保守性が向上
 
 ### Phase 11.5: 検証
 
-- [ ] T222 `pnpm test:run` で全テストを実行し、100%パスを確認
-- [ ] T223 `pnpm lint` でリンターを実行し、問題がないことを確認
-- [ ] T224 `pnpm build` で本番ビルドを実行し、成功を確認
+- [x] T222 `pnpm test:run` で全テストを実行し、100%パスを確認
+- [x] T223 `pnpm lint` でリンターを実行し、問題がないことを確認
+- [x] T224 `pnpm build` で本番ビルドを実行し、成功を確認
 
 **チェックポイント**: すべてのリファクタリングが完了し、品質が維持されている
 
