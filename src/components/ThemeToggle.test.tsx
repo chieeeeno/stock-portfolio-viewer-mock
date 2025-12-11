@@ -127,7 +127,7 @@ describe('ThemeToggle', () => {
       render(<ThemeToggle />);
 
       const button = screen.getByRole('button');
-      expect(button).toHaveAttribute('aria-label', 'ダークモードに切り替え');
+      expect(button).toHaveAttribute('aria-label', 'ダークモードに切り替える');
     });
 
     it('ダークモード時に適切なaria-labelを持つ', () => {
@@ -142,7 +142,7 @@ describe('ThemeToggle', () => {
       render(<ThemeToggle />);
 
       const button = screen.getByRole('button');
-      expect(button).toHaveAttribute('aria-label', 'ライトモードに切り替え');
+      expect(button).toHaveAttribute('aria-label', 'ライトモードに切り替える');
     });
 
     it('ボタンがフォーカス可能である', () => {
