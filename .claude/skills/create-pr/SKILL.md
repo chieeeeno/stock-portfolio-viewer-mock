@@ -1,4 +1,5 @@
 ---
+name: create-pr
 description: 現在のブランチの変更をプッシュし、分岐元ブランチに対してPRを作成します
 ---
 
@@ -26,7 +27,7 @@ git status
 **スクリプトを使用して分岐元ブランチを自動検出してください：**
 
 ```bash
-./scripts/detect-base-branch.sh
+bash scripts/detect-base-branch.sh
 ```
 
 ### スクリプトの検出方法（優先順位順）
@@ -48,7 +49,7 @@ git status
 ユーザーが確認したら、今後のために記録：
 
 ```bash
-./scripts/detect-base-branch.sh --set <確定したブランチ名>
+bash scripts/detect-base-branch.sh --set <確定したブランチ名>
 ```
 
 ### 差分を確認
@@ -119,14 +120,14 @@ git push -u origin <現在のブランチ名>
 
 ## Step 5: PRを作成
 
-`mcp__github__create_pull_request` を使用してPRを作成：
+`gh pr create` を使用してPRを作成：
 
-- **owner**: リモートURLから抽出（例: `tomoki`）
-- **repo**: リモートURLから抽出（例: `stock-portfolio-viewer-mock`）
-- **title**: Step 4で生成したタイトル
-- **body**: Step 4で生成した本文
-- **head**: 現在のブランチ名
-- **base**: Step 2で特定した分岐元ブランチ
+```bash
+gh pr create \
+  --title "<Step 4で生成したタイトル>" \
+  --body "<Step 4で生成した本文>" \
+  --base <Step 2で特定した分岐元ブランチ>
+```
 
 ## Step 6: 結果を報告
 
